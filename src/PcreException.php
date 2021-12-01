@@ -23,7 +23,7 @@ class PcreException extends \RuntimeException
     {
         $code = preg_last_error();
 
-        return new PcreException($function.' failed executing "'.$pattern.'": '.self::pcreLastErrorMessage($code), $code);
+        return new PcreException($function.'(): failed executing "'.$pattern.'": '.self::pcreLastErrorMessage($code), $code);
     }
 
     /**

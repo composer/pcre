@@ -16,7 +16,7 @@ class Regex
     /**
      * @param string $pattern
      * @param string $subject
-     * @param int    $flags
+     * @param int    $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
      * @param int    $offset
      * @return MatchResult
      */
@@ -37,7 +37,7 @@ class Regex
     /**
      * @param string $pattern
      * @param string $subject
-     * @param int    $flags
+     * @param int    $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
      * @param int    $offset
      * @return MatchAllResult
      */
@@ -81,7 +81,7 @@ class Regex
      * @param callable $replacement
      * @param string   $subject
      * @param int      $limit
-     * @param int      $flags
+     * @param int      $flags PREG_OFFSET_CAPTURE or PREG_UNMATCHED_AS_NULL, only available on PHP 7.4+
      * @return ReplaceResult
      */
     public static function replaceCallback($pattern, $replacement, $subject, $limit = -1, $flags = 0)
@@ -90,7 +90,11 @@ class Regex
             throw new \InvalidArgumentException('$subject as an array is not supported as it changes the return type');
         }
 
-        $result = preg_replace_callback($pattern, $replacement, $subject, $limit, $count, $flags);
+        if (PHP_VERSION_ID >= 70400) {
+            $result = preg_replace_callback($pattern, $replacement, $subject, $limit, $count, $flags);
+        } else {
+            $result = preg_replace_callback($pattern, $replacement, $subject, $limit, $count);
+        }
         if ($result === null) {
             throw PcreException::fromFunction('preg_replace_callback', $pattern, $subject);
         }
