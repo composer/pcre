@@ -46,16 +46,12 @@ class PcreException extends \RuntimeException
             return 'UNDEFINED_ERROR';
         }
 
-        $constants = array_filter($constants['pcre'], function ($key) {
-            return substr($key, -6) == '_ERROR';
-        }, ARRAY_FILTER_USE_KEY);
-
-        /** @var string|false $error */
-        $error = array_search($code, $constants, true);
-        if (false === $error) {
-            return 'UNDEFINED_ERROR';
+        foreach ($constants['pcre'] as $const => $val) {
+            if ($val === $code && substr($const, -6) === '_ERROR') {
+                return $const;
+            }
         }
 
-        return $error;
+        return 'UNDEFINED_ERROR';
     }
 }

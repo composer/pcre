@@ -167,7 +167,7 @@ class RegexTest extends TestCase
             $this->expectWarning($message);
         } else {
             // @phpstan-ignore-next-line
-            $this->setExpectedException('PHPUnit\Framework\Error\Warning', $message);
+            $this->setExpectedException(class_exists('PHPUnit\Framework\Error\Warning') ? 'PHPUnit\Framework\Error\Warning' : 'PHPUnit_Framework_Error_Warning', $message);
         }
     }
 }
