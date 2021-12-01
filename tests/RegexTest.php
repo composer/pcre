@@ -139,6 +139,11 @@ class RegexTest extends TestCase
         $this->assertSame('def', $result->result);
     }
 
+    /**
+     * @param  class-string $class
+     * @param  ?string $message
+     * @return void
+     */
     private function doExpectException($class, $message = null)
     {
         if (method_exists($this, 'expectException')) {
@@ -152,6 +157,10 @@ class RegexTest extends TestCase
         }
     }
 
+    /**
+     * @param  string $message
+     * @return void
+     */
     private function doExpectWarning($message)
     {
         if (method_exists($this, 'expectWarning')) {
