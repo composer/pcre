@@ -42,7 +42,7 @@ class RegexTest extends TestCase
      */
     public function testMatchThrowsWithBadPatternIfWarningsAreNotThrowing()
     {
-        $this->doExpectException('Composer\Pcre\PcreException', 'preg_match(): failed executing "{abc": '.(PHP_VERSION_ID >= 80000 ? 'Internal error' : (PHP_VERSION_ID >= 70201 ? 'PREG_INTERNAL_ERROR' : 'UNDEFINED_ERROR')));
+        $this->doExpectException('Composer\Pcre\PcreException', 'preg_match(): failed executing "{abc": '.(PHP_VERSION_ID >= 80000 ? 'Internal error' : (PHP_VERSION_ID >= 70201 ? 'PREG_INTERNAL_ERROR' : '' /* Ignoring here, some old versions return UNDEFINED_ERROR while some have been fixed */)));
         @Regex::match('{abc', 'abcdefghijklmnopqrstuvwxyz');
     }
 
