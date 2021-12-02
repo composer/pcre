@@ -13,26 +13,27 @@ namespace Composer\Pcre;
 
 class Preg
 {
+    const ARRAY_MSG = '$subject as an array is not supported. You can use \'foreach\' instead.';
+
     /**
      * @param string|string[] $pattern
      * @param string|string[] $replacement
-     * @param string|string[] $subject
+     * @param string          $subject
      * @param int             $limit
      * @param int             $count Set by method
-     * @return string|string[]
+     * @return string
      */
     public static function filter($pattern, $replacement, $subject, $limit, &$count)
     {
-        $error = null;
-        set_error_handler(function ($errno, $errstr) use (&$error) {
-            $error = $errstr;
-            return false;
-        });
+        if (is_array($subject)) { // @phpstan-ignore-line
+            throw new \InvalidArgumentException(static::ARRAY_MSG);
+        }
 
         $result = preg_filter($pattern, $replacement, $subject, $limit, $count);
-        restore_error_handler();
-        // Keep phpstan happy
-        if (!(is_string($result) || is_array($result)) || $error) {
+
+        // Keep phpstan happy. See: https://github.com/phpstan/phpstan-src/pull/826
+        // Can be replaced with `$result === null` when this has been fixed
+        if (!is_string($result)) {
             throw PcreException::fromFunction('preg_filter', $pattern);
         }
 
@@ -95,13 +96,17 @@ class Preg
     /**
      * @param string|string[] $pattern
      * @param string|string[] $replacement
-     * @param string|string[] $subject
+     * @param string          $subject
      * @param int             $limit
      * @param int             $count Set by method
-     * @return string|string[]
+     * @return string
      */
     public static function replace($pattern, $replacement, $subject, $limit, &$count)
     {
+        if (is_array($subject)) { // @phpstan-ignore-line
+            throw new \InvalidArgumentException(static::ARRAY_MSG);
+        }
+
         $result = preg_replace($pattern, $replacement, $subject, $limit, $count);
         if ($result === null) {
             throw PcreException::fromFunction('preg_replace', $pattern);
@@ -113,14 +118,18 @@ class Preg
     /**
      * @param string|string[] $pattern
      * @param callable        $replacement
-     * @param string|string[] $subject
+     * @param string          $subject
      * @param int             $limit
      * @param int             $count Set by method
      * @param int             $flags PREG_OFFSET_CAPTURE or PREG_UNMATCHED_AS_NULL, only available on PHP 7.4+
-     * @return string|string[]
+     * @return string
      */
     public static function replaceCallback($pattern, $replacement, $subject, $limit, &$count, $flags = 0)
     {
+        if (is_array($subject)) { // @phpstan-ignore-line
+            throw new \InvalidArgumentException(static::ARRAY_MSG);
+        }
+
         if (PHP_VERSION_ID >= 70400) {
             $result = preg_replace_callback($pattern, $replacement, $subject, $limit, $count, $flags);
         } else {
@@ -137,14 +146,18 @@ class Preg
      * Available from PHP 7.0
      *
      * @param array<string, callable> $pattern
-     * @param string|string[] $subject
-     * @param int             $limit
-     * @param int             $count Set by method
-     * @param int             $flags PREG_OFFSET_CAPTURE or PREG_UNMATCHED_AS_NULL, only available on PHP 7.4+
-     * @return string|string[]
+     * @param string $subject
+     * @param int    $limit
+     * @param int    $count Set by method
+     * @param int    $flags PREG_OFFSET_CAPTURE or PREG_UNMATCHED_AS_NULL, only available on PHP 7.4+
+     * @return string
      */
     public static function replaceCallbackArray(array $pattern, $subject, $limit, &$count, $flags = 0)
     {
+        if (is_array($subject)) { // @phpstan-ignore-line
+            throw new \InvalidArgumentException(static::ARRAY_MSG);
+        }
+
         if (PHP_VERSION_ID >= 70400) {
             $result = preg_replace_callback_array($pattern, $subject, $limit, $count, $flags);
         } else {

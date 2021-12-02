@@ -55,7 +55,7 @@ class Regex
     /**
      * @param string|string[] $pattern
      * @param string|string[] $replacement
-     * @param string|string[] $subject
+     * @param string          $subject
      * @param int             $limit
      * @return ReplaceResult
      */
@@ -69,7 +69,7 @@ class Regex
     /**
      * @param string|string[] $pattern
      * @param callable        $replacement
-     * @param string|string[] $subject
+     * @param string          $subject
      * @param int             $limit
      * @param int             $flags PREG_OFFSET_CAPTURE or PREG_UNMATCHED_AS_NULL, only available on PHP 7.4+
      * @return ReplaceResult

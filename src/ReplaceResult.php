@@ -15,7 +15,7 @@ class ReplaceResult
 {
     /**
      * @readonly
-     * @var string|string[]
+     * @var string
      */
     public $result;
 
@@ -33,7 +33,7 @@ class ReplaceResult
 
     /**
      * @param  int $count
-     * @param  string|string[] $result
+     * @param  string $result
      * @return self
      */
     public static function create($count, $result)
