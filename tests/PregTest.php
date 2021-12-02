@@ -28,15 +28,6 @@ class PregTest extends TestCase
     /**
      * @return void
      */
-    public function testMatchNoRef()
-    {
-        $count = Preg::match('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz', $matches);
-        $this->assertSame(1, $count);
-    }
-
-    /**
-     * @return void
-     */
     public function testMatchNoMatch()
     {
         $count = Preg::match('{abc}', 'def', $matches);
@@ -84,15 +75,6 @@ class PregTest extends TestCase
     /**
      * @return void
      */
-    public function testMatchAllNoRef()
-    {
-        $count = Preg::matchAll('{[aei]}', 'abcdefghijklmnopqrstuvwxyz', $matches);
-        $this->assertSame(3, $count);
-    }
-
-    /**
-     * @return void
-     */
     public function testMatchAllNoMatch()
     {
         $count = Preg::matchAll('{abc}', 'def', $matches);
@@ -107,15 +89,6 @@ class PregTest extends TestCase
     {
         $result = Preg::replace('{(?P<m>d)}', 'e', 'abcd', -1, $count);
         $this->assertSame(1, $count);
-        $this->assertSame('abce', $result);
-    }
-
-    /**
-     * @return void
-     */
-    public function testReplaceNoRef()
-    {
-        $result = Preg::replace('{(?P<m>d)}', 'e', 'abcd', -1, $count);
         $this->assertSame('abce', $result);
     }
 
@@ -138,17 +111,6 @@ class PregTest extends TestCase
             return '('.$match[0].')';
         }, 'abcd', -1, $count);
         $this->assertSame(1, $count);
-        $this->assertSame('abc(d)', $result);
-    }
-
-    /**
-     * @return void
-     */
-    public function testReplaceCallbackNoRef()
-    {
-        $result = Preg::replaceCallback('{(?P<m>d)}', function ($match) {
-            return '('.$match[0].')';
-        }, 'abcd', -1, $count);
         $this->assertSame('abc(d)', $result);
     }
 
