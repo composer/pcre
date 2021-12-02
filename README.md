@@ -38,7 +38,22 @@ $newString = preg_replace('{fo+}', 'bar', $string);
 $newString = preg_replace_callback('{fo+}', function ($match) { return strtoupper($match[0]); }, $string);
 ```
 
-You can now do:
+You can now call these on the `Preg` class:
+
+```php
+use Composer\Pcre\Preg;
+
+if (Preg::match('{fo+}', $string, $matches)) { ... }
+if (Preg::matchAll('{fo+}', $string, $matches)) { ... }
+$newString = Preg::replace('{fo+}', 'bar', $string);
+$newString = Preg::replaceCallback('{fo+}', function ($match) { return strtoupper($match[0]); }, $string);
+```
+
+The main difference is if anything fails to match/replace, it will throw a `Composer\Pcre\PcreException`
+instead of returning `null`, so you can now use the return values safely relying on the fact that they can
+only be strings (for replace) and ints (for match).
+
+If you would prefer a slightly more verbose usage, replacing by-ref arguments by result objects, you can use the `Regex` class:
 
 ```php
 use Composer\Pcre\Regex;
@@ -54,6 +69,7 @@ $newString = Regex::replaceCallback('{fo+}', function ($match) { return strtoupp
 ```
 
 See the *Result classes for more.
+
 
 License
 -------
