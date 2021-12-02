@@ -140,7 +140,7 @@ class RegexTest extends TestCase
     }
 
     /**
-     * @param  class-string $class
+     * @param  class-string<\Exception> $class
      * @param  ?string $message
      * @return void
      */
@@ -164,7 +164,7 @@ class RegexTest extends TestCase
     private function doExpectWarning($message)
     {
         if (method_exists($this, 'expectWarning')) {
-            $this->expectWarning($message);
+            $this->expectWarning();
         } else {
             // @phpstan-ignore-next-line
             $this->setExpectedException(class_exists('PHPUnit\Framework\Error\Warning') ? 'PHPUnit\Framework\Error\Warning' : 'PHPUnit_Framework_Error_Warning', $message);
