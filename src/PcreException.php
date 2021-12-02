@@ -23,7 +23,7 @@ class PcreException extends \RuntimeException
         $code = preg_last_error();
 
         if (is_array($pattern)) {
-            $pattern = implode(',', $pattern);
+            $pattern = implode(', ', $pattern);
         }
 
         return new PcreException($function.'(): failed executing "'.$pattern.'": '.self::pcreLastErrorMessage($code), $code);

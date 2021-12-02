@@ -26,7 +26,7 @@ class Preg
         $error = null;
         set_error_handler(function ($errno, $errstr) use (&$error) {
             $error = $errstr;
-            return true;
+            return false;
         });
 
         $result = preg_filter($pattern, $replacement, $subject, $limit, $count);

@@ -190,6 +190,7 @@ class PregTest extends TestCase
     {
         if (method_exists($this, 'expectWarning')) {
             $this->expectWarning();
+            $this->expectWarning($message);
         } else {
             // @phpstan-ignore-next-line
             $this->setExpectedException(class_exists('PHPUnit\Framework\Error\Warning') ? 'PHPUnit\Framework\Error\Warning' : 'PHPUnit_Framework_Error_Warning', $message);
