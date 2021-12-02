@@ -188,12 +188,13 @@ class PregTest extends TestCase
      */
     private function doExpectWarning($message)
     {
-        if (method_exists($this, 'expectWarning')) {
+        if (method_exists($this, 'expectWarning') && method_exists($this, 'expectWarningMessage')) {
             $this->expectWarning();
-            $this->expectWarning($message);
+            $this->expectWarningMessage($message);
         } else {
+            $class = class_exists('PHPUnit\Framework\Error\Warning') ? 'PHPUnit\Framework\Error\Warning' : 'PHPUnit_Framework_Error_Warning';
             // @phpstan-ignore-next-line
-            $this->setExpectedException(class_exists('PHPUnit\Framework\Error\Warning') ? 'PHPUnit\Framework\Error\Warning' : 'PHPUnit_Framework_Error_Warning', $message);
+            $this->doExpectException($class, $message);
         }
     }
 }
