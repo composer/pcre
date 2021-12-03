@@ -124,7 +124,7 @@ class Preg
         }
         if ($result === null) {
             $pattern = array_keys($pattern);
-            throw PcreException::fromFunction('preg_replace_callback', $pattern);
+            throw PcreException::fromFunction('preg_replace_callback_array', $pattern);
         }
 
         return $result;

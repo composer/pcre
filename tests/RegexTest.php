@@ -11,9 +11,7 @@
 
 namespace Composer\Pcre;
 
-use PHPUnit\Framework\TestCase;
-
-class RegexTest extends TestCase
+class RegexTest extends BaseTestCase
 {
     /**
      * @return void
@@ -42,8 +40,9 @@ class RegexTest extends TestCase
      */
     public function testMatchWithBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->doExpectException('Composer\Pcre\PcreException', 'preg_match(): failed executing "{abc": '.(PHP_VERSION_ID >= 80000 ? 'Internal error' : (PHP_VERSION_ID >= 70201 ? 'PREG_INTERNAL_ERROR' : '' /* Ignoring here, some old versions return UNDEFINED_ERROR while some have been fixed */)));
-        @Regex::match('{abc', 'abcdefghijklmnopqrstuvwxyz');
+        $message = $this->formatPcreMessage('preg_match()', $pattern = '{abc');
+        $this->doExpectException('Composer\Pcre\PcreException', $message);
+        @Regex::match($pattern, 'abcdefghijklmnopqrstuvwxyz');
     }
 
     /**
@@ -92,8 +91,9 @@ class RegexTest extends TestCase
      */
     public function testMatchAllWithBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->doExpectException('Composer\Pcre\PcreException');
-        @Regex::matchAll('{[aei]', 'abcdefghijklmnopqrstuvwxyz');
+        $message = $this->formatPcreMessage('preg_match_all()', $pattern = '{[aei]');
+        $this->doExpectException('Composer\Pcre\PcreException', $message);
+        @Regex::matchAll($pattern, 'abcdefghijklmnopqrstuvwxyz');
     }
 
     /**
@@ -134,8 +134,9 @@ class RegexTest extends TestCase
      */
     public function testReplaceWithBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->doExpectException('Composer\Pcre\PcreException');
-        @Regex::replace('{(?P<m>d)', 'e', 'abcd');
+        $message = $this->formatPcreMessage('preg_replace()', $pattern = '{(?P<m>d)');
+        $this->doExpectException('Composer\Pcre\PcreException', $message);
+        @Regex::replace($pattern, 'e', 'abcd');
     }
 
     /**
@@ -190,9 +191,10 @@ class RegexTest extends TestCase
      */
     public function testReplaceCallbackWithBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->doExpectException('Composer\Pcre\PcreException');
+        $message = $this->formatPcreMessage('preg_replace_callback()', $pattern = '{(?P<m>d)');
+        $this->doExpectException('Composer\Pcre\PcreException', $message);
 
-        @Regex::replaceCallback('{(?P<m>d)', function ($match) {
+        @Regex::replaceCallback($pattern, function ($match) {
             return '('.$match[0].')';
         }, 'abcd');
     }
@@ -257,9 +259,10 @@ class RegexTest extends TestCase
      */
     public function testReplaceCallbackArrayWithBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->doExpectException('Composer\Pcre\PcreException');
+        $message = $this->formatPcreMessage('preg_replace_callback_array()', $pattern = '{(?P<m>d)');
+        $this->doExpectException('Composer\Pcre\PcreException', $message);
 
-        @Regex::replaceCallbackArray(array('{(?P<m>d)' => function ($match) {
+        @Regex::replaceCallbackArray(array($pattern => function ($match) {
             return '('.$match[0].')';
         }), 'abcd');
     }
@@ -313,8 +316,9 @@ class RegexTest extends TestCase
      */
     public function testIsMatchBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->doExpectException('Composer\Pcre\PcreException');
-        @Regex::isMatch('{(?P<m>[io])', 'abcdefghijklmnopqrstuvwxyz');
+        $message = $this->formatPcreMessage('preg_match()', $pattern = '{(?P<m>[io])');
+        $this->doExpectException('Composer\Pcre\PcreException', $message);
+        @Regex::isMatch($pattern, 'abcdefghijklmnopqrstuvwxyz');
     }
 
     /**
@@ -324,39 +328,5 @@ class RegexTest extends TestCase
     {
         $this->doExpectWarning('preg_match(): No ending matching delimiter \'}\' found');
         Regex::isMatch('{(?P<m>[io])', 'abcdefghijklmnopqrstuvwxyz');
-    }
-
-    /**
-     * @param  class-string<\Exception> $class
-     * @param  ?string $message
-     * @return void
-     */
-    private function doExpectException($class, $message = null)
-    {
-        if (method_exists($this, 'expectException')) {
-            $this->expectException($class);
-            if ($message) {
-                $this->expectExceptionMessage($message);
-            }
-        } else {
-            // @phpstan-ignore-next-line
-            $this->setExpectedException($class, $message);
-        }
-    }
-
-    /**
-     * @param  string $message
-     * @return void
-     */
-    private function doExpectWarning($message)
-    {
-        if (method_exists($this, 'expectWarning') && method_exists($this, 'expectWarningMessage')) {
-            $this->expectWarning();
-            $this->expectWarningMessage($message);
-        } else {
-            $class = class_exists('PHPUnit\Framework\Error\Warning') ? 'PHPUnit\Framework\Error\Warning' : 'PHPUnit_Framework_Error_Warning';
-            // @phpstan-ignore-next-line
-            $this->doExpectException($class, $message);
-        }
     }
 }

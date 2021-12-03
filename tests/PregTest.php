@@ -11,9 +11,7 @@
 
 namespace Composer\Pcre;
 
-use PHPUnit\Framework\TestCase;
-
-class PregTest extends TestCase
+class PregTest extends BaseTestCase
 {
     /**
      * @return void
@@ -49,8 +47,9 @@ class PregTest extends TestCase
      */
     public function testMatchWithBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->doExpectException('Composer\Pcre\PcreException', 'preg_match(): failed executing "{abc": '.(PHP_VERSION_ID >= 80000 ? 'Internal error' : (PHP_VERSION_ID >= 70201 ? 'PREG_INTERNAL_ERROR' : '' /* Ignoring here, some old versions return UNDEFINED_ERROR while some have been fixed */)));
-        @Preg::match('{abc', 'abcdefghijklmnopqrstuvwxyz');
+        $message = $this->formatPcreMessage('preg_match()', $pattern = '{abc');
+        $this->doExpectException('Composer\Pcre\PcreException', $message);
+        @Preg::match($pattern, 'abcdefghijklmnopqrstuvwxyz');
     }
 
     /**
@@ -105,8 +104,9 @@ class PregTest extends TestCase
      */
     public function testMatchAllWithBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->doExpectException('Composer\Pcre\PcreException');
-        @Preg::matchAll('{[aei]', 'abcdefghijklmnopqrstuvwxyz');
+        $message = $this->formatPcreMessage('preg_match_all()', $pattern = '{[aei]');
+        $this->doExpectException('Composer\Pcre\PcreException', $message);
+        @Preg::matchAll($pattern, 'abcdefghijklmnopqrstuvwxyz');
     }
 
     /**
@@ -152,17 +152,18 @@ class PregTest extends TestCase
      */
     public function testReplaceWithBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->doExpectException('Composer\Pcre\PcreException');
-        @Preg::replace('{(?P<m>d)', 'e', 'abcd', -1);
+        $message = $this->formatPcreMessage('preg_replace()', $pattern = '{(?P<m>d)');
+        $this->doExpectException('Composer\Pcre\PcreException', $message);
+        @Preg::replace($pattern, 'e', 'abcd', -1);
     }
 
     /**
      * @return void
      */
-    public function tesReplaceWithBadPatternTriggersWarningByDefault()
+    public function testReplaceWithBadPatternTriggersWarningByDefault()
     {
         $this->doExpectWarning('preg_replace(): No ending matching delimiter \'}\' found');
-        Preg::replace('{(?P<m>d)}', 'e', 'abcd', -1);
+        Preg::replace('{(?P<m>d)', 'e', 'abcd', -1);
     }
 
     /**
@@ -215,9 +216,10 @@ class PregTest extends TestCase
      */
     public function testReplaceCallbackWithBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->doExpectException('Composer\Pcre\PcreException');
+        $message = $this->formatPcreMessage('preg_replace_callback()', $pattern = '{(?P<m>d)');
+        $this->doExpectException('Composer\Pcre\PcreException', $message);
 
-        @Preg::replaceCallback('{(?P<m>d)', function ($match) {
+        @Preg::replaceCallback($pattern, function ($match) {
             return '('.$match[0].')';
         }, 'abcd');
     }
@@ -290,9 +292,10 @@ class PregTest extends TestCase
      */
     public function testReplaceCallbackArrayWithBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->doExpectException('Composer\Pcre\PcreException');
+        $message = $this->formatPcreMessage('preg_replace_callback_array()', $pattern = '{(?P<m>d)');
+        $this->doExpectException('Composer\Pcre\PcreException', $message);
 
-        @Preg::replaceCallbackArray(array('{(?P<m>d)' => function ($match) {
+        @Preg::replaceCallbackArray(array($pattern => function ($match) {
             return '('.$match[0].')';
         }), 'abcd');
     }
@@ -346,8 +349,9 @@ class PregTest extends TestCase
      */
     public function testSplitWithBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->doExpectException('Composer\Pcre\PcreException');
-        @Preg::split('{[\s,]+', 'a, b, c');
+        $message = $this->formatPcreMessage('preg_split()', $pattern = '{[\s,]+');
+        $this->doExpectException('Composer\Pcre\PcreException', $message);
+        @Preg::split($pattern, 'a, b, c');
     }
 
     /**
@@ -382,8 +386,9 @@ class PregTest extends TestCase
      */
     public function testGrepWithBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->doExpectException('Composer\Pcre\PcreException');
-        @Preg::grep('{[de]', array('a', 'b', 'c'));
+        $message = $this->formatPcreMessage('preg_grep()', $pattern = '{[de]');
+        $this->doExpectException('Composer\Pcre\PcreException', $message);
+        @Preg::grep($pattern, array('a', 'b', 'c'));
     }
 
     /**
@@ -393,39 +398,5 @@ class PregTest extends TestCase
     {
         $this->doExpectWarning('preg_grep(): No ending matching delimiter \'}\' found');
         Preg::grep('{[de]', array('a', 'b', 'c'));
-    }
-
-    /**
-     * @param  class-string<\Exception> $class
-     * @param  ?string $message
-     * @return void
-     */
-    private function doExpectException($class, $message = null)
-    {
-        if (method_exists($this, 'expectException')) {
-            $this->expectException($class);
-            if ($message) {
-                $this->expectExceptionMessage($message);
-            }
-        } else {
-            // @phpstan-ignore-next-line
-            $this->setExpectedException($class, $message);
-        }
-    }
-
-    /**
-     * @param  string $message
-     * @return void
-     */
-    private function doExpectWarning($message)
-    {
-        if (method_exists($this, 'expectWarning') && method_exists($this, 'expectWarningMessage')) {
-            $this->expectWarning();
-            $this->expectWarningMessage($message);
-        } else {
-            $class = class_exists('PHPUnit\Framework\Error\Warning') ? 'PHPUnit\Framework\Error\Warning' : 'PHPUnit_Framework_Error_Warning';
-            // @phpstan-ignore-next-line
-            $this->doExpectException($class, $message);
-        }
     }
 }
