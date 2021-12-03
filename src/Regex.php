@@ -80,4 +80,20 @@ class Regex
 
         return ReplaceResult::create($count, $result);
     }
+
+    /**
+     * Available from PHP 7.0
+     *
+     * @param array<string, callable> $pattern
+     * @param string $subject
+     * @param int    $limit
+     * @param int    $flags PREG_OFFSET_CAPTURE or PREG_UNMATCHED_AS_NULL, only available on PHP 7.4+
+     * @return ReplaceResult
+     */
+    public static function replaceCallbackArray($pattern, $subject, $limit = -1, $flags = 0)
+    {
+        $result = Preg::replaceCallbackArray($pattern, $subject, $limit, $count, $flags);
+
+        return ReplaceResult::create($count, $result);
+    }
 }
