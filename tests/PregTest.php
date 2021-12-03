@@ -47,7 +47,7 @@ class PregTest extends TestCase
     /**
      * @return void
      */
-    public function testMatchThrowsWithBadPatternIfWarningsAreNotThrowing()
+    public function testMatchWithBadPatternThrowsIfWarningsAreNotThrowing()
     {
         $this->doExpectException('Composer\Pcre\PcreException', 'preg_match(): failed executing "{abc": '.(PHP_VERSION_ID >= 80000 ? 'Internal error' : (PHP_VERSION_ID >= 70201 ? 'PREG_INTERNAL_ERROR' : '' /* Ignoring here, some old versions return UNDEFINED_ERROR while some have been fixed */)));
         @Preg::match('{abc', 'abcdefghijklmnopqrstuvwxyz');
@@ -103,6 +103,24 @@ class PregTest extends TestCase
     /**
      * @return void
      */
+    public function testMatchAllWithBadPatternThrowsIfWarningsAreNotThrowing()
+    {
+        $this->doExpectException('Composer\Pcre\PcreException');
+        @Preg::matchAll('{[aei]', 'abcdefghijklmnopqrstuvwxyz');
+    }
+
+    /**
+     * @return void
+     */
+    public function testMatchAllWithBadPatternTriggersWarningByDefault()
+    {
+        $this->doExpectWarning('preg_match_all(): No ending matching delimiter \'}\' found');
+        Preg::matchAll('{[aei]', 'abcdefghijklmnopqrstuvwxyz');
+    }
+
+    /**
+     * @return void
+     */
     public function testReplace()
     {
         $result = Preg::replace('{(?P<m>d)}', 'e', 'abcd', -1, $count);
@@ -127,6 +145,24 @@ class PregTest extends TestCase
         $result = Preg::replace('{abc}', '123', 'def', -1, $count);
         $this->assertSame(0, $count);
         $this->assertSame('def', $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testReplaceWithBadPatternThrowsIfWarningsAreNotThrowing()
+    {
+        $this->doExpectException('Composer\Pcre\PcreException');
+        @Preg::replace('{(?P<m>d)', 'e', 'abcd', -1);
+    }
+
+    /**
+     * @return void
+     */
+    public function tesReplaceWithBadPatternTriggersWarningByDefault()
+    {
+        $this->doExpectWarning('preg_replace(): No ending matching delimiter \'}\' found');
+        Preg::replace('{(?P<m>d)}', 'e', 'abcd', -1);
     }
 
     /**
@@ -172,6 +208,30 @@ class PregTest extends TestCase
         }, 'def', -1, $count);
         $this->assertSame(0, $count);
         $this->assertSame('def', $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testReplaceCallbackWithBadPatternThrowsIfWarningsAreNotThrowing()
+    {
+        $this->doExpectException('Composer\Pcre\PcreException');
+
+        @Preg::replaceCallback('{(?P<m>d)', function ($match) {
+            return '('.$match[0].')';
+        }, 'abcd');
+    }
+
+    /**
+     * @return void
+     */
+    public function testReplaceCallbackWithBadPatternTriggersWarningByDefault()
+    {
+        $this->doExpectWarning('preg_replace_callback(): No ending matching delimiter \'}\' found');
+
+        Preg::replaceCallback('{(?P<m>d)', function ($match) {
+            return '('.$match[0].')';
+        }, 'abcd');
     }
 
     /**
@@ -228,6 +288,32 @@ class PregTest extends TestCase
      * @requires PHP 7.0
      * @return void
      */
+    public function testReplaceCallbackArrayWithBadPatternThrowsIfWarningsAreNotThrowing()
+    {
+        $this->doExpectException('Composer\Pcre\PcreException');
+
+        @Preg::replaceCallbackArray(array('{(?P<m>d)' => function ($match) {
+            return '('.$match[0].')';
+        }), 'abcd');
+    }
+
+    /**
+     * @requires PHP 7.0
+     * @return void
+     */
+    public function testReplaceCallbackArrayWithBadPatternTriggersWarningByDefault()
+    {
+        $this->doExpectWarning('preg_replace_callback_array(): No ending matching delimiter \'}\' found');
+
+        Preg::replaceCallbackArray(array('{(?P<m>d)' => function ($match) {
+            return '('.$match[0].')';
+        }), 'abcd');
+    }
+
+    /**
+     * @requires PHP 7.0
+     * @return void
+     */
     public function testReplaceCallbackArrayThrowsWithSubjectArray()
     {
         $this->doExpectException('InvalidArgumentException', Preg::ARRAY_MSG);
@@ -235,6 +321,78 @@ class PregTest extends TestCase
         Preg::replaceCallbackArray(array('{(?P<m>d)}' => function ($match) {
             return '('.$match[0].')';
         }), array('abcd')); // @phpstan-ignore-line
+    }
+
+    /**
+     * @return void
+     */
+    public function testSplit()
+    {
+        $result = Preg::split('{[\s,]+}', 'a, b, c');
+        $this->assertSame(array('a', 'b', 'c'), $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSplitNoMatch()
+    {
+        $result = Preg::split('{[\s,]+}', 'abc');
+        $this->assertSame(array('abc'), $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSplitWithBadPatternThrowsIfWarningsAreNotThrowing()
+    {
+        $this->doExpectException('Composer\Pcre\PcreException');
+        @Preg::split('{[\s,]+', 'a, b, c');
+    }
+
+    /**
+     * @return void
+     */
+    public function testSplitWithBadPatternTriggersWarningByDefault()
+    {
+        $this->doExpectWarning('preg_split(): No ending matching delimiter \'}\' found');
+        Preg::split('{[\s,]+', 'a, b, c');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGrep()
+    {
+        $result = Preg::grep('{[bc]}', array('a', 'b', 'c'));
+        $this->assertSame(array(1 => 'b', 2 => 'c'), $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGrepNoMatch()
+    {
+        $result = Preg::grep('{[de]}', array('a', 'b', 'c'));
+        $this->assertSame(array(), $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGrepWithBadPatternThrowsIfWarningsAreNotThrowing()
+    {
+        $this->doExpectException('Composer\Pcre\PcreException');
+        @Preg::grep('{[de]', array('a', 'b', 'c'));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGrepWithBadPatternTriggersWarningByDefault()
+    {
+        $this->doExpectWarning('preg_grep(): No ending matching delimiter \'}\' found');
+        Preg::grep('{[de]', array('a', 'b', 'c'));
     }
 
     /**
