@@ -28,6 +28,15 @@ class PregTest extends TestCase
     /**
      * @return void
      */
+    public function testMatchNoRef()
+    {
+        $count = Preg::match('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz');
+        $this->assertSame(1, $count);
+    }
+
+    /**
+     * @return void
+     */
     public function testMatchNoMatch()
     {
         $count = Preg::match('{abc}', 'def', $matches);
@@ -41,7 +50,7 @@ class PregTest extends TestCase
     public function testMatchThrowsWithBadPatternIfWarningsAreNotThrowing()
     {
         $this->doExpectException('Composer\Pcre\PcreException', 'preg_match(): failed executing "{abc": '.(PHP_VERSION_ID >= 80000 ? 'Internal error' : (PHP_VERSION_ID >= 70201 ? 'PREG_INTERNAL_ERROR' : '' /* Ignoring here, some old versions return UNDEFINED_ERROR while some have been fixed */)));
-        @Preg::match('{abc', 'abcdefghijklmnopqrstuvwxyz', $matches);
+        @Preg::match('{abc', 'abcdefghijklmnopqrstuvwxyz');
     }
 
     /**
@@ -50,7 +59,7 @@ class PregTest extends TestCase
     public function testMatchWithBadPatternTriggersWarningByDefault()
     {
         $this->doExpectWarning('preg_match(): No ending matching delimiter \'}\' found');
-        Preg::match('{abc', 'abcdefghijklmnopqrstuvwxyz', $matches);
+        Preg::match('{abc', 'abcdefghijklmnopqrstuvwxyz');
     }
 
     /**
@@ -59,7 +68,7 @@ class PregTest extends TestCase
     public function testMatchThrowsIfEngineErrors()
     {
         $this->doExpectException('Composer\Pcre\PcreException', 'preg_match(): failed executing "/(?:\D+|<\d+>)*[!?]/": '.(PHP_VERSION_ID >= 80000 ? 'Backtrack limit exhausted' : 'PREG_BACKTRACK_LIMIT_ERROR'));
-        Preg::match('/(?:\D+|<\d+>)*[!?]/', 'foobar foobar foobar', $matches);
+        Preg::match('/(?:\D+|<\d+>)*[!?]/', 'foobar foobar foobar');
     }
 
     /**
@@ -70,6 +79,15 @@ class PregTest extends TestCase
         $count = Preg::matchAll('{[aei]}', 'abcdefghijklmnopqrstuvwxyz', $matches);
         $this->assertSame(3, $count);
         $this->assertSame(array(0 => array('a', 'e', 'i')), $matches);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMatchAllNoRef()
+    {
+        $count = Preg::matchAll('{[aei]}', 'abcdefghijklmnopqrstuvwxyz');
+        $this->assertSame(3, $count);
     }
 
     /**
@@ -89,6 +107,15 @@ class PregTest extends TestCase
     {
         $result = Preg::replace('{(?P<m>d)}', 'e', 'abcd', -1, $count);
         $this->assertSame(1, $count);
+        $this->assertSame('abce', $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testReplaceNoRef()
+    {
+        $result = Preg::replace('{(?P<m>d)}', 'e', 'abcd', -1);
         $this->assertSame('abce', $result);
     }
 
@@ -117,6 +144,17 @@ class PregTest extends TestCase
     /**
      * @return void
      */
+    public function testReplaceCallbackNoRef()
+    {
+        $result = Preg::replaceCallback('{(?P<m>d)}', function ($match) {
+            return '('.$match[0].')';
+        }, 'abcd');
+        $this->assertSame('abc(d)', $result);
+    }
+
+    /**
+     * @return void
+     */
     public function testReplaceCallbackNoMatch()
     {
         $result = Preg::replaceCallback('{abc}', function ($match) {
@@ -125,6 +163,7 @@ class PregTest extends TestCase
         $this->assertSame(0, $count);
         $this->assertSame('def', $result);
     }
+
 
     /**
      * @param  class-string<\Exception> $class

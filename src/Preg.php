@@ -23,7 +23,7 @@ class Preg
      * @param int      $offset
      * @return int
      */
-    public static function match($pattern, $subject, &$matches, $flags = 0, $offset = 0)
+    public static function match($pattern, $subject, &$matches = null, $flags = 0, $offset = 0)
     {
         $result = preg_match($pattern, $subject, $matches, $flags, $offset);
 
@@ -42,7 +42,7 @@ class Preg
      * @param int      $offset
      * @return int
      */
-    public static function matchAll($pattern, $subject, &$matches, $flags = 0, $offset = 0)
+    public static function matchAll($pattern, $subject, &$matches = null, $flags = 0, $offset = 0)
     {
         $result = preg_match_all($pattern, $subject, $matches, $flags, $offset);
         if ($result === false || $result === null) {
@@ -60,7 +60,7 @@ class Preg
      * @param int             $count Set by method
      * @return string
      */
-    public static function replace($pattern, $replacement, $subject, $limit, &$count)
+    public static function replace($pattern, $replacement, $subject, $limit = -1, &$count = null)
     {
         if (is_array($subject)) { // @phpstan-ignore-line
             throw new \InvalidArgumentException(static::ARRAY_MSG);
@@ -83,7 +83,7 @@ class Preg
      * @param int             $flags PREG_OFFSET_CAPTURE or PREG_UNMATCHED_AS_NULL, only available on PHP 7.4+
      * @return string
      */
-    public static function replaceCallback($pattern, $replacement, $subject, $limit, &$count, $flags = 0)
+    public static function replaceCallback($pattern, $replacement, $subject, $limit = -1, &$count = null, $flags = 0)
     {
         if (is_array($subject)) { // @phpstan-ignore-line
             throw new \InvalidArgumentException(static::ARRAY_MSG);
@@ -111,7 +111,7 @@ class Preg
      * @param int    $flags PREG_OFFSET_CAPTURE or PREG_UNMATCHED_AS_NULL, only available on PHP 7.4+
      * @return string
      */
-    public static function replaceCallbackArray(array $pattern, $subject, $limit, &$count, $flags = 0)
+    public static function replaceCallbackArray(array $pattern, $subject, $limit = -1, &$count = null, $flags = 0)
     {
         if (is_array($subject)) { // @phpstan-ignore-line
             throw new \InvalidArgumentException(static::ARRAY_MSG);
@@ -155,7 +155,7 @@ class Preg
      * @param int             $count Set by method
      * @return string
      */
-    public static function filter($pattern, $replacement, $subject, $limit, &$count)
+    public static function filter($pattern, $replacement, $subject, $limit = -1, &$count = null)
     {
         if (is_array($subject)) { // @phpstan-ignore-line
             throw new \InvalidArgumentException(static::ARRAY_MSG);
