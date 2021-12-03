@@ -132,6 +132,16 @@ class PregTest extends TestCase
     /**
      * @return void
      */
+    public function testReplaceThrowsWithSubjectArray()
+    {
+        $this->doExpectException('InvalidArgumentException', Preg::ARRAY_MSG);
+        // @phpstan-ignore-next-line
+        Preg::replace('{(?P<m>d)}', 'e', array('abcd'));
+    }
+
+    /**
+     * @return void
+     */
     public function testReplaceCallback()
     {
         $result = Preg::replaceCallback('{(?P<m>d)}', function ($match) {
@@ -164,6 +174,68 @@ class PregTest extends TestCase
         $this->assertSame('def', $result);
     }
 
+    /**
+     * @return void
+     */
+    public function testReplaceCallbackThrowsWithSubjectArray()
+    {
+        $this->doExpectException('InvalidArgumentException', Preg::ARRAY_MSG);
+
+        Preg::replaceCallback('{(?P<m>d)}', function ($match) {
+            return '('.$match[0].')';
+        }, array('abcd')); // @phpstan-ignore-line
+    }
+
+    /**
+     * @requires PHP 7.0
+     * @return void
+     */
+    public function testReplaceCallbackArray()
+    {
+        $result = Preg::replaceCallbackArray(array('{(?P<m>d)}' => function ($match) {
+            return '('.$match[0].')';
+        }), 'abcd', -1, $count);
+        $this->assertSame(1, $count);
+        $this->assertSame('abc(d)', $result);
+    }
+
+    /**
+     * @requires PHP 7.0
+     * @return void
+     */
+    public function testReplaceCallbackArrayNoRef()
+    {
+        $result = Preg::replaceCallbackArray(array('{(?P<m>d)}' => function ($match) {
+            return '('.$match[0].')';
+        }), 'abcd');
+        $this->assertSame('abc(d)', $result);
+    }
+
+    /**
+     * @requires PHP 7.0
+     * @return void
+     */
+    public function testReplaceCallbackArrayNoMatch()
+    {
+        $result = Preg::replaceCallbackArray(array('{abc}' => function ($match) {
+            return '('.$match[0].')';
+        }), 'def', -1, $count);
+        $this->assertSame(0, $count);
+        $this->assertSame('def', $result);
+    }
+
+    /**
+     * @requires PHP 7.0
+     * @return void
+     */
+    public function testReplaceCallbackArrayThrowsWithSubjectArray()
+    {
+        $this->doExpectException('InvalidArgumentException', Preg::ARRAY_MSG);
+
+        Preg::replaceCallbackArray(array('{(?P<m>d)}' => function ($match) {
+            return '('.$match[0].')';
+        }), array('abcd')); // @phpstan-ignore-line
+    }
 
     /**
      * @param  class-string<\Exception> $class
