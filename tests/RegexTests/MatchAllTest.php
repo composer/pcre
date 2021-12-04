@@ -55,7 +55,7 @@ class MatchAllTest extends BaseTestCase
      */
     public function testBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->setPcreException($pattern = '{[aei]');
+        $this->expectPcreException($pattern = '{[aei]');
         @Regex::matchAll($pattern, 'abcdefghijklmnopqrstuvwxyz');
     }
 
@@ -64,7 +64,7 @@ class MatchAllTest extends BaseTestCase
      */
     public function testBadPatternTriggersWarningByDefault()
     {
-        $this->setPcreWarning();
+        $this->expectPcreWarning();
         Regex::matchAll('{[aei]', 'abcdefghijklmnopqrstuvwxyz');
     }
 }

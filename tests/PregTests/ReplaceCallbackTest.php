@@ -70,7 +70,7 @@ class ReplaceCallbackTest extends BaseTestCase
      */
     public function testBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->setPcreException($pattern = '{(?P<m>d)');
+        $this->expectPcreException($pattern = '{(?P<m>d)');
 
         @Preg::replaceCallback($pattern, function ($match) {
             return '('.$match[0].')';
@@ -82,7 +82,7 @@ class ReplaceCallbackTest extends BaseTestCase
      */
     public function testBadPatternTriggersWarningByDefault()
     {
-        $this->setPcreWarning();
+        $this->expectPcreWarning();
 
         Preg::replaceCallback('{(?P<m>d)', function ($match) {
             return '('.$match[0].')';

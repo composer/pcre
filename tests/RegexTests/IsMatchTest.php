@@ -50,7 +50,7 @@ class IsMatchTest extends BaseTestCase
      */
     public function testBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->setPcreException($pattern = '{(?P<m>[io])');
+        $this->expectPcreException($pattern = '{(?P<m>[io])');
         @Regex::isMatch($pattern, 'abcdefghijklmnopqrstuvwxyz');
     }
 
@@ -59,7 +59,7 @@ class IsMatchTest extends BaseTestCase
      */
     public function testBadPatternTriggersWarningByDefault()
     {
-        $this->setPcreWarning();
+        $this->expectPcreWarning();
         Regex::isMatch('{(?P<m>[io])', 'abcdefghijklmnopqrstuvwxyz');
     }
 }

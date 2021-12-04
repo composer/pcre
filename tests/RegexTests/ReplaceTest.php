@@ -57,7 +57,7 @@ class ReplaceTest extends BaseTestCase
      */
     public function testBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->setPcreException($pattern = '{(?P<m>d)');
+        $this->expectPcreException($pattern = '{(?P<m>d)');
         @Regex::replace($pattern, 'e', 'abcd');
     }
 
@@ -66,7 +66,7 @@ class ReplaceTest extends BaseTestCase
      */
     public function testBadPatternTriggersWarningByDefault()
     {
-        $this->setPcreWarning();
+        $this->expectPcreWarning();
         Regex::replace('{(?P<m>d)', 'e', 'abcd');
     }
 

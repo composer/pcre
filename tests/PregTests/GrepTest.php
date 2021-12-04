@@ -50,7 +50,7 @@ class GrepTest extends BaseTestCase
      */
     public function testBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->setPcreException($pattern = '{[de]');
+        $this->expectPcreException($pattern = '{[de]');
         @Preg::grep($pattern, array('a', 'b', 'c'));
     }
 
@@ -59,7 +59,7 @@ class GrepTest extends BaseTestCase
      */
     public function testBadPatternTriggersWarningByDefault()
     {
-        $this->setPcreWarning();
+        $this->expectPcreWarning();
         Preg::grep('{[de]', array('a', 'b', 'c'));
     }
 }

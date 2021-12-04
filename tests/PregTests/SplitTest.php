@@ -50,7 +50,7 @@ class SplitTest extends BaseTestCase
      */
     public function testBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->setPcreException($pattern = '{[\s,]+');
+        $this->expectPcreException($pattern = '{[\s,]+');
         @Preg::split($pattern, 'a, b, c');
     }
 
@@ -59,7 +59,7 @@ class SplitTest extends BaseTestCase
      */
     public function testBadPatternTriggersWarningByDefault()
     {
-        $this->setPcreWarning();
+        $this->expectPcreWarning();
         Preg::split('{[\s,]+', 'a, b, c');
     }
 }

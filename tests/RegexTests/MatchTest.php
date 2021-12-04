@@ -54,7 +54,7 @@ class MatchTest extends BaseTestCase
      */
     public function testBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->setPcreException($pattern = '{abc');
+        $this->expectPcreException($pattern = '{abc');
         @Regex::match($pattern, 'abcdefghijklmnopqrstuvwxyz');
     }
 
@@ -63,7 +63,7 @@ class MatchTest extends BaseTestCase
      */
     public function testBadPatternTriggersWarningByDefault()
     {
-        $this->setPcreWarning();
+        $this->expectPcreWarning();
         Regex::match('{abc', 'abcdefghijklmnopqrstuvwxyz');
     }
 
@@ -72,7 +72,7 @@ class MatchTest extends BaseTestCase
      */
     public function testThrowsIfEngineErrors()
     {
-        $this->setPcreEngineException($pattern = '/(?:\D+|<\d+>)*[!?]/');
+        $this->expectPcreEngineException($pattern = '/(?:\D+|<\d+>)*[!?]/');
         Regex::match($pattern, 'foobar foobar foobar');
     }
 }

@@ -61,7 +61,7 @@ class MatchTest extends BaseTestCase
      */
     public function testBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->setPcreException($pattern = '{(?P<m>[io])');
+        $this->expectPcreException($pattern = '{(?P<m>[io])');
         @Preg::match($pattern, 'abcdefghijklmnopqrstuvwxyz');
     }
 
@@ -70,7 +70,7 @@ class MatchTest extends BaseTestCase
      */
     public function testBadPatternTriggersWarningByDefault()
     {
-        $this->setPcreWarning();
+        $this->expectPcreWarning();
         Preg::match('{(?P<m>[io])', 'abcdefghijklmnopqrstuvwxyz');
     }
 
@@ -79,7 +79,7 @@ class MatchTest extends BaseTestCase
      */
     public function testThrowsIfEngineErrors()
     {
-        $this->setPcreEngineException($pattern = '/(?:\D+|<\d+>)*[!?]/');
+        $this->expectPcreEngineException($pattern = '/(?:\D+|<\d+>)*[!?]/');
         Preg::match($pattern, 'foobar foobar foobar');
     }
 }

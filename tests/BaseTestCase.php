@@ -56,10 +56,10 @@ class BaseTestCase extends TestCase
      * @param string $pattern
      * @return void
      */
-    protected function setPcreEngineException($pattern)
+    protected function expectPcreEngineException($pattern)
     {
         $error = PHP_VERSION_ID >= 80000 ? 'Backtrack limit exhausted' : 'PREG_BACKTRACK_LIMIT_ERROR';
-        $this->setPcreException($pattern, $error);
+        $this->expectPcreException($pattern, $error);
     }
 
     /**
@@ -67,7 +67,7 @@ class BaseTestCase extends TestCase
      * @param string $error
      * @return void
      */
-    protected function setPcreException($pattern, $error = null)
+    protected function expectPcreException($pattern, $error = null)
     {
         if (!$this->pregFunction) {
             $this->fail('Preg function name is missing');
@@ -75,7 +75,7 @@ class BaseTestCase extends TestCase
 
         if (!$error) {
             // Only use a message if the error can be reliably determined
-            if (PHP_VERSION_ID>= 80000) {
+            if (PHP_VERSION_ID >= 80000) {
                 $error = 'Internal error';
             } elseif (PHP_VERSION_ID >= 70201) {
                 $error = 'PREG_INTERNAL_ERROR';
@@ -92,17 +92,17 @@ class BaseTestCase extends TestCase
     }
 
     /**
-     * @param string $error
+     * @param string $warning
      * @return void
      */
-    protected function setPcreWarning($error = null)
+    protected function expectPcreWarning($warning = null)
     {
         if (!$this->pregFunction) {
             $this->fail('Preg function name is missing');
         }
 
-        $error = $error ?: 'No ending matching delimiter \'}\' found';
-        $message = sprintf('%s: %s', $this->pregFunction, $error);
+        $warning = $warning ?: 'No ending matching delimiter \'}\' found';
+        $message = sprintf('%s: %s', $this->pregFunction, $warning);
         $this->doExpectWarning($message);
     }
 }
