@@ -26,7 +26,6 @@ class Preg
     public static function match($pattern, $subject, &$matches = null, $flags = 0, $offset = 0)
     {
         $result = preg_match($pattern, $subject, $matches, $flags, $offset);
-
         if ($result === false) {
             throw PcreException::fromFunction('preg_match', $pattern);
         }

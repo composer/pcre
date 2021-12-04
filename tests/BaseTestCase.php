@@ -15,6 +15,8 @@ use PHPUnit\Framework\TestCase;
 
 class BaseTestCase extends TestCase
 {
+    /** @var string */
+    protected $pregFunction;
 
     /**
      * @param  class-string<\Exception> $class
@@ -51,21 +53,56 @@ class BaseTestCase extends TestCase
     }
 
     /**
-     * @param string $function
      * @param string $pattern
-     * @return string|null
+     * @return void
      */
-    protected function formatPcreMessage($function, $pattern)
+    protected function setPcreEngineException($pattern)
     {
-        if (PHP_VERSION_ID>= 80000) {
-            $error = 'Internal error';
-        } elseif (PHP_VERSION_ID >= 70201) {
-            $error = 'PREG_INTERNAL_ERROR';
-        } else {
-            // Ignoring here, some old versions return UNDEFINED_ERROR while some have been fixed
-            return null;
+        $error = PHP_VERSION_ID >= 80000 ? 'Backtrack limit exhausted' : 'PREG_BACKTRACK_LIMIT_ERROR';
+        $this->setPcreException($pattern, $error);
+    }
+
+    /**
+     * @param string $pattern
+     * @param string $error
+     * @return void
+     */
+    protected function setPcreException($pattern, $error = null)
+    {
+        if (!$this->pregFunction) {
+            $this->fail('Preg function name is missing');
         }
 
-        return sprintf('%s: failed executing "%s": %s', $function, $pattern, $error);
+        if (!$error) {
+            // Only use a message if the error can be reliably determined
+            if (PHP_VERSION_ID>= 80000) {
+                $error = 'Internal error';
+            } elseif (PHP_VERSION_ID >= 70201) {
+                $error = 'PREG_INTERNAL_ERROR';
+            }
+        }
+
+        if ($error) {
+            $message = sprintf('%s: failed executing "%s": %s', $this->pregFunction, $pattern, $error);
+        } else {
+            $message = null;
+        }
+
+        $this->doExpectException('Composer\Pcre\PcreException', $message);
+    }
+
+    /**
+     * @param string $error
+     * @return void
+     */
+    protected function setPcreWarning($error = null)
+    {
+        if (!$this->pregFunction) {
+            $this->fail('Preg function name is missing');
+        }
+
+        $error = $error ?: 'No ending matching delimiter \'}\' found';
+        $message = sprintf('%s: %s', $this->pregFunction, $error);
+        $this->doExpectWarning($message);
     }
 }
