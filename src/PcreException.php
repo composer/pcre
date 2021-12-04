@@ -15,13 +15,16 @@ class PcreException extends \RuntimeException
 {
     /**
      * @param  string $function
-     * @param  string $pattern
-     * @param  string $subject
+     * @param  string|string[] $pattern
      * @return self
      */
-    public static function fromFunction($function, $pattern, $subject)
+    public static function fromFunction($function, $pattern)
     {
         $code = preg_last_error();
+
+        if (is_array($pattern)) {
+            $pattern = implode(', ', $pattern);
+        }
 
         return new PcreException($function.'(): failed executing "'.$pattern.'": '.self::pcreLastErrorMessage($code), $code);
     }

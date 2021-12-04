@@ -16,20 +16,24 @@ class Regex
     /**
      * @param string $pattern
      * @param string $subject
+     * @param int    $offset
+     * @return bool
+     */
+    public static function isMatch($pattern, $subject, $offset = 0)
+    {
+        return (bool) Preg::match($pattern, $subject, $matches, 0, $offset);
+    }
+
+    /**
+     * @param string $pattern
+     * @param string $subject
      * @param int    $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
      * @param int    $offset
      * @return MatchResult
      */
     public static function match($pattern, $subject, $flags = 0, $offset = 0)
     {
-        if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
-            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the return type');
-        }
-
-        $count = preg_match($pattern, $subject, $matches, $flags, $offset);
-        if ($count === false) {
-            throw PcreException::fromFunction('preg_match', $pattern, $subject);
-        }
+        $count = Preg::match($pattern, $subject, $matches, $flags, $offset);
 
         return MatchResult::create($count, $matches);
     }
@@ -43,61 +47,52 @@ class Regex
      */
     public static function matchAll($pattern, $subject, $flags = 0, $offset = 0)
     {
-        if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
-            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the return type');
-        }
-
-        $count = preg_match_all($pattern, $subject, $matches, $flags, $offset);
-        if ($count === false || $count === null) {
-            throw PcreException::fromFunction('preg_match_all', $pattern, $subject);
-        }
+        $count = Preg::matchAll($pattern, $subject, $matches, $flags, $offset);
 
         return MatchAllResult::create($count, $matches);
     }
 
     /**
-     * @param string $pattern
-     * @param string $replacement
-     * @param string $subject
-     * @param int    $limit
+     * @param string|string[] $pattern
+     * @param string|string[] $replacement
+     * @param string          $subject
+     * @param int             $limit
      * @return ReplaceResult
      */
     public static function replace($pattern, $replacement, $subject, $limit = -1)
     {
-        if (is_array($subject)) { // @phpstan-ignore-line
-            throw new \InvalidArgumentException('$subject as an array is not supported as it changes the return type');
-        }
-
-        $result = preg_replace($pattern, $replacement, $subject, $limit, $count);
-        if ($result === null) {
-            throw PcreException::fromFunction('preg_replace', $pattern, $subject);
-        }
+        $result = Preg::replace($pattern, $replacement, $subject, $limit, $count);
 
         return ReplaceResult::create($count, $result);
     }
 
     /**
-     * @param string   $pattern
-     * @param callable $replacement
-     * @param string   $subject
-     * @param int      $limit
-     * @param int      $flags PREG_OFFSET_CAPTURE or PREG_UNMATCHED_AS_NULL, only available on PHP 7.4+
+     * @param string|string[] $pattern
+     * @param callable        $replacement
+     * @param string          $subject
+     * @param int             $limit
+     * @param int             $flags PREG_OFFSET_CAPTURE or PREG_UNMATCHED_AS_NULL, only available on PHP 7.4+
      * @return ReplaceResult
      */
     public static function replaceCallback($pattern, $replacement, $subject, $limit = -1, $flags = 0)
     {
-        if (is_array($subject)) { // @phpstan-ignore-line
-            throw new \InvalidArgumentException('$subject as an array is not supported as it changes the return type');
-        }
+        $result = Preg::replaceCallback($pattern, $replacement, $subject, $limit, $count, $flags);
 
-        if (PHP_VERSION_ID >= 70400) {
-            $result = preg_replace_callback($pattern, $replacement, $subject, $limit, $count, $flags);
-        } else {
-            $result = preg_replace_callback($pattern, $replacement, $subject, $limit, $count);
-        }
-        if ($result === null) {
-            throw PcreException::fromFunction('preg_replace_callback', $pattern, $subject);
-        }
+        return ReplaceResult::create($count, $result);
+    }
+
+    /**
+     * Available from PHP 7.0
+     *
+     * @param array<string, callable> $pattern
+     * @param string $subject
+     * @param int    $limit
+     * @param int    $flags PREG_OFFSET_CAPTURE or PREG_UNMATCHED_AS_NULL, only available on PHP 7.4+
+     * @return ReplaceResult
+     */
+    public static function replaceCallbackArray($pattern, $subject, $limit = -1, $flags = 0)
+    {
+        $result = Preg::replaceCallbackArray($pattern, $subject, $limit, $count, $flags);
 
         return ReplaceResult::create($count, $result);
     }
