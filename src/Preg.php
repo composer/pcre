@@ -134,7 +134,7 @@ class Preg
      * @param string $subject
      * @param int    $limit
      * @param int    $flags
-     * @return string[]
+     * @return list<string>
      */
     public static function split($pattern, $subject, $limit = -1, $flags = 0)
     {
@@ -147,10 +147,11 @@ class Preg
     }
 
     /**
+     * @template T of string|\Stringable
      * @param string   $pattern
-     * @param string[] $array
-     * @param int      $flags
-     * @return string[]
+     * @param array<T> $array
+     * @param int      $flags PREG_GREP_INVERT
+     * @return array<T>
      */
     public static function grep($pattern, array $array, $flags = 0)
     {
