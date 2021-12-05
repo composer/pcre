@@ -64,6 +64,16 @@ the fact that they can only be strings (for replace), ints (for match) or arrays
 Similarly, due to type safety requirements matching using PREG_OFFSET_CAPTURE is made available via
 `matchWithOffset` and `matchAllWithOffset`. You cannot pass the flag to `match`/`matchAll`.
 
+Additionally the `Preg` class provides match methods that return `bool` rather than `int`, for stricter type safety
+when the number of pattern matches is not useful:
+
+```php
+use Composer\Pcre\Preg;
+
+if (Preg::isMatch('{fo+}', $string, $matches)) // bool
+if (Preg::isMatchAll('{fo+}', $string, $matches, PREG_OFFSET_CAPTURE)) // bool
+```
+
 If you would prefer a slightly more verbose usage, replacing by-ref arguments by result objects, you can use the `Regex` class:
 
 ```php

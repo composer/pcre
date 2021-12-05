@@ -214,4 +214,30 @@ class Preg
 
         return $result;
     }
+
+    /**
+     * @param string   $pattern
+     * @param string   $subject
+     * @param array<string|null> $matches Set by method
+     * @param int      $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
+     * @param int      $offset
+     * @return bool
+     */
+    public static function isMatch($pattern, $subject, &$matches = null, $flags = 0, $offset = 0)
+    {
+        return (bool) static::match($pattern, $subject, $matches, $flags, $offset);
+    }
+
+    /**
+     * @param string   $pattern
+     * @param string   $subject
+     * @param array<string|null> $matches Set by method
+     * @param int      $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
+     * @param int      $offset
+     * @return bool
+     */
+    public static function isMatchAll($pattern, $subject, &$matches = null, $flags = 0, $offset = 0)
+    {
+        return (bool) static::matchAll($pattern, $subject, $matches, $flags, $offset);
+    }
 }
