@@ -10,7 +10,7 @@ It also makes it easier ot work with static analysis tools like PHPStan or Psalm
 simplifies and reduces the possible return values from all the `preg_*` functions which
 are quite packed with edge cases.
 
-This library is a thin wrapper around `preg_*` functions with [some limitations](#restrictions-limitations).
+This library is a thin wrapper around `preg_*` functions with [some limitations](#restrictions--limitations).
 If you are looking for a richer API to handle regular expressions have a look at
 [rawr/t-regx](https://packagist.org/packages/rawr/t-regx) instead.
 
