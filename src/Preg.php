@@ -38,7 +38,7 @@ class Preg
     }
 
     /**
-     * Runs preg_match_all with PREG_OFFSET_CAPTURE
+     * Runs preg_match with PREG_OFFSET_CAPTURE
      *
      * @param string   $pattern
      * @param string   $subject
@@ -269,7 +269,7 @@ class Preg
     }
 
     /**
-     * Runs preg_match_all with PREG_OFFSET_CAPTURE
+     * Runs preg_match with PREG_OFFSET_CAPTURE
      *
      * @param string   $pattern
      * @param string   $subject
