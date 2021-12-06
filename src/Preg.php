@@ -42,10 +42,12 @@ class Preg
      *
      * @param string   $pattern
      * @param string   $subject
-     * @param array<string|null> $matches Set by method
+     * @param array<int|string, array{string|null, int}> $matches Set by method
      * @param int      $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
      * @param int      $offset
      * @return int
+     *
+     * @phpstan-param array<int|string, array{string|null, int<-1, max>}> $matches
      */
     public static function matchWithOffset($pattern, $subject, &$matches = null, $flags = 0, $offset = 0)
     {
@@ -60,7 +62,7 @@ class Preg
     /**
      * @param string   $pattern
      * @param string   $subject
-     * @param array<string|null> $matches Set by method
+     * @param array<int|string, list<string|null>> $matches Set by method
      * @param int      $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
      * @param int      $offset
      * @return int
@@ -84,10 +86,12 @@ class Preg
      *
      * @param string   $pattern
      * @param string   $subject
-     * @param array<string|null> $matches Set by method
+     * @param array<int|string, list<array{string|null, int}>> $matches Set by method
      * @param int      $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
      * @param int      $offset
      * @return int
+     *
+     * @phpstan-param array<int|string, list<array{string|null, int<-1, max>}>> $matches
      */
     public static function matchAllWithOffset($pattern, $subject, &$matches = null, $flags = 0, $offset = 0)
     {
