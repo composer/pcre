@@ -11,7 +11,7 @@
 
 namespace Composer\Pcre;
 
-class ReplaceResult
+final class ReplaceResult
 {
     /**
      * @readonly

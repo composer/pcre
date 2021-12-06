@@ -33,6 +33,7 @@ Instead of:
 
 ```php
 if (preg_match('{fo+}', $string, $matches)) { ... }
+if (preg_match('{fo+}', $string, $matches, PREG_OFFSET_CAPTURE)) { ... }
 if (preg_match_all('{fo+}', $string, $matches)) { ... }
 $newString = preg_replace('{fo+}', 'bar', $string);
 $newString = preg_replace_callback('{fo+}', function ($match) { return strtoupper($match[0]); }, $string);
@@ -47,6 +48,7 @@ You can now call these on the `Preg` class:
 use Composer\Pcre\Preg;
 
 if (Preg::match('{fo+}', $string, $matches)) { ... }
+if (Preg::matchWithOffset('{fo+}', $string, $matches)) { ... }
 if (Preg::matchAll('{fo+}', $string, $matches)) { ... }
 $newString = Preg::replace('{fo+}', 'bar', $string);
 $newString = Preg::replaceCallback('{fo+}', function ($match) { return strtoupper($match[0]); }, $string);
@@ -56,8 +58,11 @@ $array = Preg::split('{[a-z]+}', $string);
 ```
 
 The main difference is if anything fails to match/replace/.., it will throw a `Composer\Pcre\PcreException`
-instead of returning `null` (or false in some cases), so you can now use the return values safely relying on the fact that they can
-only be strings (for replace), ints (for match) or arrays (for grep/split).
+instead of returning `null` (or false in some cases), so you can now use the return values safely relying on
+the fact that they can only be strings (for replace), ints (for match) or arrays (for grep/split).
+
+Similarly, due to type safety requirements matching using PREG_OFFSET_CAPTURE is made available via
+`matchWithOffset` and `matchAllWithOffset`. You cannot pass the flag to `match`/`matchAll`.
 
 If you would prefer a slightly more verbose usage, replacing by-ref arguments by result objects, you can use the `Regex` class:
 
@@ -71,6 +76,9 @@ $bool = Regex::isMatch('{fo+}', $string);
 $result = Regex::match('{fo+}', $string);
 if ($result->matched) { something($result->matches); }
 
+$result = Regex::matchWithOffset('{fo+}', $string);
+if ($result->matched) { something($result->matches); }
+
 $result = Regex::matchAll('{fo+}', $string);
 if ($result->matched && $result->count > 3) { something($result->matches); }
 
@@ -79,9 +87,11 @@ $newString = Regex::replaceCallback('{fo+}', function ($match) { return strtoupp
 $newString = Regex::replaceCallbackArray(['{fo+}' => fn ($match) => strtoupper($match[0])], $string)->result;
 ```
 
-Note that `preg_grep` and `preg_split` are only callable via the `Preg` class as they do not have complex return types warranting a specific result object.
+Note that `preg_grep` and `preg_split` are only callable via the `Preg` class as they do not have
+complex return types warranting a specific result object.
 
-See the [MatchResult](src/MatchResult.php), [MatchAllResult](src/MatchAllResult.php), and [ReplaceResult](src/ReplaceResult.php) class sources for more.
+See the [MatchResult](src/MatchResult.php), [MatchWithOffsetResult](src/MatchWithOffsetResult.php), [MatchAllResult](src/MatchAllResult.php),
+[MatchAllWithOffsetResult](src/MatchAllWithOffsetResult.php), and [ReplaceResult](src/ReplaceResult.php) class sources for more details.
 
 
 License

@@ -25,7 +25,31 @@ class Preg
      */
     public static function match($pattern, $subject, &$matches = null, $flags = 0, $offset = 0)
     {
+        if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
+            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the type of $matches');
+        }
+
         $result = preg_match($pattern, $subject, $matches, $flags, $offset);
+        if ($result === false) {
+            throw PcreException::fromFunction('preg_match', $pattern);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Runs preg_match_all with PREG_OFFSET_CAPTURE
+     *
+     * @param string   $pattern
+     * @param string   $subject
+     * @param array<string|null> $matches Set by method
+     * @param int      $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
+     * @param int      $offset
+     * @return int
+     */
+    public static function matchWithOffset($pattern, $subject, &$matches = null, $flags = 0, $offset = 0)
+    {
+        $result = preg_match($pattern, $subject, $matches, $flags | PREG_OFFSET_CAPTURE, $offset);
         if ($result === false) {
             throw PcreException::fromFunction('preg_match', $pattern);
         }
@@ -43,7 +67,31 @@ class Preg
      */
     public static function matchAll($pattern, $subject, &$matches = null, $flags = 0, $offset = 0)
     {
+        if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
+            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the type of $matches');
+        }
+
         $result = preg_match_all($pattern, $subject, $matches, $flags, $offset);
+        if ($result === false || $result === null) {
+            throw PcreException::fromFunction('preg_match_all', $pattern);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Runs preg_match_all with PREG_OFFSET_CAPTURE
+     *
+     * @param string   $pattern
+     * @param string   $subject
+     * @param array<string|null> $matches Set by method
+     * @param int      $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
+     * @param int      $offset
+     * @return int
+     */
+    public static function matchAllWithOffset($pattern, $subject, &$matches = null, $flags = 0, $offset = 0)
+    {
+        $result = preg_match_all($pattern, $subject, $matches, $flags | PREG_OFFSET_CAPTURE, $offset);
         if ($result === false || $result === null) {
             throw PcreException::fromFunction('preg_match_all', $pattern);
         }

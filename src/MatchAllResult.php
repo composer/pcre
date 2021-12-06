@@ -11,11 +11,13 @@
 
 namespace Composer\Pcre;
 
-class MatchAllResult
+final class MatchAllResult
 {
     /**
+     * An array of match group => list of matched strings
+     *
      * @readonly
-     * @var array<array<string|null>>
+     * @var array<int|string, list<string|null>>
      */
     public $matches;
 

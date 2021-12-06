@@ -33,9 +33,29 @@ class Regex
      */
     public static function match($pattern, $subject, $flags = 0, $offset = 0)
     {
+        if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
+            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the return type');
+        }
+
         $count = Preg::match($pattern, $subject, $matches, $flags, $offset);
 
         return MatchResult::create($count, $matches);
+    }
+
+    /**
+     * Runs preg_match with PREG_OFFSET_CAPTURE
+     *
+     * @param string $pattern
+     * @param string $subject
+     * @param int    $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
+     * @param int    $offset
+     * @return MatchWithOffsetResult
+     */
+    public static function matchWithOffset($pattern, $subject, $flags = 0, $offset = 0)
+    {
+        $count = Preg::matchWithOffset($pattern, $subject, $matches, $flags, $offset);
+
+        return MatchWithOffsetResult::create($count, $matches);
     }
 
     /**
@@ -47,11 +67,30 @@ class Regex
      */
     public static function matchAll($pattern, $subject, $flags = 0, $offset = 0)
     {
+        if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
+            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the return type');
+        }
+
         $count = Preg::matchAll($pattern, $subject, $matches, $flags, $offset);
 
         return MatchAllResult::create($count, $matches);
     }
 
+    /**
+     * Runs preg_match_all with PREG_OFFSET_CAPTURE
+     *
+     * @param string $pattern
+     * @param string $subject
+     * @param int    $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
+     * @param int    $offset
+     * @return MatchAllWithOffsetResult
+     */
+    public static function matchAllWithOffset($pattern, $subject, $flags = 0, $offset = 0)
+    {
+        $count = Preg::matchAllWithOffset($pattern, $subject, $matches, $flags, $offset);
+
+        return MatchAllWithOffsetResult::create($count, $matches);
+    }
     /**
      * @param string|string[] $pattern
      * @param string|string[] $replacement
