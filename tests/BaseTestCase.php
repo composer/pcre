@@ -73,7 +73,7 @@ class BaseTestCase extends TestCase
             self::fail('Preg function name is missing');
         }
 
-        if (null !== $error) {
+        if (null === $error) {
             // Only use a message if the error can be reliably determined
             if (PHP_VERSION_ID >= 80000) {
                 $error = 'Internal error';
