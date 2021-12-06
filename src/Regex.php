@@ -34,7 +34,7 @@ class Regex
     public static function match($pattern, $subject, $flags = 0, $offset = 0)
     {
         if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
-            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the return type');
+            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the return type, use matchWithOffset() instead');
         }
 
         $count = Preg::match($pattern, $subject, $matches, $flags, $offset);
@@ -68,7 +68,11 @@ class Regex
     public static function matchAll($pattern, $subject, $flags = 0, $offset = 0)
     {
         if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
-            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the return type');
+            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the return type, use matchAllWithOffset() instead');
+        }
+
+        if (($flags & PREG_SET_ORDER) !== 0) {
+            throw new \InvalidArgumentException('PREG_SET_ORDER is not supported as it changes the return type');
         }
 
         $count = Preg::matchAll($pattern, $subject, $matches, $flags, $offset);

@@ -26,7 +26,7 @@ class Preg
     public static function match($pattern, $subject, &$matches = null, $flags = 0, $offset = 0)
     {
         if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
-            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the type of $matches');
+            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the type of $matches, use matchWithOffset() instead');
         }
 
         $result = preg_match($pattern, $subject, $matches, $flags, $offset);
@@ -70,7 +70,11 @@ class Preg
     public static function matchAll($pattern, $subject, &$matches = null, $flags = 0, $offset = 0)
     {
         if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
-            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the type of $matches');
+            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the type of $matches, use matchAllWithOffset() instead');
+        }
+
+        if (($flags & PREG_SET_ORDER) !== 0) {
+            throw new \InvalidArgumentException('PREG_SET_ORDER is not supported as it changes the type of $matches');
         }
 
         $result = preg_match_all($pattern, $subject, $matches, $flags, $offset);
