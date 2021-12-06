@@ -3,9 +3,16 @@ composer/pcre
 
 PCRE wrapping library that offers type-safe `preg_*` replacements.
 
-This library gives you a way to ensure `preg_*` functions do not fail silently, returning unexpected `null`s that may not be handled.
+This library gives you a way to ensure `preg_*` functions do not fail silently, returning
+unexpected `null`s that may not be handled.
 
-It also makes it easier ot work with static analysis tools like PHPStan or Psalm as it simplifies and reduces the possible return values from all the `preg_*` functions which are quite packed with edge cases.
+It also makes it easier ot work with static analysis tools like PHPStan or Psalm as it
+simplifies and reduces the possible return values from all the `preg_*` functions which
+are quite packed with edge cases.
+
+This library is a thin wrapper around `preg_*` functions with [some limitations](#restrictions-limitations).
+If you are looking for a richer API to handle regular expressions have a look at
+[rawr/t-regx](https://packagist.org/packages/rawr/t-regx) instead.
 
 [![Continuous Integration](https://github.com/composer/pcre/workflows/Continuous%20Integration/badge.svg?branch=main)](https://github.com/composer/pcre/actions)
 
@@ -61,9 +68,6 @@ The main difference is if anything fails to match/replace/.., it will throw a `C
 instead of returning `null` (or false in some cases), so you can now use the return values safely relying on
 the fact that they can only be strings (for replace), ints (for match) or arrays (for grep/split).
 
-Similarly, due to type safety requirements matching using PREG_OFFSET_CAPTURE is made available via
-`matchWithOffset` and `matchAllWithOffset`. You cannot pass the flag to `match`/`matchAll`.
-
 Additionally the `Preg` class provides match methods that return `bool` rather than `int`, for stricter type safety
 when the number of pattern matches is not useful:
 
@@ -103,6 +107,26 @@ complex return types warranting a specific result object.
 See the [MatchResult](src/MatchResult.php), [MatchWithOffsetResult](src/MatchWithOffsetResult.php), [MatchAllResult](src/MatchAllResult.php),
 [MatchAllWithOffsetResult](src/MatchAllWithOffsetResult.php), and [ReplaceResult](src/ReplaceResult.php) class sources for more details.
 
+Restrictions / Limitations
+--------------------------
+
+Due to type safety requirements a few restrictions are in place.matchWithOffset
+
+- matching using `PREG_OFFSET_CAPTURE` is made available via `matchWithOffset` and `matchAllWithOffset`.
+  You cannot pass the flag to `match`/`matchAll`.
+- `Preg::split` will also reject `PREG_SPLIT_OFFSET_CAPTURE` and you should use `splitWithOffset`
+  instead.
+- `matchAll` rejects `PREG_SET_ORDER` as it also changes the shape of the returned matches. There
+  is no alternative provided as you can fairly easily code around it.
+- `preg_filter` is not supported as it has a rather crazy API, most likely you should rather
+  use `Preg::grep` in combination with some loop and `Preg::replace`.
+- `replace`, `replaceCallback` and `replaceCallbackArray` do not support an array `$subject`,
+  only simple strings.
+- in 2.x, we plan to always implicitly use `PREG_UNMATCHED_AS_NULL` for matching, which offers much
+  saner/predictable results. This is currently not doable due to the PHP version requirement and to
+  keep things working the same across all PHP versions. If you use the library on a PHP 7.2+ project
+  however we highly recommend using `PREG_UNMATCHED_AS_NULL` with all `match*` and `replaceCallback*`
+  methods.
 
 License
 -------
