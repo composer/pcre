@@ -221,6 +221,7 @@ class Preg
             throw PcreException::fromFunction('preg_split', $pattern);
         }
 
+        // @phpstan-ignore-next-line See https://github.com/phpstan/phpstan/issues/6155
         return $result;
     }
 
