@@ -28,16 +28,12 @@ final class MatchResult
     public $matched;
 
     /**
-     * @param  int $count
-     * @param  array<string|null> $matches
-     * @return self
+     * @param int $count
+     * @param array<string|null> $matches
      */
-    public static function create($count, $matches)
+    public function __construct($count, array $matches)
     {
-        $result = new self;
-        $result->matches = $matches;
-        $result->matched = (bool) $count;
-
-        return $result;
+        $this->matches = $matches;
+        $this->matched = (bool) $count;
     }
 }

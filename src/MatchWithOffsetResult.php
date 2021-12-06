@@ -29,17 +29,13 @@ final class MatchWithOffsetResult
     public $matched;
 
     /**
-     * @param  int $count
-     * @param  array<array{string|null, int}> $matches
-     * @return self
+     * @param int $count
+     * @param array<array{string|null, int}> $matches
      * @phpstan-param array<int|string, array{string|null, int<-1, max>}> $matches
      */
-    public static function create($count, $matches)
+    public function __construct($count, array $matches)
     {
-        $result = new self;
-        $result->matches = $matches;
-        $result->matched = (bool) $count;
-
-        return $result;
+        $this->matches = $matches;
+        $this->matched = (bool) $count;
     }
 }

@@ -39,7 +39,7 @@ class Regex
 
         $count = Preg::match($pattern, $subject, $matches, $flags, $offset);
 
-        return MatchResult::create($count, $matches);
+        return new MatchResult($count, $matches);
     }
 
     /**
@@ -55,7 +55,7 @@ class Regex
     {
         $count = Preg::matchWithOffset($pattern, $subject, $matches, $flags, $offset);
 
-        return MatchWithOffsetResult::create($count, $matches);
+        return new MatchWithOffsetResult($count, $matches);
     }
 
     /**
@@ -73,7 +73,7 @@ class Regex
 
         $count = Preg::matchAll($pattern, $subject, $matches, $flags, $offset);
 
-        return MatchAllResult::create($count, $matches);
+        return new MatchAllResult($count, $matches);
     }
 
     /**
@@ -89,7 +89,7 @@ class Regex
     {
         $count = Preg::matchAllWithOffset($pattern, $subject, $matches, $flags, $offset);
 
-        return MatchAllWithOffsetResult::create($count, $matches);
+        return new MatchAllWithOffsetResult($count, $matches);
     }
     /**
      * @param string|string[] $pattern
@@ -102,7 +102,7 @@ class Regex
     {
         $result = Preg::replace($pattern, $replacement, $subject, $limit, $count);
 
-        return ReplaceResult::create($count, $result);
+        return new ReplaceResult($count, $result);
     }
 
     /**
@@ -117,7 +117,7 @@ class Regex
     {
         $result = Preg::replaceCallback($pattern, $replacement, $subject, $limit, $count, $flags);
 
-        return ReplaceResult::create($count, $result);
+        return new ReplaceResult($count, $result);
     }
 
     /**
@@ -133,6 +133,6 @@ class Regex
     {
         $result = Preg::replaceCallbackArray($pattern, $subject, $limit, $count, $flags);
 
-        return ReplaceResult::create($count, $result);
+        return new ReplaceResult($count, $result);
     }
 }

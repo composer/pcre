@@ -32,17 +32,13 @@ final class ReplaceResult
     public $matched;
 
     /**
-     * @param  int $count
-     * @param  string $result
-     * @return self
+     * @param int $count
+     * @param string $result
      */
-    public static function create($count, $result)
+    public function __construct($count, $result)
     {
-        $replaceResult = new self;
-        $replaceResult->count = $count;
-        $replaceResult->matched = (bool) $count;
-        $replaceResult->result = $result;
-
-        return $replaceResult;
+        $this->count = $count;
+        $this->matched = (bool) $count;
+        $this->result = $result;
     }
 }
