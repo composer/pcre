@@ -14,7 +14,7 @@ namespace Composer\Pcre\RegexTests;
 use Composer\Pcre\BaseTestCase;
 use Composer\Pcre\Regex;
 
-class MatchAllWithOffsetTest extends BaseTestCase
+class MatchWithOffsetsTest extends BaseTestCase
 {
     /**
      * This can be replaced with a setUp() method when appropriate
@@ -24,7 +24,7 @@ class MatchAllWithOffsetTest extends BaseTestCase
      */
     public function registerFunctionName()
     {
-        $this->pregFunction = 'preg_match_all()';
+        $this->pregFunction = 'preg_match()';
     }
 
     /**
@@ -32,11 +32,10 @@ class MatchAllWithOffsetTest extends BaseTestCase
      */
     public function testSuccess()
     {
-        $result = Regex::matchAllWithOffset('{[aei]}', 'abcdefghijklmnopqrstuvwxyz');
-        self::assertInstanceOf('Composer\Pcre\MatchAllWithOffsetResult', $result);
+        $result = Regex::matchWithOffsets('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz');
+        self::assertInstanceOf('Composer\Pcre\MatchWithOffsetsResult', $result);
         self::assertTrue($result->matched);
-        self::assertSame(3, $result->count);
-        self::assertSame(array(0 => array(array('a', 0), array('e', 4), array('i', 8))), $result->matches);
+        self::assertSame(array(0 => array('i', 8), 'm' => array('i', 8), 1 => array('i', 8)), $result->matches);
     }
 
     /**
@@ -44,9 +43,9 @@ class MatchAllWithOffsetTest extends BaseTestCase
      */
     public function testFailure()
     {
-        $result = Regex::matchAllWithOffset('{abc}', 'def');
-        self::assertInstanceOf('Composer\Pcre\MatchAllWithOffsetResult', $result);
+        $result = Regex::matchWithOffsets('{abc}', 'def');
+        self::assertInstanceOf('Composer\Pcre\MatchWithOffsetsResult', $result);
         self::assertFalse($result->matched);
-        self::assertSame(array(array()), $result->matches);
+        self::assertSame(array(), $result->matches);
     }
 }

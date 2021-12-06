@@ -55,7 +55,7 @@ You can now call these on the `Preg` class:
 use Composer\Pcre\Preg;
 
 if (Preg::match('{fo+}', $string, $matches)) { ... }
-if (Preg::matchWithOffset('{fo+}', $string, $matches)) { ... }
+if (Preg::matchWithOffsets('{fo+}', $string, $matches)) { ... }
 if (Preg::matchAll('{fo+}', $string, $matches)) { ... }
 $newString = Preg::replace('{fo+}', 'bar', $string);
 $newString = Preg::replaceCallback('{fo+}', function ($match) { return strtoupper($match[0]); }, $string);
@@ -90,7 +90,7 @@ $bool = Regex::isMatch('{fo+}', $string);
 $result = Regex::match('{fo+}', $string);
 if ($result->matched) { something($result->matches); }
 
-$result = Regex::matchWithOffset('{fo+}', $string);
+$result = Regex::matchWithOffsets('{fo+}', $string);
 if ($result->matched) { something($result->matches); }
 
 $result = Regex::matchAll('{fo+}', $string);
@@ -104,17 +104,17 @@ $newString = Regex::replaceCallbackArray(['{fo+}' => fn ($match) => strtoupper($
 Note that `preg_grep` and `preg_split` are only callable via the `Preg` class as they do not have
 complex return types warranting a specific result object.
 
-See the [MatchResult](src/MatchResult.php), [MatchWithOffsetResult](src/MatchWithOffsetResult.php), [MatchAllResult](src/MatchAllResult.php),
-[MatchAllWithOffsetResult](src/MatchAllWithOffsetResult.php), and [ReplaceResult](src/ReplaceResult.php) class sources for more details.
+See the [MatchResult](src/MatchResult.php), [MatchWithOffsetsResult](src/MatchWithOffsetsResult.php), [MatchAllResult](src/MatchAllResult.php),
+[MatchAllWithOffsetsResult](src/MatchAllWithOffsetsResult.php), and [ReplaceResult](src/ReplaceResult.php) class sources for more details.
 
 Restrictions / Limitations
 --------------------------
 
-Due to type safety requirements a few restrictions are in place.matchWithOffset
+Due to type safety requirements a few restrictions are in place.matchWithOffsets
 
-- matching using `PREG_OFFSET_CAPTURE` is made available via `matchWithOffset` and `matchAllWithOffset`.
+- matching using `PREG_OFFSET_CAPTURE` is made available via `matchWithOffsets` and `matchAllWithOffsets`.
   You cannot pass the flag to `match`/`matchAll`.
-- `Preg::split` will also reject `PREG_SPLIT_OFFSET_CAPTURE` and you should use `splitWithOffset`
+- `Preg::split` will also reject `PREG_SPLIT_OFFSET_CAPTURE` and you should use `splitWithOffsets`
   instead.
 - `matchAll` rejects `PREG_SET_ORDER` as it also changes the shape of the returned matches. There
   is no alternative provided as you can fairly easily code around it.

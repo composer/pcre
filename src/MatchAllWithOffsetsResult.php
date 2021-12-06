@@ -11,16 +11,22 @@
 
 namespace Composer\Pcre;
 
-final class MatchWithOffsetResult
+final class MatchAllWithOffsetsResult
 {
     /**
-     * An array of match group => pair of string matched + offset in bytes (or -1 if no match)
+     * An array of match group => list of matches, every match being a pair of string matched + offset in bytes (or -1 if no match)
      *
      * @readonly
-     * @var array<int|string, array{string|null, int}>
-     * @phpstan-var array<int|string, array{string|null, int<-1, max>}>
+     * @var array<int|string, list<array{string|null, int}>>
+     * @phpstan-var array<int|string, list<array{string|null, int<-1, max>}>>
      */
     public $matches;
+
+    /**
+     * @readonly
+     * @var int
+     */
+    public $count;
 
     /**
      * @readonly
@@ -30,12 +36,13 @@ final class MatchWithOffsetResult
 
     /**
      * @param int $count
-     * @param array<array{string|null, int}> $matches
-     * @phpstan-param array<int|string, array{string|null, int<-1, max>}> $matches
+     * @param array<int|string, list<array{string|null, int}>> $matches
+     * @phpstan-param array<int|string, list<array{string|null, int<-1, max>}>> $matches
      */
     public function __construct($count, array $matches)
     {
         $this->matches = $matches;
         $this->matched = (bool) $count;
+        $this->count = $count;
     }
 }

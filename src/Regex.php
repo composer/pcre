@@ -34,7 +34,7 @@ class Regex
     public static function match($pattern, $subject, $flags = 0, $offset = 0)
     {
         if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
-            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the return type, use matchWithOffset() instead');
+            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the return type, use matchWithOffsets() instead');
         }
 
         $count = Preg::match($pattern, $subject, $matches, $flags, $offset);
@@ -49,13 +49,13 @@ class Regex
      * @param string $subject
      * @param int    $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
      * @param int    $offset
-     * @return MatchWithOffsetResult
+     * @return MatchWithOffsetsResult
      */
-    public static function matchWithOffset($pattern, $subject, $flags = 0, $offset = 0)
+    public static function matchWithOffsets($pattern, $subject, $flags = 0, $offset = 0)
     {
-        $count = Preg::matchWithOffset($pattern, $subject, $matches, $flags, $offset);
+        $count = Preg::matchWithOffsets($pattern, $subject, $matches, $flags, $offset);
 
-        return new MatchWithOffsetResult($count, $matches);
+        return new MatchWithOffsetsResult($count, $matches);
     }
 
     /**
@@ -68,7 +68,7 @@ class Regex
     public static function matchAll($pattern, $subject, $flags = 0, $offset = 0)
     {
         if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
-            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the return type, use matchAllWithOffset() instead');
+            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the return type, use matchAllWithOffsets() instead');
         }
 
         if (($flags & PREG_SET_ORDER) !== 0) {
@@ -87,13 +87,13 @@ class Regex
      * @param string $subject
      * @param int    $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
      * @param int    $offset
-     * @return MatchAllWithOffsetResult
+     * @return MatchAllWithOffsetsResult
      */
-    public static function matchAllWithOffset($pattern, $subject, $flags = 0, $offset = 0)
+    public static function matchAllWithOffsets($pattern, $subject, $flags = 0, $offset = 0)
     {
-        $count = Preg::matchAllWithOffset($pattern, $subject, $matches, $flags, $offset);
+        $count = Preg::matchAllWithOffsets($pattern, $subject, $matches, $flags, $offset);
 
-        return new MatchAllWithOffsetResult($count, $matches);
+        return new MatchAllWithOffsetsResult($count, $matches);
     }
     /**
      * @param string|string[] $pattern

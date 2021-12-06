@@ -26,7 +26,7 @@ class Preg
     public static function match($pattern, $subject, &$matches = null, $flags = 0, $offset = 0)
     {
         if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
-            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the type of $matches, use matchWithOffset() instead');
+            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the type of $matches, use matchWithOffsets() instead');
         }
 
         $result = preg_match($pattern, $subject, $matches, $flags, $offset);
@@ -49,7 +49,7 @@ class Preg
      *
      * @phpstan-param array<int|string, array{string|null, int<-1, max>}> $matches
      */
-    public static function matchWithOffset($pattern, $subject, &$matches = null, $flags = 0, $offset = 0)
+    public static function matchWithOffsets($pattern, $subject, &$matches, $flags = 0, $offset = 0)
     {
         $result = preg_match($pattern, $subject, $matches, $flags | PREG_OFFSET_CAPTURE, $offset);
         if ($result === false) {
@@ -70,7 +70,7 @@ class Preg
     public static function matchAll($pattern, $subject, &$matches = null, $flags = 0, $offset = 0)
     {
         if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
-            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the type of $matches, use matchAllWithOffset() instead');
+            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the type of $matches, use matchAllWithOffsets() instead');
         }
 
         if (($flags & PREG_SET_ORDER) !== 0) {
@@ -97,7 +97,7 @@ class Preg
      *
      * @phpstan-param array<int|string, list<array{string|null, int<-1, max>}>> $matches
      */
-    public static function matchAllWithOffset($pattern, $subject, &$matches = null, $flags = 0, $offset = 0)
+    public static function matchAllWithOffsets($pattern, $subject, &$matches, $flags = 0, $offset = 0)
     {
         $result = preg_match_all($pattern, $subject, $matches, $flags | PREG_OFFSET_CAPTURE, $offset);
         if ($result === false || $result === null) {
@@ -195,7 +195,7 @@ class Preg
     public static function split($pattern, $subject, $limit = -1, $flags = 0)
     {
         if (($flags & PREG_SPLIT_OFFSET_CAPTURE) !== 0) {
-            throw new \InvalidArgumentException('PREG_SPLIT_OFFSET_CAPTURE is not supported as it changes the type of $matches, use splitWithOffset() instead');
+            throw new \InvalidArgumentException('PREG_SPLIT_OFFSET_CAPTURE is not supported as it changes the type of $matches, use splitWithOffsets() instead');
         }
 
         $result = preg_split($pattern, $subject, $limit, $flags);
@@ -214,7 +214,7 @@ class Preg
      * @return list<array{string, int}>
      * @phpstan-return list<array{string, int<0, max>}>
      */
-    public static function splitWithOffset($pattern, $subject, $limit = -1, $flags = 0)
+    public static function splitWithOffsets($pattern, $subject, $limit = -1, $flags = 0)
     {
         $result = preg_split($pattern, $subject, $limit, $flags | PREG_SPLIT_OFFSET_CAPTURE);
         if ($result === false) {
@@ -266,5 +266,39 @@ class Preg
     public static function isMatchAll($pattern, $subject, &$matches = null, $flags = 0, $offset = 0)
     {
         return (bool) static::matchAll($pattern, $subject, $matches, $flags, $offset);
+    }
+
+    /**
+     * Runs preg_match_all with PREG_OFFSET_CAPTURE
+     *
+     * @param string   $pattern
+     * @param string   $subject
+     * @param array<int|string, array{string|null, int}> $matches Set by method
+     * @param int      $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
+     * @param int      $offset
+     * @return bool
+     *
+     * @phpstan-param array<int|string, array{string|null, int<-1, max>}> $matches
+     */
+    public static function isMatchWithOffsets($pattern, $subject, &$matches, $flags = 0, $offset = 0)
+    {
+        return (bool) static::matchWithOffsets($pattern, $subject, $matches, $flags, $offset);
+    }
+
+    /**
+     * Runs preg_match_all with PREG_OFFSET_CAPTURE
+     *
+     * @param string   $pattern
+     * @param string   $subject
+     * @param array<int|string, list<array{string|null, int}>> $matches Set by method
+     * @param int      $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
+     * @param int      $offset
+     * @return bool
+     *
+     * @phpstan-param array<int|string, list<array{string|null, int<-1, max>}>> $matches
+     */
+    public static function isMatchAllWithOffsets($pattern, $subject, &$matches, $flags = 0, $offset = 0)
+    {
+        return (bool) static::matchAllWithOffsets($pattern, $subject, $matches, $flags, $offset);
     }
 }

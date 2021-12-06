@@ -14,7 +14,7 @@ namespace Composer\Pcre\PregTests;
 use Composer\Pcre\BaseTestCase;
 use Composer\Pcre\Preg;
 
-class SplitWithOffsetTest extends BaseTestCase
+class IsMatchAllWithOffsetsTest extends BaseTestCase
 {
     /**
      * This can be replaced with a setUp() method when appropriate
@@ -24,7 +24,7 @@ class SplitWithOffsetTest extends BaseTestCase
      */
     public function registerFunctionName()
     {
-        $this->pregFunction = 'preg_split()';
+        $this->pregFunction = 'preg_match_all()';
     }
 
     /**
@@ -32,8 +32,9 @@ class SplitWithOffsetTest extends BaseTestCase
      */
     public function testSuccess()
     {
-        $result = Preg::splitWithOffset('{[\s,]+}', 'a, b, c');
-        self::assertSame(array(array('a', 0), array('b', 3), array('c', 6)), $result);
+        $result = Preg::isMatchAllWithOffsets('{[aei]}', 'abcdefghijklmnopqrstuvwxyz', $matches);
+        self::assertSame(true, $result);
+        self::assertSame(array(0 => array(array('a', 0), array('e', 4), array('i', 8))), $matches);
     }
 
     /**
@@ -41,8 +42,9 @@ class SplitWithOffsetTest extends BaseTestCase
      */
     public function testFailure()
     {
-        $result = Preg::splitWithOffset('{[\s,]+}', 'abc');
-        self::assertSame(array(array('abc', 0)), $result);
+        $result = Preg::isMatchAllWithOffsets('{abc}', 'def', $matches);
+        self::assertSame(false, $result);
+        self::assertSame(array(array()), $matches);
     }
 
     /**
@@ -50,8 +52,8 @@ class SplitWithOffsetTest extends BaseTestCase
      */
     public function testBadPatternThrowsIfWarningsAreNotThrowing()
     {
-        $this->expectPcreException($pattern = '{[\s,]+');
-        @Preg::splitWithOffset($pattern, 'a, b, c');
+        $this->expectPcreException($pattern = '{[aei]');
+        @Preg::isMatchAllWithOffsets($pattern, 'abcdefghijklmnopqrstuvwxyz', $matches);
     }
 
     /**
@@ -60,6 +62,6 @@ class SplitWithOffsetTest extends BaseTestCase
     public function testBadPatternTriggersWarningByDefault()
     {
         $this->expectPcreWarning();
-        Preg::splitWithOffset('{[\s,]+', 'a, b, c');
+        Preg::isMatchAllWithOffsets('{[aei]', 'abcdefghijklmnopqrstuvwxyz', $matches);
     }
 }
