@@ -15,8 +15,8 @@ use PHPUnit\Framework\TestCase;
 
 class BaseTestCase extends TestCase
 {
-    /** @var string */
-    protected $pregFunction;
+    /** @var string|null */
+    protected $pregFunction = null;
 
     /**
      * @param  class-string<\Exception> $class
@@ -27,7 +27,7 @@ class BaseTestCase extends TestCase
     {
         if (method_exists($this, 'expectException')) {
             $this->expectException($class);
-            if ($message) {
+            if (null !== $message) {
                 $this->expectExceptionMessage($message);
             }
         } else {
@@ -69,11 +69,11 @@ class BaseTestCase extends TestCase
      */
     protected function expectPcreException($pattern, $error = null)
     {
-        if (!$this->pregFunction) {
+        if (null === $this->pregFunction) {
             $this->fail('Preg function name is missing');
         }
 
-        if (!$error) {
+        if (null !== $error) {
             // Only use a message if the error can be reliably determined
             if (PHP_VERSION_ID >= 80000) {
                 $error = 'Internal error';
@@ -82,7 +82,7 @@ class BaseTestCase extends TestCase
             }
         }
 
-        if ($error) {
+        if (null !== $error) {
             $message = sprintf('%s: failed executing "%s": %s', $this->pregFunction, $pattern, $error);
         } else {
             $message = null;
@@ -97,11 +97,11 @@ class BaseTestCase extends TestCase
      */
     protected function expectPcreWarning($warning = null)
     {
-        if (!$this->pregFunction) {
+        if (null === $this->pregFunction) {
             $this->fail('Preg function name is missing');
         }
 
-        $warning = $warning ?: 'No ending matching delimiter \'}\' found';
+        $warning = $warning !== null ? $warning : 'No ending matching delimiter \'}\' found';
         $message = sprintf('%s: %s', $this->pregFunction, $warning);
         $this->doExpectWarning($message);
     }
