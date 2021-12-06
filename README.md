@@ -71,7 +71,7 @@ when the number of pattern matches is not useful:
 use Composer\Pcre\Preg;
 
 if (Preg::isMatch('{fo+}', $string, $matches)) // bool
-if (Preg::isMatchAll('{fo+}', $string, $matches, PREG_OFFSET_CAPTURE)) // bool
+if (Preg::isMatchAll('{fo+}', $string, $matches)) // bool
 ```
 
 If you would prefer a slightly more verbose usage, replacing by-ref arguments by result objects, you can use the `Regex` class:

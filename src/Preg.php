@@ -231,7 +231,7 @@ class Preg
     /**
      * @param string   $pattern
      * @param string   $subject
-     * @param array<string|null> $matches Set by method
+     * @param array<int|string, list<string|null>> $matches Set by method
      * @param int      $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
      * @param int      $offset
      * @return bool
