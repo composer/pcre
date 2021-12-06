@@ -33,8 +33,8 @@ class ReplaceTest extends BaseTestCase
     public function testSuccess()
     {
         $result = Preg::replace('{(?P<m>d)}', 'e', 'abcd', -1, $count);
-        $this->assertSame(1, $count);
-        $this->assertSame('abce', $result);
+        self::assertSame(1, $count);
+        self::assertSame('abce', $result);
     }
 
     /**
@@ -43,7 +43,7 @@ class ReplaceTest extends BaseTestCase
     public function testSuccessNoRef()
     {
         $result = Preg::replace('{(?P<m>d)}', 'e', 'abcd', -1);
-        $this->assertSame('abce', $result);
+        self::assertSame('abce', $result);
     }
 
     /**
@@ -52,8 +52,8 @@ class ReplaceTest extends BaseTestCase
     public function testFailure()
     {
         $result = Preg::replace('{abc}', '123', 'def', -1, $count);
-        $this->assertSame(0, $count);
-        $this->assertSame('def', $result);
+        self::assertSame(0, $count);
+        self::assertSame('def', $result);
     }
 
     /**

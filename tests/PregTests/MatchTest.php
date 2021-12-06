@@ -33,8 +33,8 @@ class MatchTest extends BaseTestCase
     public function testSuccess()
     {
         $count = Preg::match('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz', $matches);
-        $this->assertSame(1, $count);
-        $this->assertSame(array(0 => 'i', 'm' => 'i', 1 => 'i'), $matches);
+        self::assertSame(1, $count);
+        self::assertSame(array(0 => 'i', 'm' => 'i', 1 => 'i'), $matches);
     }
 
     /**
@@ -43,7 +43,7 @@ class MatchTest extends BaseTestCase
     public function testSuccessNoRef()
     {
         $count = Preg::match('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz');
-        $this->assertSame(1, $count);
+        self::assertSame(1, $count);
     }
 
     /**
@@ -52,8 +52,8 @@ class MatchTest extends BaseTestCase
     public function testFailure()
     {
         $count = Preg::match('{abc}', 'def', $matches);
-        $this->assertSame(0, $count);
-        $this->assertSame(array(), $matches);
+        self::assertSame(0, $count);
+        self::assertSame(array(), $matches);
     }
 
     /**

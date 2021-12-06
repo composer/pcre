@@ -34,10 +34,10 @@ class ReplaceTest extends BaseTestCase
     public function testSuccess()
     {
         $result = Regex::replace('{(?P<m>d)}', 'e', 'abcd');
-        $this->assertInstanceOf('Composer\Pcre\ReplaceResult', $result);
-        $this->assertTrue($result->matched);
-        $this->assertSame(1, $result->count);
-        $this->assertSame('abce', $result->result);
+        self::assertInstanceOf('Composer\Pcre\ReplaceResult', $result);
+        self::assertTrue($result->matched);
+        self::assertSame(1, $result->count);
+        self::assertSame('abce', $result->result);
     }
 
     /**
@@ -46,10 +46,10 @@ class ReplaceTest extends BaseTestCase
     public function testFailure()
     {
         $result = Regex::replace('{abc}', '123', 'def');
-        $this->assertInstanceOf('Composer\Pcre\ReplaceResult', $result);
-        $this->assertFalse($result->matched);
-        $this->assertSame(0, $result->count);
-        $this->assertSame('def', $result->result);
+        self::assertInstanceOf('Composer\Pcre\ReplaceResult', $result);
+        self::assertFalse($result->matched);
+        self::assertSame(0, $result->count);
+        self::assertSame('def', $result->result);
     }
 
     /**

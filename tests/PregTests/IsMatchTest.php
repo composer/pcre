@@ -33,8 +33,8 @@ class IsMatchTest extends BaseTestCase
     public function testSuccess()
     {
         $result = Preg::isMatch('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz', $matches);
-        $this->assertSame(true, $result);
-        $this->assertSame(array(0 => 'i', 'm' => 'i', 1 => 'i'), $matches);
+        self::assertSame(true, $result);
+        self::assertSame(array(0 => 'i', 'm' => 'i', 1 => 'i'), $matches);
     }
 
     /**
@@ -43,7 +43,7 @@ class IsMatchTest extends BaseTestCase
     public function testSuccessNoRef()
     {
         $result = Preg::isMatch('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz');
-        $this->assertSame(true, $result);
+        self::assertSame(true, $result);
     }
 
     /**
@@ -52,8 +52,8 @@ class IsMatchTest extends BaseTestCase
     public function testFailure()
     {
         $result = Preg::isMatch('{abc}', 'def', $matches);
-        $this->assertSame(false, $result);
-        $this->assertSame(array(), $matches);
+        self::assertSame(false, $result);
+        self::assertSame(array(), $matches);
     }
 
     /**

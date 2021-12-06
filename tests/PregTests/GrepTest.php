@@ -33,7 +33,7 @@ class GrepTest extends BaseTestCase
     public function testSuccess()
     {
         $result = Preg::grep('{[bc]}', array('a', 'b', 'c'));
-        $this->assertSame(array(1 => 'b', 2 => 'c'), $result);
+        self::assertSame(array(1 => 'b', 2 => 'c'), $result);
     }
 
     /**
@@ -42,7 +42,7 @@ class GrepTest extends BaseTestCase
     public function testFailure()
     {
         $result = Preg::grep('{[de]}', array('a', 'b', 'c'));
-        $this->assertSame(array(), $result);
+        self::assertSame(array(), $result);
     }
 
     /**

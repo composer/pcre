@@ -36,8 +36,8 @@ class ReplaceCallbackTest extends BaseTestCase
             return '('.$match[0].')';
         }, 'abcd', -1, $count);
 
-        $this->assertSame(1, $count);
-        $this->assertSame('abc(d)', $result);
+        self::assertSame(1, $count);
+        self::assertSame('abc(d)', $result);
     }
 
     /**
@@ -49,7 +49,7 @@ class ReplaceCallbackTest extends BaseTestCase
             return '('.$match[0].')';
         }, 'abcd');
 
-        $this->assertSame('abc(d)', $result);
+        self::assertSame('abc(d)', $result);
     }
 
     /**
@@ -61,8 +61,8 @@ class ReplaceCallbackTest extends BaseTestCase
             return '('.$match[0].')';
         }, 'def', -1, $count);
 
-        $this->assertSame(0, $count);
-        $this->assertSame('def', $result);
+        self::assertSame(0, $count);
+        self::assertSame('def', $result);
     }
 
     /**

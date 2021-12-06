@@ -33,9 +33,9 @@ class MatchTest extends BaseTestCase
     public function testSuccess()
     {
         $result = Regex::match('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz');
-        $this->assertInstanceOf('Composer\Pcre\MatchResult', $result);
-        $this->assertTrue($result->matched);
-        $this->assertSame(array(0 => 'i', 'm' => 'i', 1 => 'i'), $result->matches);
+        self::assertInstanceOf('Composer\Pcre\MatchResult', $result);
+        self::assertTrue($result->matched);
+        self::assertSame(array(0 => 'i', 'm' => 'i', 1 => 'i'), $result->matches);
     }
 
     /**
@@ -44,9 +44,9 @@ class MatchTest extends BaseTestCase
     public function testFailure()
     {
         $result = Regex::match('{abc}', 'def');
-        $this->assertInstanceOf('Composer\Pcre\MatchResult', $result);
-        $this->assertFalse($result->matched);
-        $this->assertSame(array(), $result->matches);
+        self::assertInstanceOf('Composer\Pcre\MatchResult', $result);
+        self::assertFalse($result->matched);
+        self::assertSame(array(), $result->matches);
     }
 
     /**

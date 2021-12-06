@@ -33,10 +33,10 @@ class MatchAllTest extends BaseTestCase
     public function testSuccess()
     {
         $result = Regex::matchAll('{[aei]}', 'abcdefghijklmnopqrstuvwxyz');
-        $this->assertInstanceOf('Composer\Pcre\MatchAllResult', $result);
-        $this->assertTrue($result->matched);
-        $this->assertSame(3, $result->count);
-        $this->assertSame(array(0 => array('a', 'e', 'i')), $result->matches);
+        self::assertInstanceOf('Composer\Pcre\MatchAllResult', $result);
+        self::assertTrue($result->matched);
+        self::assertSame(3, $result->count);
+        self::assertSame(array(0 => array('a', 'e', 'i')), $result->matches);
     }
 
     /**
@@ -45,9 +45,9 @@ class MatchAllTest extends BaseTestCase
     public function testFailure()
     {
         $result = Regex::matchAll('{abc}', 'def');
-        $this->assertInstanceOf('Composer\Pcre\MatchAllResult', $result);
-        $this->assertFalse($result->matched);
-        $this->assertSame(array(array()), $result->matches);
+        self::assertInstanceOf('Composer\Pcre\MatchAllResult', $result);
+        self::assertFalse($result->matched);
+        self::assertSame(array(array()), $result->matches);
     }
 
     /**

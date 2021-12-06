@@ -33,7 +33,7 @@ class IsMatchTest extends BaseTestCase
     public function testSuccess()
     {
         $result = Regex::isMatch('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz');
-        $this->assertTrue($result);
+        self::assertTrue($result);
     }
 
     /**
@@ -42,7 +42,7 @@ class IsMatchTest extends BaseTestCase
     public function testFailure()
     {
         $result = Regex::isMatch('{abc}', 'def');
-        $this->assertFalse($result);
+        self::assertFalse($result);
     }
 
     /**

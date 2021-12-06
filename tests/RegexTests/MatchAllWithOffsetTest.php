@@ -33,10 +33,10 @@ class MatchAllWithOffsetTest extends BaseTestCase
     public function testSuccess()
     {
         $result = Regex::matchAllWithOffset('{[aei]}', 'abcdefghijklmnopqrstuvwxyz');
-        $this->assertInstanceOf('Composer\Pcre\MatchAllWithOffsetResult', $result);
-        $this->assertTrue($result->matched);
-        $this->assertSame(3, $result->count);
-        $this->assertSame(array(0 => array(array('a', 0), array('e', 4), array('i', 8))), $result->matches);
+        self::assertInstanceOf('Composer\Pcre\MatchAllWithOffsetResult', $result);
+        self::assertTrue($result->matched);
+        self::assertSame(3, $result->count);
+        self::assertSame(array(0 => array(array('a', 0), array('e', 4), array('i', 8))), $result->matches);
     }
 
     /**
@@ -45,8 +45,8 @@ class MatchAllWithOffsetTest extends BaseTestCase
     public function testFailure()
     {
         $result = Regex::matchAllWithOffset('{abc}', 'def');
-        $this->assertInstanceOf('Composer\Pcre\MatchAllWithOffsetResult', $result);
-        $this->assertFalse($result->matched);
-        $this->assertSame(array(array()), $result->matches);
+        self::assertInstanceOf('Composer\Pcre\MatchAllWithOffsetResult', $result);
+        self::assertFalse($result->matched);
+        self::assertSame(array(array()), $result->matches);
     }
 }

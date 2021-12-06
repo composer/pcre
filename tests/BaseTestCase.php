@@ -25,7 +25,7 @@ class BaseTestCase extends TestCase
      */
     protected function doExpectException($class, $message = null)
     {
-        if (method_exists($this, 'expectException')) {
+        if (method_exists($this, 'expectException')) { // @phpstan-ignore-line
             $this->expectException($class);
             if (null !== $message) {
                 $this->expectExceptionMessage($message);
@@ -70,7 +70,7 @@ class BaseTestCase extends TestCase
     protected function expectPcreException($pattern, $error = null)
     {
         if (null === $this->pregFunction) {
-            $this->fail('Preg function name is missing');
+            self::fail('Preg function name is missing');
         }
 
         if (null !== $error) {
@@ -98,7 +98,7 @@ class BaseTestCase extends TestCase
     protected function expectPcreWarning($warning = null)
     {
         if (null === $this->pregFunction) {
-            $this->fail('Preg function name is missing');
+            self::fail('Preg function name is missing');
         }
 
         $warning = $warning !== null ? $warning : 'No ending matching delimiter \'}\' found';

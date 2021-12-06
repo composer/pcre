@@ -33,7 +33,7 @@ class SplitTest extends BaseTestCase
     public function testSuccess()
     {
         $result = Preg::split('{[\s,]+}', 'a, b, c');
-        $this->assertSame(array('a', 'b', 'c'), $result);
+        self::assertSame(array('a', 'b', 'c'), $result);
     }
 
     /**
@@ -42,7 +42,7 @@ class SplitTest extends BaseTestCase
     public function testFailure()
     {
         $result = Preg::split('{[\s,]+}', 'abc');
-        $this->assertSame(array('abc'), $result);
+        self::assertSame(array('abc'), $result);
     }
 
     /**

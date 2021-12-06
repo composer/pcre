@@ -33,8 +33,8 @@ class IsMatchAllTest extends BaseTestCase
     public function testSuccess()
     {
         $result = Preg::isMatchAll('{[aei]}', 'abcdefghijklmnopqrstuvwxyz', $matches);
-        $this->assertSame(true, $result);
-        $this->assertSame(array(0 => array('a', 'e', 'i')), $matches);
+        self::assertSame(true, $result);
+        self::assertSame(array(0 => array('a', 'e', 'i')), $matches);
     }
 
     /**
@@ -43,7 +43,7 @@ class IsMatchAllTest extends BaseTestCase
     public function testSuccessNoRef()
     {
         $result = Preg::isMatchAll('{[aei]}', 'abcdefghijklmnopqrstuvwxyz');
-        $this->assertSame(true, $result);
+        self::assertSame(true, $result);
     }
 
     /**
@@ -52,8 +52,8 @@ class IsMatchAllTest extends BaseTestCase
     public function testFailure()
     {
         $result = Preg::isMatchAll('{abc}', 'def', $matches);
-        $this->assertSame(false, $result);
-        $this->assertSame(array(array()), $matches);
+        self::assertSame(false, $result);
+        self::assertSame(array(array()), $matches);
     }
 
     /**

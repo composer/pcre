@@ -40,10 +40,10 @@ class ReplaceCallbackArrayTest extends BaseTestCase
             return '('.$match[0].')';
         }), 'abcd');
 
-        $this->assertInstanceOf('Composer\Pcre\ReplaceResult', $result);
-        $this->assertTrue($result->matched);
-        $this->assertSame(1, $result->count);
-        $this->assertSame('abc(d)', $result->result);
+        self::assertInstanceOf('Composer\Pcre\ReplaceResult', $result);
+        self::assertTrue($result->matched);
+        self::assertSame(1, $result->count);
+        self::assertSame('abc(d)', $result->result);
     }
 
     /**
@@ -55,10 +55,10 @@ class ReplaceCallbackArrayTest extends BaseTestCase
             return '('.$match[0].')';
         }), 'def');
 
-        $this->assertInstanceOf('Composer\Pcre\ReplaceResult', $result);
-        $this->assertFalse($result->matched);
-        $this->assertSame(0, $result->count);
-        $this->assertSame('def', $result->result);
+        self::assertInstanceOf('Composer\Pcre\ReplaceResult', $result);
+        self::assertFalse($result->matched);
+        self::assertSame(0, $result->count);
+        self::assertSame('def', $result->result);
     }
 
     /**

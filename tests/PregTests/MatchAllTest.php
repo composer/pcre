@@ -33,8 +33,8 @@ class MatchAllTest extends BaseTestCase
     public function testSuccess()
     {
         $count = Preg::matchAll('{[aei]}', 'abcdefghijklmnopqrstuvwxyz', $matches);
-        $this->assertSame(3, $count);
-        $this->assertSame(array(0 => array('a', 'e', 'i')), $matches);
+        self::assertSame(3, $count);
+        self::assertSame(array(0 => array('a', 'e', 'i')), $matches);
     }
 
     /**
@@ -43,7 +43,7 @@ class MatchAllTest extends BaseTestCase
     public function testSuccessNoRef()
     {
         $count = Preg::matchAll('{[aei]}', 'abcdefghijklmnopqrstuvwxyz');
-        $this->assertSame(3, $count);
+        self::assertSame(3, $count);
     }
 
     /**
@@ -52,8 +52,8 @@ class MatchAllTest extends BaseTestCase
     public function testFailure()
     {
         $count = Preg::matchAll('{abc}', 'def', $matches);
-        $this->assertSame(0, $count);
-        $this->assertSame(array(array()), $matches);
+        self::assertSame(0, $count);
+        self::assertSame(array(array()), $matches);
     }
 
     /**
