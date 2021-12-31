@@ -78,7 +78,7 @@ class Preg
         }
 
         $result = preg_match_all($pattern, $subject, $matches, $flags, $offset);
-        if ($result === false) {
+        if ($result === false || $result === null) {
             throw PcreException::fromFunction('preg_match_all', $pattern);
         }
 
@@ -100,7 +100,7 @@ class Preg
     public static function matchAllWithOffsets($pattern, $subject, &$matches, $flags = 0, $offset = 0)
     {
         $result = preg_match_all($pattern, $subject, $matches, $flags | PREG_OFFSET_CAPTURE, $offset);
-        if ($result === false) {
+        if ($result === false || $result === null) {
             throw PcreException::fromFunction('preg_match_all', $pattern);
         }
 
