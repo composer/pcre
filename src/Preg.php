@@ -78,7 +78,7 @@ class Preg
         }
 
         $result = preg_match_all($pattern, $subject, $matches, $flags, $offset);
-        if ($result === false || $result === null) {
+        if ($result === false) {
             throw PcreException::fromFunction('preg_match_all', $pattern);
         }
 
@@ -100,7 +100,7 @@ class Preg
     public static function matchAllWithOffsets($pattern, $subject, &$matches, $flags = 0, $offset = 0)
     {
         $result = preg_match_all($pattern, $subject, $matches, $flags | PREG_OFFSET_CAPTURE, $offset);
-        if ($result === false || $result === null) {
+        if ($result === false) {
             throw PcreException::fromFunction('preg_match_all', $pattern);
         }
 
@@ -221,7 +221,6 @@ class Preg
             throw PcreException::fromFunction('preg_split', $pattern);
         }
 
-        // @phpstan-ignore-next-line See https://github.com/phpstan/phpstan/issues/6155
         return $result;
     }
 
