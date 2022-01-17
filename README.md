@@ -6,7 +6,7 @@ PCRE wrapping library that offers type-safe `preg_*` replacements.
 This library gives you a way to ensure `preg_*` functions do not fail silently, returning
 unexpected `null`s that may not be handled.
 
-It also makes it easier ot work with static analysis tools like PHPStan or Psalm as it
+It also makes it easier to work with static analysis tools like PHPStan or Psalm as it
 simplifies and reduces the possible return values from all the `preg_*` functions which
 are quite packed with edge cases.
 
