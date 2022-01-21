@@ -14,7 +14,7 @@ namespace Composer\Pcre;
 class Regex
 {
     /**
-     * @param string $pattern
+     * @param non-empty-string $pattern
      * @param string $subject
      * @param int    $offset
      * @return bool
@@ -25,7 +25,7 @@ class Regex
     }
 
     /**
-     * @param string $pattern
+     * @param non-empty-string $pattern
      * @param string $subject
      * @param int    $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
      * @param int    $offset
@@ -45,7 +45,7 @@ class Regex
     /**
      * Runs preg_match with PREG_OFFSET_CAPTURE
      *
-     * @param string $pattern
+     * @param non-empty-string $pattern
      * @param string $subject
      * @param int    $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
      * @param int    $offset
@@ -59,7 +59,7 @@ class Regex
     }
 
     /**
-     * @param string $pattern
+     * @param non-empty-string $pattern
      * @param string $subject
      * @param int    $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
      * @param int    $offset
@@ -83,7 +83,7 @@ class Regex
     /**
      * Runs preg_match_all with PREG_OFFSET_CAPTURE
      *
-     * @param string $pattern
+     * @param non-empty-string $pattern
      * @param string $subject
      * @param int    $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
      * @param int    $offset

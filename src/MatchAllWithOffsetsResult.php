@@ -24,7 +24,7 @@ final class MatchAllWithOffsetsResult
 
     /**
      * @readonly
-     * @var int
+     * @var 0|positive-int
      */
     public $count;
 
@@ -35,7 +35,7 @@ final class MatchAllWithOffsetsResult
     public $matched;
 
     /**
-     * @param int $count
+     * @param 0|positive-int $count
      * @param array<int|string, list<array{string|null, int}>> $matches
      * @phpstan-param array<int|string, list<array{string|null, int<-1, max>}>> $matches
      */
