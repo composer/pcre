@@ -110,7 +110,7 @@ See the [MatchResult](src/MatchResult.php), [MatchWithOffsetsResult](src/MatchWi
 Restrictions / Limitations
 --------------------------
 
-Due to type safety requirements a few restrictions are in place.matchWithOffsets
+Due to type safety requirements a few restrictions are in place.
 
 - matching using `PREG_OFFSET_CAPTURE` is made available via `matchWithOffsets` and `matchAllWithOffsets`.
   You cannot pass the flag to `match`/`matchAll`.
