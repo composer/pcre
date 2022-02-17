@@ -4,5 +4,11 @@ parameters:
         - src
         - tests
 
+    reportUnmatchedIgnoredErrors: false
+
+    bootstrapFiles:
+        - tests/phpstan-locate-phpunit-autoloader.php
+
 includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - phpstan-baseline.neon

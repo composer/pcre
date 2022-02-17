@@ -25,14 +25,9 @@ class BaseTestCase extends TestCase
      */
     protected function doExpectException($class, $message = null)
     {
-        if (method_exists($this, 'expectException')) { // @phpstan-ignore-line
-            $this->expectException($class);
-            if (null !== $message) {
-                $this->expectExceptionMessage($message);
-            }
-        } else {
-            // @phpstan-ignore-next-line
-            $this->setExpectedException($class, $message);
+        $this->expectException($class);
+        if (null !== $message) {
+            $this->expectExceptionMessage($message);
         }
     }
 
@@ -42,14 +37,8 @@ class BaseTestCase extends TestCase
      */
     protected function doExpectWarning($message)
     {
-        if (method_exists($this, 'expectWarning') && method_exists($this, 'expectWarningMessage')) {
-            $this->expectWarning();
-            $this->expectWarningMessage($message);
-        } else {
-            $class = class_exists('PHPUnit\Framework\Error\Warning') ? 'PHPUnit\Framework\Error\Warning' : 'PHPUnit_Framework_Error_Warning';
-            // @phpstan-ignore-next-line
-            $this->doExpectException($class, $message);
-        }
+        $this->expectWarning();
+        $this->expectWarningMessage($message);
     }
 
     /**

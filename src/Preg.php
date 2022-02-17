@@ -19,7 +19,7 @@ class Preg
      * @param non-empty-string   $pattern
      * @param string   $subject
      * @param array<string|null> $matches Set by method
-     * @param int      $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
+     * @param int      $flags PREG_UNMATCHED_AS_NULL is always set, no other flags are supported
      * @param int      $offset
      * @return 0|1
      */
@@ -29,7 +29,7 @@ class Preg
             throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the type of $matches, use matchWithOffsets() instead');
         }
 
-        $result = preg_match($pattern, $subject, $matches, $flags, $offset);
+        $result = preg_match($pattern, $subject, $matches, $flags | PREG_UNMATCHED_AS_NULL, $offset);
         if ($result === false) {
             throw PcreException::fromFunction('preg_match', $pattern);
         }
@@ -43,7 +43,7 @@ class Preg
      * @param non-empty-string   $pattern
      * @param string   $subject
      * @param array<int|string, array{string|null, int}> $matches Set by method
-     * @param int      $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
+     * @param int      $flags PREG_UNMATCHED_AS_NULL and PREG_MATCH_OFFSET are always set, no other flags are supported
      * @param int      $offset
      * @return 0|1
      *
@@ -51,7 +51,7 @@ class Preg
      */
     public static function matchWithOffsets($pattern, $subject, &$matches, $flags = 0, $offset = 0)
     {
-        $result = preg_match($pattern, $subject, $matches, $flags | PREG_OFFSET_CAPTURE, $offset);
+        $result = preg_match($pattern, $subject, $matches, $flags | PREG_UNMATCHED_AS_NULL | PREG_OFFSET_CAPTURE, $offset);
         if ($result === false) {
             throw PcreException::fromFunction('preg_match', $pattern);
         }
@@ -63,7 +63,7 @@ class Preg
      * @param non-empty-string   $pattern
      * @param string   $subject
      * @param array<int|string, list<string|null>> $matches Set by method
-     * @param int      $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
+     * @param int      $flags PREG_UNMATCHED_AS_NULL is always set, no other flags are supported
      * @param int      $offset
      * @return 0|positive-int
      */
@@ -77,8 +77,8 @@ class Preg
             throw new \InvalidArgumentException('PREG_SET_ORDER is not supported as it changes the type of $matches');
         }
 
-        $result = preg_match_all($pattern, $subject, $matches, $flags, $offset);
-        if ($result === false || $result === null) {
+        $result = preg_match_all($pattern, $subject, $matches, $flags | PREG_UNMATCHED_AS_NULL, $offset);
+        if ($result === false || /* PHP < 8 may return null */ $result === null) {
             throw PcreException::fromFunction('preg_match_all', $pattern);
         }
 
@@ -91,7 +91,7 @@ class Preg
      * @param non-empty-string   $pattern
      * @param string   $subject
      * @param array<int|string, list<array{string|null, int}>> $matches Set by method
-     * @param int      $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
+     * @param int      $flags PREG_UNMATCHED_AS_NULL and PREG_MATCH_OFFSET are always set, no other flags are supported
      * @param int      $offset
      * @return 0|positive-int
      *
@@ -99,8 +99,8 @@ class Preg
      */
     public static function matchAllWithOffsets($pattern, $subject, &$matches, $flags = 0, $offset = 0)
     {
-        $result = preg_match_all($pattern, $subject, $matches, $flags | PREG_OFFSET_CAPTURE, $offset);
-        if ($result === false || $result === null) {
+        $result = preg_match_all($pattern, $subject, $matches, $flags | PREG_UNMATCHED_AS_NULL | PREG_OFFSET_CAPTURE, $offset);
+        if ($result === false || /* PHP < 8 may return null */ $result === null) {
             throw PcreException::fromFunction('preg_match_all', $pattern);
         }
 
@@ -210,7 +210,7 @@ class Preg
      * @param string $pattern
      * @param string $subject
      * @param int    $limit
-     * @param int    $flags PREG_SPLIT_NO_EMPTY or PREG_SPLIT_DELIM_CAPTURE
+     * @param int    $flags PREG_SPLIT_NO_EMPTY or PREG_SPLIT_DELIM_CAPTURE, PREG_SPLIT_OFFSET_CAPTURE is always set
      * @return list<array{string, int}>
      * @phpstan-return list<array{string, int<0, max>}>
      */
@@ -245,7 +245,7 @@ class Preg
      * @param non-empty-string   $pattern
      * @param string   $subject
      * @param array<string|null> $matches Set by method
-     * @param int      $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
+     * @param int      $flags PREG_UNMATCHED_AS_NULL is always set, no other flags are supported
      * @param int      $offset
      * @return bool
      */
@@ -258,7 +258,7 @@ class Preg
      * @param non-empty-string   $pattern
      * @param string   $subject
      * @param array<int|string, list<string|null>> $matches Set by method
-     * @param int      $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
+     * @param int      $flags PREG_UNMATCHED_AS_NULL is always set, no other flags are supported
      * @param int      $offset
      * @return bool
      */
@@ -273,7 +273,7 @@ class Preg
      * @param non-empty-string   $pattern
      * @param string   $subject
      * @param array<int|string, array{string|null, int}> $matches Set by method
-     * @param int      $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
+     * @param int      $flags PREG_UNMATCHED_AS_NULL is always set, no other flags are supported
      * @param int      $offset
      * @return bool
      *
@@ -290,7 +290,7 @@ class Preg
      * @param non-empty-string   $pattern
      * @param string   $subject
      * @param array<int|string, list<array{string|null, int}>> $matches Set by method
-     * @param int      $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
+     * @param int      $flags PREG_UNMATCHED_AS_NULL is always set, no other flags are supported
      * @param int      $offset
      * @return bool
      *

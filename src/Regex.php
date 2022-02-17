@@ -27,7 +27,7 @@ class Regex
     /**
      * @param non-empty-string $pattern
      * @param string $subject
-     * @param int    $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
+     * @param int    $flags PREG_UNMATCHED_AS_NULL is always set, no other flags are supported
      * @param int    $offset
      * @return MatchResult
      */
@@ -47,7 +47,7 @@ class Regex
      *
      * @param non-empty-string $pattern
      * @param string $subject
-     * @param int    $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
+     * @param int    $flags PREG_UNMATCHED_AS_NULL and PREG_MATCH_OFFSET are always set, no other flags are supported
      * @param int    $offset
      * @return MatchWithOffsetsResult
      */
@@ -61,7 +61,7 @@ class Regex
     /**
      * @param non-empty-string $pattern
      * @param string $subject
-     * @param int    $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
+     * @param int    $flags PREG_UNMATCHED_AS_NULL is always set, no other flags are supported
      * @param int    $offset
      * @return MatchAllResult
      */
@@ -85,7 +85,7 @@ class Regex
      *
      * @param non-empty-string $pattern
      * @param string $subject
-     * @param int    $flags PREG_UNMATCHED_AS_NULL, only available on PHP 7.2+
+     * @param int    $flags PREG_UNMATCHED_AS_NULL and PREG_MATCH_OFFSET are always set, no other flags are supported
      * @param int    $offset
      * @return MatchAllWithOffsetsResult
      */
