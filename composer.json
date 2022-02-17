@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "php": "^5.3.2 || ^7.0 || ^8.0"
+        "php": "^7.2 || ^8.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^4.2 || ^5",
@@ -36,7 +36,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "1.x-dev"
+            "dev-main": "2.x-dev"
         }
     },
     "scripts": {
