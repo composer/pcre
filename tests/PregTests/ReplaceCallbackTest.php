@@ -16,21 +16,12 @@ use Composer\Pcre\Preg;
 
 class ReplaceCallbackTest extends BaseTestCase
 {
-    /**
-     * This can be replaced with a setUp() method when appropriate
-     *
-     * @before
-     * @return void
-     */
-    public function registerFunctionName()
+    public function setUp(): void
     {
         $this->pregFunction = 'preg_replace_callback()';
     }
 
-    /**
-     * @return void
-     */
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $result = Preg::replaceCallback('{(?P<m>d)}', function ($match) {
             return '('.$match[0].')';
@@ -40,10 +31,7 @@ class ReplaceCallbackTest extends BaseTestCase
         self::assertSame('abc(d)', $result);
     }
 
-    /**
-     * @return void
-     */
-    public function testSuccessNoRef()
+    public function testSuccessNoRef(): void
     {
         $result = Preg::replaceCallback('{(?P<m>d)}', function ($match) {
             return '('.$match[0].')';
@@ -52,10 +40,7 @@ class ReplaceCallbackTest extends BaseTestCase
         self::assertSame('abc(d)', $result);
     }
 
-    /**
-     * @return void
-     */
-    public function testFailure()
+    public function testFailure(): void
     {
         $result = Preg::replaceCallback('{abc}', function ($match) {
             return '('.$match[0].')';
@@ -65,10 +50,7 @@ class ReplaceCallbackTest extends BaseTestCase
         self::assertSame('def', $result);
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternThrowsIfWarningsAreNotThrowing()
+    public function testBadPatternThrowsIfWarningsAreNotThrowing(): void
     {
         $this->expectPcreException($pattern = '{(?P<m>d)');
 
@@ -77,10 +59,7 @@ class ReplaceCallbackTest extends BaseTestCase
         }, 'abcd');
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternTriggersWarningByDefault()
+    public function testBadPatternTriggersWarningByDefault(): void
     {
         $this->expectPcreWarning();
 
@@ -89,10 +68,7 @@ class ReplaceCallbackTest extends BaseTestCase
         }, 'abcd');
     }
 
-    /**
-     * @return void
-     */
-    public function testThrowsWithSubjectArray()
+    public function testThrowsWithSubjectArray(): void
     {
         $this->doExpectException('InvalidArgumentException', Preg::ARRAY_MSG);
 

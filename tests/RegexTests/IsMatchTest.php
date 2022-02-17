@@ -16,48 +16,30 @@ use Composer\Pcre\Regex;
 
 class IsMatchTest extends BaseTestCase
 {
-    /**
-     * This can be replaced with a setUp() method when appropriate
-     *
-     * @before
-     * @return void
-     */
-    public function registerFunctionName()
+    public function setUp(): void
     {
         $this->pregFunction = 'preg_match()';
     }
 
-    /**
-     * @return void
-     */
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $result = Regex::isMatch('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz');
         self::assertTrue($result);
     }
 
-    /**
-     * @return void
-     */
-    public function testFailure()
+    public function testFailure(): void
     {
         $result = Regex::isMatch('{abc}', 'def');
         self::assertFalse($result);
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternThrowsIfWarningsAreNotThrowing()
+    public function testBadPatternThrowsIfWarningsAreNotThrowing(): void
     {
         $this->expectPcreException($pattern = '{(?P<m>[io])');
         @Regex::isMatch($pattern, 'abcdefghijklmnopqrstuvwxyz');
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternTriggersWarningByDefault()
+    public function testBadPatternTriggersWarningByDefault(): void
     {
         $this->expectPcreWarning();
         Regex::isMatch('{(?P<m>[io])', 'abcdefghijklmnopqrstuvwxyz');

@@ -16,50 +16,32 @@ use Composer\Pcre\Preg;
 
 class IsMatchWithOffsetsTest extends BaseTestCase
 {
-    /**
-     * This can be replaced with a setUp() method when appropriate
-     *
-     * @before
-     * @return void
-     */
-    public function registerFunctionName()
+    public function setUp(): void
     {
         $this->pregFunction = 'preg_match()';
     }
 
-    /**
-     * @return void
-     */
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $result = Preg::isMatchWithOffsets('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz', $matches);
         self::assertSame(true, $result);
         self::assertSame(array(0 => array('i', 8), 'm' => array('i', 8), 1 => array('i', 8)), $matches);
     }
 
-    /**
-     * @return void
-     */
-    public function testFailure()
+    public function testFailure(): void
     {
         $result = Preg::isMatchWithOffsets('{abc}', 'def', $matches);
         self::assertSame(false, $result);
         self::assertSame(array(), $matches);
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternThrowsIfWarningsAreNotThrowing()
+    public function testBadPatternThrowsIfWarningsAreNotThrowing(): void
     {
         $this->expectPcreException($pattern = '{(?P<m>[io])');
         @Preg::isMatchWithOffsets($pattern, 'abcdefghijklmnopqrstuvwxyz', $matches);
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternTriggersWarningByDefault()
+    public function testBadPatternTriggersWarningByDefault(): void
     {
         $this->expectPcreWarning();
         Preg::isMatchWithOffsets('{(?P<m>[io])', 'abcdefghijklmnopqrstuvwxyz', $matches);

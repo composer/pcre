@@ -16,68 +16,57 @@ use Composer\Pcre\Preg;
 
 class MatchTest extends BaseTestCase
 {
-    /**
-     * This can be replaced with a setUp() method when appropriate
-     *
-     * @before
-     * @return void
-     */
-    public function registerFunctionName()
+    public function setUp(): void
     {
         $this->pregFunction = 'preg_match()';
     }
 
-    /**
-     * @return void
-     */
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $count = Preg::match('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz', $matches);
         self::assertSame(1, $count);
         self::assertSame(array(0 => 'i', 'm' => 'i', 1 => 'i'), $matches);
     }
 
-    /**
-     * @return void
-     */
-    public function testSuccessNoRef()
+    public function testSuccessWithInt(): void
+    {
+        $count = Preg::match('{(?P<m>\d)}', 123, $matches); // @phpstan-ignore-line
+        self::assertSame(1, $count);
+        self::assertSame(array(0 => '1', 'm' => '1', 1 => '1'), $matches);
+    }
+
+    public function testTypeErrorWithNull(): void
+    {
+        $this->expectException('TypeError');
+        $count = Preg::match('{(?P<m>\d)}', null, $matches); // @phpstan-ignore-line
+    }
+
+    public function testSuccessNoRef(): void
     {
         $count = Preg::match('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz');
         self::assertSame(1, $count);
     }
 
-    /**
-     * @return void
-     */
-    public function testFailure()
+    public function testFailure(): void
     {
         $count = Preg::match('{abc}', 'def', $matches);
         self::assertSame(0, $count);
         self::assertSame(array(), $matches);
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternThrowsIfWarningsAreNotThrowing()
+    public function testBadPatternThrowsIfWarningsAreNotThrowing(): void
     {
         $this->expectPcreException($pattern = '{(?P<m>[io])');
         @Preg::match($pattern, 'abcdefghijklmnopqrstuvwxyz');
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternTriggersWarningByDefault()
+    public function testBadPatternTriggersWarningByDefault(): void
     {
         $this->expectPcreWarning();
         Preg::match('{(?P<m>[io])', 'abcdefghijklmnopqrstuvwxyz');
     }
 
-    /**
-     * @return void
-     */
-    public function testThrowsIfEngineErrors()
+    public function testThrowsIfEngineErrors(): void
     {
         $this->expectPcreEngineException($pattern = '/(?:\D+|<\d+>)*[!?]/');
         Preg::match($pattern, 'foobar foobar foobar');

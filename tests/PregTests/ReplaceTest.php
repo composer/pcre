@@ -16,68 +16,44 @@ use Composer\Pcre\Preg;
 
 class ReplaceTest extends BaseTestCase
 {
-    /**
-     * This can be replaced with a setUp() method when appropriate
-     *
-     * @before
-     * @return void
-     */
-    public function registerFunctionName()
+    public function setUp(): void
     {
         $this->pregFunction = 'preg_replace()';
     }
 
-    /**
-     * @return void
-     */
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $result = Preg::replace('{(?P<m>d)}', 'e', 'abcd', -1, $count);
         self::assertSame(1, $count);
         self::assertSame('abce', $result);
     }
 
-    /**
-     * @return void
-     */
-    public function testSuccessNoRef()
+    public function testSuccessNoRef(): void
     {
         $result = Preg::replace('{(?P<m>d)}', 'e', 'abcd', -1);
         self::assertSame('abce', $result);
     }
 
-    /**
-     * @return void
-     */
-    public function testFailure()
+    public function testFailure(): void
     {
         $result = Preg::replace('{abc}', '123', 'def', -1, $count);
         self::assertSame(0, $count);
         self::assertSame('def', $result);
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternThrowsIfWarningsAreNotThrowing()
+    public function testBadPatternThrowsIfWarningsAreNotThrowing(): void
     {
         $this->expectPcreException($pattern = '{(?P<m>d)');
         @Preg::replace($pattern, 'e', 'abcd', -1);
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternTriggersWarningByDefault()
+    public function testBadPatternTriggersWarningByDefault(): void
     {
         $this->expectPcreWarning();
         Preg::replace('{(?P<m>d)', 'e', 'abcd', -1);
     }
 
-    /**
-     * @return void
-     */
-    public function testThrowsWithSubjectArray()
+    public function testThrowsWithSubjectArray(): void
     {
         $this->doExpectException('InvalidArgumentException', Preg::ARRAY_MSG);
         // @phpstan-ignore-next-line

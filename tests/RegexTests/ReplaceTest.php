@@ -17,21 +17,12 @@ use Composer\Pcre\Regex;
 
 class ReplaceTest extends BaseTestCase
 {
-    /**
-     * This can be replaced with a setUp() method when appropriate
-     *
-     * @before
-     * @return void
-     */
-    public function registerFunctionName()
+    public function setUp(): void
     {
         $this->pregFunction = 'preg_replace()';
     }
 
-    /**
-     * @return void
-     */
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $result = Regex::replace('{(?P<m>d)}', 'e', 'abcd');
         self::assertInstanceOf('Composer\Pcre\ReplaceResult', $result);
@@ -40,10 +31,7 @@ class ReplaceTest extends BaseTestCase
         self::assertSame('abce', $result->result);
     }
 
-    /**
-     * @return void
-     */
-    public function testFailure()
+    public function testFailure(): void
     {
         $result = Regex::replace('{abc}', '123', 'def');
         self::assertInstanceOf('Composer\Pcre\ReplaceResult', $result);
@@ -52,28 +40,19 @@ class ReplaceTest extends BaseTestCase
         self::assertSame('def', $result->result);
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternThrowsIfWarningsAreNotThrowing()
+    public function testBadPatternThrowsIfWarningsAreNotThrowing(): void
     {
         $this->expectPcreException($pattern = '{(?P<m>d)');
         @Regex::replace($pattern, 'e', 'abcd');
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternTriggersWarningByDefault()
+    public function testBadPatternTriggersWarningByDefault(): void
     {
         $this->expectPcreWarning();
         Regex::replace('{(?P<m>d)', 'e', 'abcd');
     }
 
-    /**
-     * @return void
-     */
-    public function testThrowsWithSubjectArray()
+    public function testThrowsWithSubjectArray(): void
     {
         $this->doExpectException('InvalidArgumentException', Preg::ARRAY_MSG);
         // @phpstan-ignore-next-line

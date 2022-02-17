@@ -19,11 +19,9 @@ class BaseTestCase extends TestCase
     protected $pregFunction = null;
 
     /**
-     * @param  class-string<\Exception> $class
-     * @param  ?string $message
-     * @return void
+     * @param  class-string<\Throwable> $class
      */
-    protected function doExpectException($class, $message = null)
+    protected function doExpectException(string $class, ?string $message = null): void
     {
         $this->expectException($class);
         if (null !== $message) {
@@ -31,32 +29,19 @@ class BaseTestCase extends TestCase
         }
     }
 
-    /**
-     * @param  string $message
-     * @return void
-     */
-    protected function doExpectWarning($message)
+    protected function doExpectWarning(string $message): void
     {
         $this->expectWarning();
         $this->expectWarningMessage($message);
     }
 
-    /**
-     * @param string $pattern
-     * @return void
-     */
-    protected function expectPcreEngineException($pattern)
+    protected function expectPcreEngineException(string $pattern): void
     {
         $error = PHP_VERSION_ID >= 80000 ? 'Backtrack limit exhausted' : 'PREG_BACKTRACK_LIMIT_ERROR';
         $this->expectPcreException($pattern, $error);
     }
 
-    /**
-     * @param string $pattern
-     * @param string $error
-     * @return void
-     */
-    protected function expectPcreException($pattern, $error = null)
+    protected function expectPcreException(string $pattern, ?string $error = null): void
     {
         if (null === $this->pregFunction) {
             self::fail('Preg function name is missing');
@@ -80,11 +65,7 @@ class BaseTestCase extends TestCase
         $this->doExpectException('Composer\Pcre\PcreException', $message);
     }
 
-    /**
-     * @param string $warning
-     * @return void
-     */
-    protected function expectPcreWarning($warning = null)
+    protected function expectPcreWarning(?string $warning = null): void
     {
         if (null === $this->pregFunction) {
             self::fail('Preg function name is missing');

@@ -16,48 +16,30 @@ use Composer\Pcre\Preg;
 
 class SplitWithOffsetsTest extends BaseTestCase
 {
-    /**
-     * This can be replaced with a setUp() method when appropriate
-     *
-     * @before
-     * @return void
-     */
-    public function registerFunctionName()
+    public function setUp(): void
     {
         $this->pregFunction = 'preg_split()';
     }
 
-    /**
-     * @return void
-     */
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $result = Preg::splitWithOffsets('{[\s,]+}', 'a, b, c');
         self::assertSame(array(array('a', 0), array('b', 3), array('c', 6)), $result);
     }
 
-    /**
-     * @return void
-     */
-    public function testFailure()
+    public function testFailure(): void
     {
         $result = Preg::splitWithOffsets('{[\s,]+}', 'abc');
         self::assertSame(array(array('abc', 0)), $result);
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternThrowsIfWarningsAreNotThrowing()
+    public function testBadPatternThrowsIfWarningsAreNotThrowing(): void
     {
         $this->expectPcreException($pattern = '{[\s,]+');
         @Preg::splitWithOffsets($pattern, 'a, b, c');
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternTriggersWarningByDefault()
+    public function testBadPatternTriggersWarningByDefault(): void
     {
         $this->expectPcreWarning();
         Preg::splitWithOffsets('{[\s,]+', 'a, b, c');
