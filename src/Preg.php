@@ -13,7 +13,9 @@ namespace Composer\Pcre;
 
 class Preg
 {
+    /** @internal */
     public const ARRAY_MSG = '$subject as an array is not supported. You can use \'foreach\' instead.';
+    /** @internal */
     public const INVALID_TYPE_MSG = '$subject must be a string, %s given.';
 
     /**
