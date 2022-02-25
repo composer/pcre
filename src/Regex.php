@@ -105,8 +105,6 @@ class Regex
     }
 
     /**
-     * Available from PHP 7.0
-     *
      * @param array<string, callable> $pattern
      * @param string $subject
      * @param int    $flags PREG_OFFSET_CAPTURE or PREG_UNMATCHED_AS_NULL, only available on PHP 7.4+

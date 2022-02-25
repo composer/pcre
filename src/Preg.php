@@ -155,8 +155,6 @@ class Preg
     }
 
     /**
-     * Available from PHP 7.0
-     *
      * @param array<string, callable> $pattern
      * @param string $subject
      * @param int    $count Set by method
