@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "php": "^7.2 || ^8.0"
+        "php": "^7.4 || ^8.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^5",
@@ -36,11 +36,11 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.x-dev"
+            "dev-main": "3.x-dev"
         }
     },
     "scripts": {
-        "test": "SYMFONY_PHPUNIT_REMOVE_RETURN_TYPEHINT=1 vendor/bin/simple-phpunit",
+        "test": "vendor/bin/simple-phpunit",
         "phpstan": "phpstan analyse"
     }
 }
