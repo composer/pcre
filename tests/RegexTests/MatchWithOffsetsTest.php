@@ -16,21 +16,12 @@ use Composer\Pcre\Regex;
 
 class MatchWithOffsetsTest extends BaseTestCase
 {
-    /**
-     * This can be replaced with a setUp() method when appropriate
-     *
-     * @before
-     * @return void
-     */
-    public function registerFunctionName()
+    public function setUp(): void
     {
         $this->pregFunction = 'preg_match()';
     }
 
-    /**
-     * @return void
-     */
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $result = Regex::matchWithOffsets('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz');
         self::assertInstanceOf('Composer\Pcre\MatchWithOffsetsResult', $result);
@@ -38,10 +29,7 @@ class MatchWithOffsetsTest extends BaseTestCase
         self::assertSame(array(0 => array('i', 8), 'm' => array('i', 8), 1 => array('i', 8)), $result->matches);
     }
 
-    /**
-     * @return void
-     */
-    public function testFailure()
+    public function testFailure(): void
     {
         $result = Regex::matchWithOffsets('{abc}', 'def');
         self::assertInstanceOf('Composer\Pcre\MatchWithOffsetsResult', $result);

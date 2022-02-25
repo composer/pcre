@@ -35,7 +35,7 @@ class PcreException extends \RuntimeException
      */
     private static function pcreLastErrorMessage($code)
     {
-        if (PHP_VERSION_ID >= 80000) {
+        if (function_exists('preg_last_error_msg')) {
             return preg_last_error_msg();
         }
 

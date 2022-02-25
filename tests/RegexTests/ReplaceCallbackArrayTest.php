@@ -20,21 +20,12 @@ use Composer\Pcre\Regex;
  */
 class ReplaceCallbackArrayTest extends BaseTestCase
 {
-    /**
-     * This can be replaced with a setUp() method when appropriate
-     *
-     * @before
-     * @return void
-     */
-    public function registerFunctionName()
+    public function setUp(): void
     {
         $this->pregFunction = 'preg_replace_callback_array()';
     }
 
-    /**
-     * @return void
-     */
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $result = Regex::replaceCallbackArray(array('{(?P<m>d)}' => function ($match) {
             return '('.$match[0].')';
@@ -46,10 +37,7 @@ class ReplaceCallbackArrayTest extends BaseTestCase
         self::assertSame('abc(d)', $result->result);
     }
 
-    /**
-     * @return void
-     */
-    public function testFailure()
+    public function testFailure(): void
     {
         $result = Regex::replaceCallbackArray(array('{abc}' => function ($match) {
             return '('.$match[0].')';
@@ -61,10 +49,7 @@ class ReplaceCallbackArrayTest extends BaseTestCase
         self::assertSame('def', $result->result);
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternThrowsIfWarningsAreNotThrowing()
+    public function testBadPatternThrowsIfWarningsAreNotThrowing(): void
     {
         $this->expectPcreException($pattern = '{(?P<m>d)');
 
@@ -73,10 +58,7 @@ class ReplaceCallbackArrayTest extends BaseTestCase
         }), 'abcd');
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternTriggersWarningByDefault()
+    public function testBadPatternTriggersWarningByDefault(): void
     {
         $this->expectPcreWarning();
 
@@ -85,10 +67,7 @@ class ReplaceCallbackArrayTest extends BaseTestCase
         }), 'abcd');
     }
 
-    /**
-     * @return void
-     */
-    public function testThrowsWithSubjectArray()
+    public function testThrowsWithSubjectArray(): void
     {
         $this->doExpectException('InvalidArgumentException', Preg::ARRAY_MSG);
 

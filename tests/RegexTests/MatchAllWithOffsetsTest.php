@@ -16,21 +16,12 @@ use Composer\Pcre\Regex;
 
 class MatchAllWithOffsetsTest extends BaseTestCase
 {
-    /**
-     * This can be replaced with a setUp() method when appropriate
-     *
-     * @before
-     * @return void
-     */
-    public function registerFunctionName()
+    public function setUp(): void
     {
         $this->pregFunction = 'preg_match_all()';
     }
 
-    /**
-     * @return void
-     */
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $result = Regex::matchAllWithOffsets('{[aei]}', 'abcdefghijklmnopqrstuvwxyz');
         self::assertInstanceOf('Composer\Pcre\MatchAllWithOffsetsResult', $result);
@@ -39,10 +30,7 @@ class MatchAllWithOffsetsTest extends BaseTestCase
         self::assertSame(array(0 => array(array('a', 0), array('e', 4), array('i', 8))), $result->matches);
     }
 
-    /**
-     * @return void
-     */
-    public function testFailure()
+    public function testFailure(): void
     {
         $result = Regex::matchAllWithOffsets('{abc}', 'def');
         self::assertInstanceOf('Composer\Pcre\MatchAllWithOffsetsResult', $result);

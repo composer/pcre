@@ -16,59 +16,38 @@ use Composer\Pcre\Preg;
 
 class IsMatchTest extends BaseTestCase
 {
-    /**
-     * This can be replaced with a setUp() method when appropriate
-     *
-     * @before
-     * @return void
-     */
-    public function registerFunctionName()
+    public function setUp(): void
     {
         $this->pregFunction = 'preg_match()';
     }
 
-    /**
-     * @return void
-     */
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $result = Preg::isMatch('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz', $matches);
         self::assertSame(true, $result);
         self::assertSame(array(0 => 'i', 'm' => 'i', 1 => 'i'), $matches);
     }
 
-    /**
-     * @return void
-     */
-    public function testSuccessNoRef()
+    public function testSuccessNoRef(): void
     {
         $result = Preg::isMatch('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz');
         self::assertSame(true, $result);
     }
 
-    /**
-     * @return void
-     */
-    public function testFailure()
+    public function testFailure(): void
     {
         $result = Preg::isMatch('{abc}', 'def', $matches);
         self::assertSame(false, $result);
         self::assertSame(array(), $matches);
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternThrowsIfWarningsAreNotThrowing()
+    public function testBadPatternThrowsIfWarningsAreNotThrowing(): void
     {
         $this->expectPcreException($pattern = '{(?P<m>[io])');
         @Preg::isMatch($pattern, 'abcdefghijklmnopqrstuvwxyz');
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternTriggersWarningByDefault()
+    public function testBadPatternTriggersWarningByDefault(): void
     {
         $this->expectPcreWarning();
         Preg::isMatch('{(?P<m>[io])', 'abcdefghijklmnopqrstuvwxyz');

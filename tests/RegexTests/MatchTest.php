@@ -16,21 +16,12 @@ use Composer\Pcre\Regex;
 
 class MatchTest extends BaseTestCase
 {
-    /**
-     * This can be replaced with a setUp() method when appropriate
-     *
-     * @before
-     * @return void
-     */
-    public function registerFunctionName()
+    public function setUp(): void
     {
         $this->pregFunction = 'preg_match()';
     }
 
-    /**
-     * @return void
-     */
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $result = Regex::match('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz');
         self::assertInstanceOf('Composer\Pcre\MatchResult', $result);
@@ -38,10 +29,7 @@ class MatchTest extends BaseTestCase
         self::assertSame(array(0 => 'i', 'm' => 'i', 1 => 'i'), $result->matches);
     }
 
-    /**
-     * @return void
-     */
-    public function testFailure()
+    public function testFailure(): void
     {
         $result = Regex::match('{abc}', 'def');
         self::assertInstanceOf('Composer\Pcre\MatchResult', $result);
@@ -49,28 +37,19 @@ class MatchTest extends BaseTestCase
         self::assertSame(array(), $result->matches);
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternThrowsIfWarningsAreNotThrowing()
+    public function testBadPatternThrowsIfWarningsAreNotThrowing(): void
     {
         $this->expectPcreException($pattern = '{abc');
         @Regex::match($pattern, 'abcdefghijklmnopqrstuvwxyz');
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternTriggersWarningByDefault()
+    public function testBadPatternTriggersWarningByDefault(): void
     {
         $this->expectPcreWarning();
         Regex::match('{abc', 'abcdefghijklmnopqrstuvwxyz');
     }
 
-    /**
-     * @return void
-     */
-    public function testThrowsIfEngineErrors()
+    public function testThrowsIfEngineErrors(): void
     {
         $this->expectPcreEngineException($pattern = '/(?:\D+|<\d+>)*[!?]/');
         Regex::match($pattern, 'foobar foobar foobar');

@@ -16,21 +16,12 @@ use Composer\Pcre\Regex;
 
 class MatchAllTest extends BaseTestCase
 {
-    /**
-     * This can be replaced with a setUp() method when appropriate
-     *
-     * @before
-     * @return void
-     */
-    public function registerFunctionName()
+    public function setUp(): void
     {
         $this->pregFunction = 'preg_match_all()';
     }
 
-    /**
-     * @return void
-     */
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $result = Regex::matchAll('{[aei]}', 'abcdefghijklmnopqrstuvwxyz');
         self::assertInstanceOf('Composer\Pcre\MatchAllResult', $result);
@@ -39,10 +30,7 @@ class MatchAllTest extends BaseTestCase
         self::assertSame(array(0 => array('a', 'e', 'i')), $result->matches);
     }
 
-    /**
-     * @return void
-     */
-    public function testFailure()
+    public function testFailure(): void
     {
         $result = Regex::matchAll('{abc}', 'def');
         self::assertInstanceOf('Composer\Pcre\MatchAllResult', $result);
@@ -50,19 +38,13 @@ class MatchAllTest extends BaseTestCase
         self::assertSame(array(array()), $result->matches);
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternThrowsIfWarningsAreNotThrowing()
+    public function testBadPatternThrowsIfWarningsAreNotThrowing(): void
     {
         $this->expectPcreException($pattern = '{[aei]');
         @Regex::matchAll($pattern, 'abcdefghijklmnopqrstuvwxyz');
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternTriggersWarningByDefault()
+    public function testBadPatternTriggersWarningByDefault(): void
     {
         $this->expectPcreWarning();
         Regex::matchAll('{[aei]', 'abcdefghijklmnopqrstuvwxyz');

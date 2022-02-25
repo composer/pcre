@@ -16,48 +16,30 @@ use Composer\Pcre\Preg;
 
 class GrepTest extends BaseTestCase
 {
-    /**
-     * This can be replaced with a setUp() method when appropriate
-     *
-     * @before
-     * @return void
-     */
-    public function registerFunctionName()
+    public function setUp(): void
     {
         $this->pregFunction = 'preg_grep()';
     }
 
-    /**
-     * @return void
-     */
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $result = Preg::grep('{[bc]}', array('a', 'b', 'c'));
         self::assertSame(array(1 => 'b', 2 => 'c'), $result);
     }
 
-    /**
-     * @return void
-     */
-    public function testFailure()
+    public function testFailure(): void
     {
         $result = Preg::grep('{[de]}', array('a', 'b', 'c'));
         self::assertSame(array(), $result);
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternThrowsIfWarningsAreNotThrowing()
+    public function testBadPatternThrowsIfWarningsAreNotThrowing(): void
     {
         $this->expectPcreException($pattern = '{[de]');
         @Preg::grep($pattern, array('a', 'b', 'c'));
     }
 
-    /**
-     * @return void
-     */
-    public function testBadPatternTriggersWarningByDefault()
+    public function testBadPatternTriggersWarningByDefault(): void
     {
         $this->expectPcreWarning();
         Preg::grep('{[de]', array('a', 'b', 'c'));
