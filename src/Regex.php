@@ -95,7 +95,7 @@ class Regex
     /**
      * @param string|string[] $pattern
      * @param string          $subject
-     * @param int             $flags PREG_OFFSET_CAPTURE or PREG_UNMATCHED_AS_NULL, only available on PHP 7.4+
+     * @param int             $flags PREG_OFFSET_CAPTURE is supported, PREG_UNMATCHED_AS_NULL is always set
      */
     public static function replaceCallback($pattern, callable $replacement, $subject, int $limit = -1, int $flags = 0): ReplaceResult
     {
@@ -107,7 +107,7 @@ class Regex
     /**
      * @param array<string, callable> $pattern
      * @param string $subject
-     * @param int    $flags PREG_OFFSET_CAPTURE or PREG_UNMATCHED_AS_NULL, only available on PHP 7.4+
+     * @param int    $flags PREG_OFFSET_CAPTURE is supported, PREG_UNMATCHED_AS_NULL is always set
      */
     public static function replaceCallbackArray(array $pattern, $subject, int $limit = -1, int $flags = 0): ReplaceResult
     {

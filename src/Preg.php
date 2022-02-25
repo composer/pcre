@@ -130,7 +130,7 @@ class Preg
      * @param string|string[] $pattern
      * @param string $subject
      * @param int             $count Set by method
-     * @param int             $flags PREG_OFFSET_CAPTURE or PREG_UNMATCHED_AS_NULL, only available on PHP 7.4+
+     * @param int             $flags PREG_OFFSET_CAPTURE is supported, PREG_UNMATCHED_AS_NULL is always set
      */
     public static function replaceCallback($pattern, callable $replacement, $subject, int $limit = -1, int &$count = null, int $flags = 0): string
     {
@@ -142,11 +142,7 @@ class Preg
             throw new \TypeError(sprintf(static::INVALID_TYPE_MSG, gettype($subject)));
         }
 
-        if (PHP_VERSION_ID >= 70400) {
-            $result = preg_replace_callback($pattern, $replacement, $subject, $limit, $count, $flags);
-        } else {
-            $result = preg_replace_callback($pattern, $replacement, $subject, $limit, $count);
-        }
+        $result = preg_replace_callback($pattern, $replacement, $subject, $limit, $count, $flags | PREG_UNMATCHED_AS_NULL);
         if ($result === null) {
             throw PcreException::fromFunction('preg_replace_callback', $pattern);
         }
@@ -158,7 +154,7 @@ class Preg
      * @param array<string, callable> $pattern
      * @param string $subject
      * @param int    $count Set by method
-     * @param int    $flags PREG_OFFSET_CAPTURE or PREG_UNMATCHED_AS_NULL, only available on PHP 7.4+
+     * @param int    $flags PREG_OFFSET_CAPTURE is supported, PREG_UNMATCHED_AS_NULL is always set
      */
     public static function replaceCallbackArray(array $pattern, $subject, int $limit = -1, int &$count = null, int $flags = 0): string
     {
@@ -170,11 +166,7 @@ class Preg
             throw new \TypeError(sprintf(static::INVALID_TYPE_MSG, gettype($subject)));
         }
 
-        if (PHP_VERSION_ID >= 70400) {
-            $result = preg_replace_callback_array($pattern, $subject, $limit, $count, $flags);
-        } else {
-            $result = preg_replace_callback_array($pattern, $subject, $limit, $count);
-        }
+        $result = preg_replace_callback_array($pattern, $subject, $limit, $count, $flags | PREG_UNMATCHED_AS_NULL);
         if ($result === null) {
             $pattern = array_keys($pattern);
             throw PcreException::fromFunction('preg_replace_callback_array', $pattern);
