@@ -12,6 +12,7 @@
 /.gitignore export-ignore
 /.php_cs export-ignore
 /phpstan.neon.dist export-ignore
+/phpstan-baseline.neon export-ignore
 /phpunit.xml.dist export-ignore
 /tests export-ignore
 /CONTRIBUTING.md export-ignore
