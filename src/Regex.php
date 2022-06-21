@@ -35,6 +35,43 @@ class Regex
     }
 
     /**
+     * @param non-empty-string $pattern
+     * @param int    $flags PREG_UNMATCHED_AS_NULL is always set, no other flags are supported
+     */
+    public static function matchFirst(string $pattern, string $subject, int $flags = 0, int $offset = 0): MatchFirstResult
+    {
+        self::checkOffsetCapture($flags);
+
+        $count = Preg::match($pattern, $subject, $matches, $flags, $offset);
+
+        return new MatchFirstResult($count, $matches);
+    }
+
+    /**
+     * @param array<non-empty-string> $patterns
+     * @param int    $flags PREG_UNMATCHED_AS_NULL is always set, no other flags are supported
+     */
+    public static function matchFirstOf(array $patterns, string $subject, int $flags = 0, int $offset = 0): MatchFirstResult
+    {
+        self::checkOffsetCapture($flags);
+
+        if ($patterns === []) {
+            throw new \LogicException('You have provided an empty patterns.');
+        }
+
+        $match = null; // Make PHPStan/IDE happy
+        foreach ($patterns as $pattern) {
+            $match = self::matchFirst($pattern, $subject, $flags, $offset);
+
+            if ($match->matched === true) {
+                return $match;
+            }
+        }
+
+        return $match;
+    }
+
+    /**
      * Runs preg_match with PREG_OFFSET_CAPTURE
      *
      * @param non-empty-string $pattern
