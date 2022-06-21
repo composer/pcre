@@ -75,6 +75,7 @@ class Preg
         }
 
         $result = preg_match_all($pattern, $subject, $matches, $flags | PREG_UNMATCHED_AS_NULL, $offset);
+        /** @phpstan-ignore-next-line */
         if ($result === false || /* PHP < 8 may return null */ $result === null) {
             throw PcreException::fromFunction('preg_match_all', $pattern);
         }
