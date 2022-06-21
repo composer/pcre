@@ -75,8 +75,8 @@ class Preg
         }
 
         $result = preg_match_all($pattern, $subject, $matches, $flags | PREG_UNMATCHED_AS_NULL, $offset);
-        /** @phpstan-ignore-next-line */
-        if ($result === false || /* PHP < 8 may return null */ $result === null) {
+        // PHP < 8 may return null
+        if (in_array($result, [false, null], true)) {
             throw PcreException::fromFunction('preg_match_all', $pattern);
         }
 
@@ -96,7 +96,8 @@ class Preg
     public static function matchAllWithOffsets(string $pattern, string $subject, ?array &$matches, int $flags = 0, int $offset = 0): int
     {
         $result = preg_match_all($pattern, $subject, $matches, $flags | PREG_UNMATCHED_AS_NULL | PREG_OFFSET_CAPTURE, $offset);
-        if ($result === false || /* PHP < 8 may return null */ $result === null) {
+        // PHP < 8 may return null
+        if (in_array($result, [false, null], true)) {
             throw PcreException::fromFunction('preg_match_all', $pattern);
         }
 
