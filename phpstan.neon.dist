@@ -4,7 +4,6 @@ parameters:
         - src
         - tests
 
-    reportUnmatchedIgnoredErrors: false
     treatPhpDocTypesAsCertain: false
 
     bootstrapFiles:
@@ -12,4 +11,3 @@ parameters:
 
 includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon
-    - phpstan-baseline.neon
