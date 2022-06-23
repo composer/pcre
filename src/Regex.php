@@ -112,7 +112,7 @@ class Regex
         return new ReplaceResult($count, $result);
     }
 
-    protected static function checkOffsetCapture(int $flags): void
+    private static function checkOffsetCapture(int $flags): void
     {
         if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
             throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the return type, use matchWithOffsets() instead');

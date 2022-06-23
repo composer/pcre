@@ -277,7 +277,7 @@ class Preg
         return (bool) static::matchAllWithOffsets($pattern, $subject, $matches, $flags, $offset);
     }
 
-    protected static function checkOffsetCapture(int $flags, string $useFunctionName): void
+    private static function checkOffsetCapture(int $flags, string $useFunctionName): void
     {
         if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
             throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the type of $matches, use ' . $useFunctionName . '() instead');
