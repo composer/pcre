@@ -26,9 +26,7 @@ class Preg
      */
     public static function match(string $pattern, string $subject, ?array &$matches = null, int $flags = 0, int $offset = 0): int
     {
-        if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
-            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the type of $matches, use matchWithOffsets() instead');
-        }
+        self::checkOffsetCapture($flags, 'matchWithOffsets');
 
         $result = preg_match($pattern, $subject, $matches, $flags | PREG_UNMATCHED_AS_NULL, $offset);
         if ($result === false) {
@@ -66,9 +64,7 @@ class Preg
      */
     public static function matchAll(string $pattern, string $subject, ?array &$matches = null, int $flags = 0, int $offset = 0): int
     {
-        if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
-            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the type of $matches, use matchAllWithOffsets() instead');
-        }
+        self::checkOffsetCapture($flags, 'matchAllWithOffsets');
 
         if (($flags & PREG_SET_ORDER) !== 0) {
             throw new \InvalidArgumentException('PREG_SET_ORDER is not supported as it changes the type of $matches');
@@ -271,5 +267,12 @@ class Preg
     public static function isMatchAllWithOffsets(string $pattern, string $subject, ?array &$matches, int $flags = 0, int $offset = 0): bool
     {
         return (bool) static::matchAllWithOffsets($pattern, $subject, $matches, $flags, $offset);
+    }
+
+    private static function checkOffsetCapture(int $flags, string $useFunctionName): void
+    {
+        if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
+            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the type of $matches, use ' . $useFunctionName . '() instead');
+        }
     }
 }

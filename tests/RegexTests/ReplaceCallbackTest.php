@@ -36,7 +36,7 @@ class ReplaceCallbackTest extends BaseTestCase
 
     public function testFailure(): void
     {
-       $result = Regex::replaceCallback('{abc}', function ($match) {
+        $result = Regex::replaceCallback('{abc}', function ($match) {
             return '('.$match[0].')';
         }, 'def');
 
