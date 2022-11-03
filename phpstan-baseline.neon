@@ -1,2 +1,6 @@
 parameters:
-    ignoreErrors:
+	ignoreErrors:
+		-
+			message: "#^Offset 0 does not exist on string\\|null\\.$#"
+			count: 1
+			path: tests/PregTests/ReplaceCallbackTest.php
