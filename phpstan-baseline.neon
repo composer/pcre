@@ -1,11 +1,16 @@
 parameters:
-    ignoreErrors:
-        -
-            message: "#^Function preg_replace_callback invoked with 6 parameters, 3\\-5 required\\.$#"
-            count: 1
-            path: src/Preg.php
+	ignoreErrors:
+		-
+			message: "#^Function preg_replace_callback invoked with 6 parameters, 3\\-5 required\\.$#"
+			count: 1
+			path: src/Preg.php
 
-        -
-            message: "#^Function preg_replace_callback_array invoked with 5 parameters, 2\\-4 required\\.$#"
-            count: 1
-            path: src/Preg.php
+		-
+			message: "#^Function preg_replace_callback_array invoked with 5 parameters, 2\\-4 required\\.$#"
+			count: 1
+			path: src/Preg.php
+
+		-
+			message: "#^Offset 0 does not exist on string\\|null\\.$#"
+			count: 1
+			path: tests/PregTests/ReplaceCallbackTest.php

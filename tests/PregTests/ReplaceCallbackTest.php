@@ -31,6 +31,16 @@ class ReplaceCallbackTest extends BaseTestCase
         self::assertSame('abc(d)', $result);
     }
 
+    public function testSuccessWithOffset(): void
+    {
+        $result = Preg::replaceCallback('{(?P<m>d)}', function ($match) {
+            return '('.$match[0][0].')';
+        }, 'abcd', -1, $count, PREG_OFFSET_CAPTURE);
+
+        self::assertSame(1, $count);
+        self::assertSame('abc(d)', $result);
+    }
+
     public function testSuccessNoRef(): void
     {
         $result = Preg::replaceCallback('{(?P<m>d)}', function ($match) {
