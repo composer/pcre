@@ -33,7 +33,7 @@ final class MatchWithOffsetsResult
      * @param array<array{string|null, int}> $matches
      * @phpstan-param array<int|string, array{string|null, int<-1, max>}> $matches
      */
-    public function __construct($count, array $matches)
+    public function __construct(int $count, array $matches)
     {
         $this->matches = $matches;
         $this->matched = (bool) $count;
