@@ -13,6 +13,7 @@ namespace Composer\Pcre\PregTests;
 
 use Composer\Pcre\BaseTestCase;
 use Composer\Pcre\Preg;
+use Composer\Pcre\UnexpectedNullMatchException;
 
 class MatchTest extends BaseTestCase
 {
@@ -33,6 +34,20 @@ class MatchTest extends BaseTestCase
         $count = Preg::match('{(?P<m>\d)}', 123, $matches); // @phpstan-ignore-line
         self::assertSame(1, $count);
         self::assertSame(array(0 => '1', 'm' => '1', 1 => '1'), $matches);
+    }
+
+    public function testSuccessStrictGroups(): void
+    {
+        $count = Preg::matchStrictGroups('{(?P<m>\d)(?<matched>a)?}', '3a', $matches);
+        self::assertSame(1, $count);
+        self::assertSame(array(0 => '3a', 'm' => '3', 1 => '3', 'matched' => 'a', 2 => 'a'), $matches);
+    }
+
+    public function testFailStrictGroups(): void
+    {
+        self::expectException(UnexpectedNullMatchException::class);
+        self::expectExceptionMessage('Pattern "{(?P<m>\d)(?<unmatched>b)?}" had an unexpected unmatched group "unmatched", make sure the pattern always matches or use match() instead.');
+        Preg::matchStrictGroups('{(?P<m>\d)(?<unmatched>b)?}', '123', $matches);
     }
 
     public function testTypeErrorWithNull(): void
