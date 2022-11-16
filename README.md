@@ -91,6 +91,11 @@ if (Preg::matchStrictGroups('{fo+}', $string, $matches))
 if (Preg::matchAllStrictGroups('{fo+}', $string, $matches))
 ```
 
+**Note:** This is generally safe to use as long as you do not have optional subpatterns (i.e. `(something)?`).
+A subpattern that can match an empty string like `(.*)` is **not** optional, it will be present as an
+empty string in the matches. A non-matching subpattern, even if optional like `(?:foo)?` will anyway not be present in
+matches so it is also not a problem to use these with `*StrictGroups` methods.
+
 If you would prefer a slightly more verbose usage, replacing by-ref arguments by result objects, you can use the `Regex` class:
 
 ```php
