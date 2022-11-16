@@ -132,6 +132,21 @@ class Regex
     }
 
     /**
+     * Variant of `replaceCallback()` which outputs non-null matches (or throws)
+     *
+     * @param string $pattern
+     * @param callable(array<int|string, string>): string $replacement
+     * @param string          $subject
+     * @param int-mask<PREG_UNMATCHED_AS_NULL|PREG_OFFSET_CAPTURE> $flags PREG_OFFSET_CAPTURE or PREG_UNMATCHED_AS_NULL, only available on PHP 7.4+
+     */
+    public static function replaceCallbackStrictGroups($pattern, callable $replacement, $subject, int $limit = -1, int $flags = 0): ReplaceResult
+    {
+        $result = Preg::replaceCallbackStrictGroups($pattern, $replacement, $subject, $limit, $count, $flags);
+
+        return new ReplaceResult($count, $result);
+    }
+
+    /**
      * @param array<string, callable(array<int|string, string|null>): string> $pattern
      * @param string $subject
      * @param int-mask<PREG_UNMATCHED_AS_NULL|PREG_OFFSET_CAPTURE> $flags PREG_OFFSET_CAPTURE is supported, PREG_UNMATCHED_AS_NULL is always set

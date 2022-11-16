@@ -13,6 +13,7 @@ namespace Composer\Pcre\PregTests;
 
 use Composer\Pcre\BaseTestCase;
 use Composer\Pcre\Preg;
+use Composer\Pcre\UnexpectedNullMatchException;
 
 class ReplaceCallbackTest extends BaseTestCase
 {
@@ -58,6 +59,26 @@ class ReplaceCallbackTest extends BaseTestCase
 
         self::assertSame(0, $count);
         self::assertSame('def', $result);
+    }
+
+    public function testSuccessStrictGroups(): void
+    {
+        $result = Preg::replaceCallbackStrictGroups('{(?P<m>\d)(?<matched>a)?}', function ($match) {
+            return strtoupper($match['matched']);
+        }, '3a', -1, $count);
+
+        self::assertSame(1, $count);
+        self::assertSame('A', $result);
+    }
+
+    public function testFailStrictGroups(): void
+    {
+        self::expectException(UnexpectedNullMatchException::class);
+        self::expectExceptionMessage('Pattern "{(?P<m>\d)(?<unmatched>a)?}" had an unexpected unmatched group "unmatched", make sure the pattern always matches or use replaceCallback() instead.');
+
+        $result = Preg::replaceCallbackStrictGroups('{(?P<m>\d)(?<unmatched>a)?}', function ($match) {
+            return strtoupper($match['unmatched']);
+        }, '123', -1, $count);
     }
 
     public function testBadPatternThrowsIfWarningsAreNotThrowing(): void
