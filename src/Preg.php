@@ -30,7 +30,7 @@ class Preg
     {
         self::checkOffsetCapture($flags, 'matchWithOffsets');
 
-        $result = preg_match($pattern, $subject, $matches, $flags | PREG_UNMATCHED_AS_NULL, $offset);
+        $result = self::pregMatch($pattern, $subject, $matches, $flags | PREG_UNMATCHED_AS_NULL, $offset);
         if ($result === false) {
             throw PcreException::fromFunction('preg_match', $pattern);
         }
@@ -69,7 +69,7 @@ class Preg
      */
     public static function matchWithOffsets(string $pattern, string $subject, ?array &$matches, int $flags = 0, int $offset = 0): int
     {
-        $result = preg_match($pattern, $subject, $matches, $flags | PREG_UNMATCHED_AS_NULL | PREG_OFFSET_CAPTURE, $offset);
+        $result = self::pregMatch($pattern, $subject, $matches, $flags | PREG_UNMATCHED_AS_NULL | PREG_OFFSET_CAPTURE, $offset);
         if ($result === false) {
             throw PcreException::fromFunction('preg_match', $pattern);
         }
@@ -414,5 +414,41 @@ class Preg
 
         /** @var array<int|string, list<string>> */
         return $matches;
+    }
+
+    /**
+     * @param non-empty-string   $pattern
+     * @param array<string|null> $matches Set by method
+     * @param int-mask<PREG_UNMATCHED_AS_NULL|PREG_OFFSET_CAPTURE> $flags
+     * @return 0|1|false
+     *
+     * @param-out array<int|string, string|null> $matches
+     */
+    private static function pregMatch(string $pattern, string $subject, ?array &$matches = null, int $flags = 0, int $offset = 0)
+    {
+        if (PHP_VERSION_ID >= 70400) {
+            return preg_match($pattern, $subject, $matches, $flags, $offset);
+        }
+
+        // On PHP 7.2 and 7.3, PREG_UNMATCHED_AS_NULL only works correctly in preg_match_all
+        // as preg_match does not set trailing unmatched groups to null
+        // e.g. preg_match('/(a)(b)*(c)(d)*/', 'ac', $matches, PREG_UNMATCHED_AS_NULL); would
+        // have $match[4] unset instead of null
+        //
+        // So we use preg_match_all here as workaround to ensure old-PHP meets the expectations
+        // set by the library's documentation
+        $result = preg_match_all($pattern, $subject, $matchesInternal, $flags, $offset);
+        if (!is_int($result)) { // PHP < 8 may return null, 8+ returns int|false
+            throw PcreException::fromFunction('preg_match', $pattern);
+        }
+
+        if ($result === 0) {
+            $matches = [];
+        } else {
+            $matches = array_map(function ($m) { return reset($m); }, $matchesInternal);
+            $result = min($result, 1);
+        }
+
+        return $result;
     }
 }

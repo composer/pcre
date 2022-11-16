@@ -71,6 +71,12 @@ class BaseTestCase extends TestCase
             self::fail('Preg function name is missing');
         }
 
+        // this is a hack to make the tests work on 7.2/7.3
+        // @see Preg::pregMatch
+        if ($this->pregFunction === 'preg_match()' && PHP_VERSION_ID < 70400) {
+            $this->pregFunction = 'preg_match_all()';
+        }
+
         $warning = $warning !== null ? $warning : 'No ending matching delimiter \'}\' found';
         $message = sprintf('%s: %s', $this->pregFunction, $warning);
         $this->doExpectWarning($message);
