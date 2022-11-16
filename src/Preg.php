@@ -39,6 +39,25 @@ class Preg
     }
 
     /**
+     * Variant of `match()` which outputs non-null matches (or throws)
+     *
+     * @param non-empty-string $pattern
+     * @param array<string> $matches Set by method
+     * @param int-mask<PREG_UNMATCHED_AS_NULL> $flags PREG_UNMATCHED_AS_NULL is always set, no other flags are supported
+     * @return 0|1
+     * @throws UnexpectedNullMatchException
+     *
+     * @param-out array<int|string, string> $matches
+     */
+    public static function matchStrictGroups(string $pattern, string $subject, ?array &$matches = null, int $flags = 0, int $offset = 0): int
+    {
+        $result = self::match($pattern, $subject, $matchesInternal, $flags, $offset);
+        $matches = self::enforceNonNullMatches($pattern, $matchesInternal, 'match');
+
+        return $result;
+    }
+
+    /**
      * Runs preg_match with PREG_OFFSET_CAPTURE
      *
      * @param non-empty-string   $pattern
@@ -61,7 +80,7 @@ class Preg
     /**
      * @param non-empty-string   $pattern
      * @param array<int|string, list<string|null>> $matches Set by method
-     * @param int-mask<PREG_UNMATCHED_AS_NULL|PREG_SET_ORDER> $flags PREG_UNMATCHED_AS_NULL is always set, no other flags are supported
+     * @param int-mask<PREG_UNMATCHED_AS_NULL> $flags PREG_UNMATCHED_AS_NULL is always set, no other flags are supported
      * @return 0|positive-int
      *
      * @param-out array<int|string, list<string|null>> $matches
@@ -69,15 +88,31 @@ class Preg
     public static function matchAll(string $pattern, string $subject, ?array &$matches = null, int $flags = 0, int $offset = 0): int
     {
         self::checkOffsetCapture($flags, 'matchAllWithOffsets');
-
-        if (($flags & PREG_SET_ORDER) !== 0) {
-            throw new \InvalidArgumentException('PREG_SET_ORDER is not supported as it changes the type of $matches');
-        }
+        self::checkSetOrder($flags);
 
         $result = preg_match_all($pattern, $subject, $matches, $flags | PREG_UNMATCHED_AS_NULL, $offset);
         if (!is_int($result)) { // PHP < 8 may return null, 8+ returns int|false
             throw PcreException::fromFunction('preg_match_all', $pattern);
         }
+
+        return $result;
+    }
+
+    /**
+     * Variant of `match()` which outputs non-null matches (or throws)
+     *
+     * @param non-empty-string   $pattern
+     * @param array<int|string, list<string|null>> $matches Set by method
+     * @param int-mask<PREG_UNMATCHED_AS_NULL> $flags PREG_UNMATCHED_AS_NULL is always set, no other flags are supported
+     * @return 0|positive-int
+     * @throws UnexpectedNullMatchException
+     *
+     * @param-out array<int|string, list<string>> $matches
+     */
+    public static function matchAllStrictGroups(string $pattern, string $subject, ?array &$matches = null, int $flags = 0, int $offset = 0): int
+    {
+        $result = self::matchAll($pattern, $subject, $matchesInternal, $flags, $offset);
+        $matches = self::enforceNonNullMatchAll($pattern, $matchesInternal, 'matchAll');
 
         return $result;
     }
@@ -94,6 +129,8 @@ class Preg
      */
     public static function matchAllWithOffsets(string $pattern, string $subject, ?array &$matches, int $flags = 0, int $offset = 0): int
     {
+        self::checkSetOrder($flags);
+
         $result = preg_match_all($pattern, $subject, $matches, $flags | PREG_UNMATCHED_AS_NULL | PREG_OFFSET_CAPTURE, $offset);
         if (!is_int($result)) { // PHP < 8 may return null, 8+ returns int|false
             throw PcreException::fromFunction('preg_match_all', $pattern);
@@ -233,6 +270,8 @@ class Preg
     }
 
     /**
+     * Variant of match() which returns a bool instead of int
+     *
      * @param non-empty-string   $pattern
      * @param array<string|null> $matches Set by method
      * @param int-mask<PREG_UNMATCHED_AS_NULL> $flags PREG_UNMATCHED_AS_NULL is always set, no other flags are supported
@@ -245,6 +284,23 @@ class Preg
     }
 
     /**
+     * Variant of `isMatch()` which outputs non-null matches (or throws)
+     *
+     * @param non-empty-string $pattern
+     * @param array<string> $matches Set by method
+     * @param int-mask<PREG_UNMATCHED_AS_NULL> $flags PREG_UNMATCHED_AS_NULL is always set, no other flags are supported
+     * @throws UnexpectedNullMatchException
+     *
+     * @param-out array<int|string, string> $matches
+     */
+    public static function isMatchStrictGroups(string $pattern, string $subject, ?array &$matches = null, int $flags = 0, int $offset = 0): bool
+    {
+        return (bool) self::matchStrictGroups($pattern, $subject, $matches, $flags, $offset);
+    }
+
+    /**
+     * Variant of matchAll() which returns a bool instead of int
+     *
      * @param non-empty-string   $pattern
      * @param array<int|string, list<string|null>> $matches Set by method
      * @param int-mask<PREG_UNMATCHED_AS_NULL> $flags PREG_UNMATCHED_AS_NULL is always set, no other flags are supported
@@ -257,6 +313,22 @@ class Preg
     }
 
     /**
+     * Variant of `isMatchAll()` which outputs non-null matches (or throws)
+     *
+     * @param non-empty-string $pattern
+     * @param array<int|string, list<string>> $matches Set by method
+     * @param int-mask<PREG_UNMATCHED_AS_NULL> $flags PREG_UNMATCHED_AS_NULL is always set, no other flags are supported
+     *
+     * @param-out array<int|string, list<string>> $matches
+     */
+    public static function isMatchAllStrictGroups(string $pattern, string $subject, ?array &$matches = null, int $flags = 0, int $offset = 0): bool
+    {
+        return (bool) self::matchAllStrictGroups($pattern, $subject, $matches, $flags, $offset);
+    }
+
+    /**
+     * Variant of matchWithOffsets() which returns a bool instead of int
+     *
      * Runs preg_match with PREG_OFFSET_CAPTURE
      *
      * @param non-empty-string   $pattern
@@ -271,6 +343,8 @@ class Preg
     }
 
     /**
+     * Variant of matchAllWithOffsets() which returns a bool instead of int
+     *
      * Runs preg_match_all with PREG_OFFSET_CAPTURE
      *
      * @param non-empty-string   $pattern
@@ -289,5 +363,48 @@ class Preg
         if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
             throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the type of $matches, use ' . $useFunctionName . '() instead');
         }
+    }
+
+    private static function checkSetOrder(int $flags): void
+    {
+        if (($flags & PREG_SET_ORDER) !== 0) {
+            throw new \InvalidArgumentException('PREG_SET_ORDER is not supported as it changes the type of $matches');
+        }
+    }
+
+    /**
+     * @param array<int|string, string|null> $matches
+     * @return array<int|string, string>
+     * @throws UnexpectedNullMatchException
+     */
+    private static function enforceNonNullMatches(string $pattern, array $matches, string $variantMethod)
+    {
+        foreach ($matches as $group => $match) {
+            if (null === $match) {
+                throw new UnexpectedNullMatchException('Pattern "'.$pattern.'" had an unexpected unmatched group "'.$group.'", make sure the pattern always matches or use '.$variantMethod.'() instead.');
+            }
+        }
+
+        /** @var array<string> */
+        return $matches;
+    }
+
+    /**
+     * @param array<int|string, list<string|null>> $matches
+     * @return array<int|string, list<string>>
+     * @throws UnexpectedNullMatchException
+     */
+    private static function enforceNonNullMatchAll(string $pattern, array $matches, string $variantMethod)
+    {
+        foreach ($matches as $group => $groupMatches) {
+            foreach ($groupMatches as $match) {
+                if (null === $match) {
+                    throw new UnexpectedNullMatchException('Pattern "'.$pattern.'" had an unexpected unmatched group "'.$group.'", make sure the pattern always matches or use '.$variantMethod.'() instead.');
+                }
+            }
+        }
+
+        /** @var array<int|string, list<string>> */
+        return $matches;
     }
 }

@@ -84,6 +84,17 @@ if (Preg::isMatch('{fo+}', $string, $matches)) // bool
 if (Preg::isMatchAll('{fo+}', $string, $matches)) // bool
 ```
 
+Finally the `Preg` class provides a few `*StrictGroups` method variants that ensure match groups
+are always present and thus non-nullable, making it easier to write type-safe code:
+
+```php
+use Composer\Pcre\Preg;
+
+// $matches is guaranteed to be an array of strings, if a subpattern does not match and produces a null it will throw
+if (Preg::matchStrictGroups('{fo+}', $string, $matches))
+if (Preg::matchAllStrictGroups('{fo+}', $string, $matches))
+```
+
 If you would prefer a slightly more verbose usage, replacing by-ref arguments by result objects, you can use the `Regex` class:
 
 ```php
