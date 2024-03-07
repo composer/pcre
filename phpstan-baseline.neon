@@ -6,11 +6,6 @@ parameters:
 			path: src/Preg.php
 
 		-
-			message: "#^Parameter \\#2 \\$matches of static method Composer\\\\Pcre\\\\Preg\\:\\:enforceNonNullMatches\\(\\) expects array\\<int\\|string, string\\|null\\>, array\\<int\\|string, array\\<int, int\\|string\\|null\\>\\|string\\|null\\> given\\.$#"
-			count: 1
-			path: src/Preg.php
-
-		-
 			message: "#^Parameter &\\$matches @param\\-out type of method Composer\\\\Pcre\\\\Preg\\:\\:match\\(\\) expects array\\<int\\|string, string\\|null\\>, \\(int is int \\? array\\<array\\<int, int\\<\\-1, max\\>\\|string\\>\\> \\: \\(int is int \\? array\\<string\\|null\\> \\: \\(int is int \\? array\\<array\\<int, int\\|string\\|null\\>\\> \\: array\\<string\\>\\)\\)\\) given\\.$#"
 			count: 1
 			path: src/Preg.php

@@ -391,16 +391,18 @@ class Preg
     }
 
     /**
-     * @param array<int|string, string|null> $matches
+     * @param array<int|string, string|null|array{string|null, int}> $matches
      * @return array<int|string, string>
      * @throws UnexpectedNullMatchException
      */
     private static function enforceNonNullMatches(string $pattern, array $matches, string $variantMethod)
     {
         foreach ($matches as $group => $match) {
-            if (null === $match) {
-                throw new UnexpectedNullMatchException('Pattern "'.$pattern.'" had an unexpected unmatched group "'.$group.'", make sure the pattern always matches or use '.$variantMethod.'() instead.');
+            if (is_string($match) || (is_array($match) && is_string($match[0]))) {
+                continue;
             }
+
+            throw new UnexpectedNullMatchException('Pattern "'.$pattern.'" had an unexpected unmatched group "'.$group.'", make sure the pattern always matches or use '.$variantMethod.'() instead.');
         }
 
         /** @var array<string> */
