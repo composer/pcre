@@ -422,7 +422,7 @@ class Preg
      * @param int-mask<PREG_UNMATCHED_AS_NULL|PREG_OFFSET_CAPTURE> $flags
      * @return 0|1|false
      *
-     * @param-out array<int|string, string|null> $matches
+     * @param-out ($flags is PREG_OFFSET_CAPTURE ? array<int|string, array{string|null, int<-1, max>}> : array<int|string, string|null>) $matches
      */
     private static function pregMatch(string $pattern, string $subject, ?array &$matches = null, int $flags = 0, int $offset = 0)
     {
