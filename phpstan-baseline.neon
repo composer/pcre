@@ -16,12 +16,7 @@ parameters:
 			path: src/Preg.php
 
 		-
-			message: "#^Parameter &\\$matches @param\\-out type of method Composer\\\\Pcre\\\\Preg\\:\\:matchAll\\(\\) expects array\\<int\\|string, list\\<string\\|null\\>\\>, \\(512 is 1 \\? array\\<list\\<string\\>\\> \\: \\(512 is 2 \\? list\\<array\\<string\\>\\> \\: \\(512 is 256\\|257 \\? array\\<list\\<array\\{string, int\\}\\>\\> \\: \\(512 is 258 \\? list\\<array\\<array\\{string, int\\}\\>\\> \\: \\(512 is 512\\|513 \\? array\\<list\\<string\\|null\\>\\> \\: \\(512 is 514 \\? list\\<array\\<string\\|null\\>\\> \\: \\(512 is 770 \\? list\\<array\\<array\\{string\\|null, int\\}\\>\\> \\: array\\)\\)\\)\\)\\)\\)\\) given\\.$#"
-			count: 1
-			path: src/Preg.php
-
-		-
-			message: "#^Parameter &\\$matches @param\\-out type of method Composer\\\\Pcre\\\\Preg\\:\\:matchAllWithOffsets\\(\\) expects array\\<int\\|string, list\\<array\\{string\\|null, int\\<\\-1, max\\>\\}\\>\\>, \\(768 is 1 \\? array\\<list\\<string\\>\\> \\: \\(768 is 2 \\? list\\<array\\<string\\>\\> \\: \\(768 is 256\\|257 \\? array\\<list\\<array\\{string, int\\}\\>\\> \\: \\(768 is 258 \\? list\\<array\\<array\\{string, int\\}\\>\\> \\: \\(768 is 512\\|513 \\? array\\<list\\<string\\|null\\>\\> \\: \\(768 is 514 \\? list\\<array\\<string\\|null\\>\\> \\: \\(768 is 770 \\? list\\<array\\<array\\{string\\|null, int\\}\\>\\> \\: array\\)\\)\\)\\)\\)\\)\\) given\\.$#"
+			message: "#^Parameter &\\$matches @param\\-out type of method Composer\\\\Pcre\\\\Preg\\:\\:matchAllWithOffsets\\(\\) expects array\\<int\\|string, list\\<array\\{string\\|null, int\\<\\-1, max\\>\\}\\>\\>, array given\\.$#"
 			count: 1
 			path: src/Preg.php
 
@@ -31,11 +26,6 @@ parameters:
 			path: src/Preg.php
 
 		-
-			message: "#^Parameter &\\$matches @param\\-out type of method Composer\\\\Pcre\\\\Preg\\:\\:pregMatch\\(\\) expects array\\<int\\|string, string\\|null\\>, \\(int is int \\? array\\<array\\<int, int\\<\\-1, max\\>\\|string\\>\\> \\: \\(int is int \\? array\\<string\\|null\\> \\: \\(int is int \\? array\\<array\\<int, int\\|string\\|null\\>\\> \\: array\\<string\\>\\)\\)\\) given\\.$#"
-			count: 1
-			path: src/Preg.php
-
-		-
-			message: "#^Parameter &\\$matches @param\\-out type of method Composer\\\\Pcre\\\\Preg\\:\\:pregMatch\\(\\) expects array\\<int\\|string, string\\|null\\>, array given\\.$#"
+			message: "#^Parameter &\\$matches @param\\-out type of method Composer\\\\Pcre\\\\Preg\\:\\:pregMatch\\(\\) expects array\\<int\\|string, array\\{string\\|null, int\\<\\-1, max\\>\\}\\|string\\|null\\>, array given\\.$#"
 			count: 1
 			path: src/Preg.php
