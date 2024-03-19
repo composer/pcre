@@ -143,11 +143,11 @@ class Preg
      * @param string|string[] $pattern
      * @param string|string[] $replacement
      * @param string $subject
-     * @param int             $count Set by method
+     * @param int|null $count Set by method
      *
      * @param-out int<0, max> $count
      */
-    public static function replace($pattern, $replacement, $subject, int $limit = -1, int &$count = null): string
+    public static function replace($pattern, $replacement, $subject, int $limit = -1, ?int &$count = null): string
     {
         if (!is_scalar($subject)) {
             if (is_array($subject)) {
@@ -169,12 +169,12 @@ class Preg
      * @param string|string[] $pattern
      * @param ($flags is PREG_OFFSET_CAPTURE ? (callable(array<int|string, array{string|null, int<-1, max>}>): string) : callable(array<int|string, string|null>): string) $replacement
      * @param string $subject
-     * @param int             $count Set by method
+     * @param int|null $count Set by method
      * @param int-mask<PREG_UNMATCHED_AS_NULL|PREG_OFFSET_CAPTURE> $flags PREG_OFFSET_CAPTURE is supported, PREG_UNMATCHED_AS_NULL is always set
      *
      * @param-out int<0, max> $count
      */
-    public static function replaceCallback($pattern, callable $replacement, $subject, int $limit = -1, int &$count = null, int $flags = 0): string
+    public static function replaceCallback($pattern, callable $replacement, $subject, int $limit = -1, ?int &$count = null, int $flags = 0): string
     {
         if (!is_scalar($subject)) {
             if (is_array($subject)) {
@@ -198,12 +198,12 @@ class Preg
      * @param string $pattern
      * @param ($flags is PREG_OFFSET_CAPTURE ? (callable(array<int|string, array{string, int<0, max>}>): string) : callable(array<int|string, string>): string) $replacement
      * @param string $subject
-     * @param int $count Set by method
+     * @param int|null $count Set by method
      * @param int-mask<PREG_UNMATCHED_AS_NULL|PREG_OFFSET_CAPTURE> $flags PREG_OFFSET_CAPTURE is supported, PREG_UNMATCHED_AS_NULL is always set
      *
      * @param-out int<0, max> $count
      */
-    public static function replaceCallbackStrictGroups(string $pattern, callable $replacement, $subject, int $limit = -1, int &$count = null, int $flags = 0): string
+    public static function replaceCallbackStrictGroups(string $pattern, callable $replacement, $subject, int $limit = -1, ?int &$count = null, int $flags = 0): string
     {
         return self::replaceCallback($pattern, function (array $matches) use ($pattern, $replacement) {
             return $replacement(self::enforceNonNullMatches($pattern, $matches, 'replaceCallback'));
@@ -213,12 +213,12 @@ class Preg
     /**
      * @param ($flags is PREG_OFFSET_CAPTURE ? (array<string, callable(array<int|string, array{string|null, int<-1, max>}>): string>) : array<string, callable(array<int|string, string|null>): string>) $pattern
      * @param string $subject
-     * @param int    $count Set by method
+     * @param int|null $count Set by method
      * @param int-mask<PREG_UNMATCHED_AS_NULL|PREG_OFFSET_CAPTURE> $flags PREG_OFFSET_CAPTURE is supported, PREG_UNMATCHED_AS_NULL is always set
      *
      * @param-out int<0, max> $count
      */
-    public static function replaceCallbackArray(array $pattern, $subject, int $limit = -1, int &$count = null, int $flags = 0): string
+    public static function replaceCallbackArray(array $pattern, $subject, int $limit = -1, ?int &$count = null, int $flags = 0): string
     {
         if (!is_scalar($subject)) {
             if (is_array($subject)) {
