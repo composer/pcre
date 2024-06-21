@@ -9,6 +9,8 @@ function doMatch(string $s): void
 {
     if (Preg::match('/Price: /i', $s, $matches)) {
         assertType('array{string}', $matches);
+    } else {
+        assertType('array{}', $matches);
     }
     assertType('array{}|array{string}', $matches);
 
@@ -18,4 +20,24 @@ function doMatch(string $s): void
         assertType('array{}', $matches);
     }
     assertType('array{}|array{string, string}', $matches);
+}
+
+function identicalMatch(string $s): void
+{
+    if (Preg::match('/Price: /i', $s, $matches) === 1) {
+        assertType('array{string}', $matches);
+    } else {
+        assertType('array{}', $matches);
+    }
+    assertType('array{}|array{string}', $matches);
+}
+
+function equalMatch(string $s): void
+{
+    if (Preg::match('/Price: /i', $s, $matches) == 1) {
+        assertType('array{string}', $matches);
+    } else {
+        assertType('array{}', $matches);
+    }
+    assertType('array{}|array{string}', $matches);
 }
