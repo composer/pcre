@@ -7,10 +7,14 @@ parameters:
     reportUnmatchedIgnoredErrors: false
     treatPhpDocTypesAsCertain: false
 
-    bootstrapFiles:
-        - tests/phpstan-locate-phpunit-autoloader.php
+    ignoreErrors:
+        - '#Test::data[a-zA-Z0-9_]+\(\) return type has no value type specified in iterable type#'
+
+    excludePaths:
+        - tests/PHPStanTests/nsrt/*
 
 includes:
+    - extension.neon
     - vendor/phpstan/phpstan/conf/bleedingEdge.neon
     - vendor/phpstan/phpstan-strict-rules/rules.neon
     - phpstan-baseline.neon
