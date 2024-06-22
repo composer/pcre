@@ -37,6 +37,7 @@ class TypeInferenceTest extends TypeInferenceTestCase
     public static function getAdditionalConfigFiles(): array
     {
         return [
+            'phar://' . __DIR__ . '/../../vendor/phpstan/phpstan/phpstan.phar/conf/bleedingEdge.neon',
             __DIR__ . '/../../extension.neon',
         ];
     }
