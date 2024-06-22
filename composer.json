@@ -21,8 +21,11 @@
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^7",
-        "phpstan/phpstan": "^1.11",
+        "phpstan/phpstan": "^1.11.6",
         "phpstan/phpstan-strict-rules": "^1.1"
+    },
+    "conflict": {
+        "phpstan/phpstan": "<1.11.6"
     },
     "autoload": {
         "psr-4": {
