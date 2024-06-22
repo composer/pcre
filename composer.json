@@ -21,8 +21,11 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
-        "phpstan/phpstan": "1.11.x-dev",
+        "phpstan/phpstan": "^1.11.6",
         "phpstan/phpstan-strict-rules": "^1.1"
+    },
+    "conflict": {
+        "phpstan/phpstan": "<1.11.6"
     },
     "autoload": {
         "psr-4": {
