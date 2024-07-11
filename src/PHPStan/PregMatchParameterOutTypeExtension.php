@@ -14,8 +14,10 @@ use PHPStan\Type\Type;
 
 final class PregMatchParameterOutTypeExtension implements StaticMethodParameterOutTypeExtension
 {
-
-    private RegexArrayShapeMatcher $regexShapeMatcher;
+    /**
+     * @var RegexArrayShapeMatcher
+     */
+    private $regexShapeMatcher;
 
     public function __construct(
         RegexArrayShapeMatcher $regexShapeMatcher

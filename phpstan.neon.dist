@@ -7,8 +7,8 @@ parameters:
     reportUnmatchedIgnoredErrors: false
     treatPhpDocTypesAsCertain: false
 
-    ignoreErrors:
-        - '#Test::data[a-zA-Z0-9_]+\(\) return type has no value type specified in iterable type#'
+    bootstrapFiles:
+        - tests/phpstan-locate-phpunit-autoloader.php
 
     excludePaths:
         - tests/PHPStanTests/nsrt/*

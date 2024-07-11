@@ -16,18 +16,20 @@ use PHPStan\Type\StaticMethodTypeSpecifyingExtension;
 
 final class PregMatchTypeSpecifyingExtension implements StaticMethodTypeSpecifyingExtension, TypeSpecifierAwareExtension
 {
+    /**
+     * @var TypeSpecifier
+     */
+    private $typeSpecifier;
 
-    private TypeSpecifier $typeSpecifier;
+    /**
+     * @var RegexArrayShapeMatcher
+     */
+    private $regexShapeMatcher;
 
-    private RegexArrayShapeMatcher $regexShapeMatcher;
-
-    public function __construct(
-        RegexArrayShapeMatcher $regexShapeMatcher
-    )
+    public function __construct(RegexArrayShapeMatcher $regexShapeMatcher)
     {
         $this->regexShapeMatcher = $regexShapeMatcher;
     }
-
 
     public function setTypeSpecifier(TypeSpecifier $typeSpecifier): void
     {
@@ -83,5 +85,4 @@ final class PregMatchTypeSpecifyingExtension implements StaticMethodTypeSpecifyi
             $node,
         );
     }
-
 }

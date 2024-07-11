@@ -15,10 +15,12 @@ use PHPStan\Testing\TypeInferenceTestCase;
 
 class TypeInferenceTest extends TypeInferenceTestCase
 {
+    /**
+     * @return mixed
+     */
     public function dataFileAsserts(): iterable
     {
         yield from $this->gatherAssertTypesFromDirectory(__DIR__ . '/nsrt');
-
     }
 
     /**
@@ -28,9 +30,9 @@ class TypeInferenceTest extends TypeInferenceTestCase
     public function testFileAsserts(
         string $assertType,
         string $file,
-               ...$args
-	): void
-	{
+        ...$args
+    ): void
+    {
         $this->assertFileAsserts($assertType, $file, ...$args);
     }
 
