@@ -37,7 +37,7 @@ class BaseTestCase extends TestCase
 
     protected function expectPcreEngineException(string $pattern): void
     {
-        $error = PHP_VERSION_ID >= 80000 ? 'Backtrack limit exhausted' : 'PREG_BACKTRACK_LIMIT_ERROR';
+        $error = function_exists('preg_last_error_msg') ? 'Backtrack limit exhausted' : 'PREG_BACKTRACK_LIMIT_ERROR';
         $this->expectPcreException($pattern, $error);
     }
 
@@ -49,9 +49,9 @@ class BaseTestCase extends TestCase
 
         if (null === $error) {
             // Only use a message if the error can be reliably determined
-            if (PHP_VERSION_ID >= 80000) {
+            if (function_exists('preg_last_error_msg')) {
                 $error = 'Internal error';
-            } elseif (PHP_VERSION_ID >= 70201) {
+            } else {
                 $error = 'PREG_INTERNAL_ERROR';
             }
         }

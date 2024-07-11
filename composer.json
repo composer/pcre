@@ -43,7 +43,7 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit",
-        "phpstan": "phpstan analyse"
+        "test": "@php vendor/bin/phpunit",
+        "phpstan": "@php phpstan analyse"
     }
 }
