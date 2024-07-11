@@ -30,7 +30,7 @@ final class PregMatchParameterOutTypeExtension implements StaticMethodParameterO
     {
         return
             $methodReflection->getDeclaringClass()->getName() === Preg::class
-            && in_array($methodReflection->getName(), ['match', 'isMatch'], true)
+            && in_array($methodReflection->getName(), ['match', 'isMatch', 'matchStrictGroups', 'isMatchStrictGroups'], true)
             && $parameter->getName() === 'matches';
     }
 
