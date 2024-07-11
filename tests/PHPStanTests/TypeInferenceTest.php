@@ -14,7 +14,7 @@ namespace Composer\Pcre\PHPStanTests;
 use PHPStan\Testing\TypeInferenceTestCase;
 
 /**
- * Run with "vendor/bin/phpunit --group phpstan"
+ * Run with "vendor/bin/phpunit --testsuite phpstan"
  *
  * This is excluded by default to avoid side effects with the library tests
  *

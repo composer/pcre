@@ -5,18 +5,17 @@
     backupGlobals="false"
     colors="true"
     bootstrap="vendor/autoload.php"
+    defaultTestSuite="pcre"
     >
     <testsuites>
-        <testsuite name="PCRE Test Suite">
-            <directory>tests</directory>
+        <testsuite name="pcre">
+            <directory>tests/PregTests</directory>
+            <directory>tests/RegexTests</directory>
+        </testsuite>
+        <testsuite name="phpstan">
+            <directory>tests/PHPStanTests</directory>
         </testsuite>
     </testsuites>
-
-    <groups>
-        <exclude>
-            <group>phpstan</group>
-        </exclude>
-    </groups>
 
     <filter>
         <whitelist>
