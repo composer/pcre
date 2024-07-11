@@ -6,6 +6,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Type\Constant\ConstantIntegerType;
 use PHPStan\Type\TypeCombinator;
 use PHPStan\Type\Type;
+use PhpParser\Node\Arg;
 
 final class PregMatchFlags
 {

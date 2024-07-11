@@ -39,12 +39,13 @@ function identicalMatch(string $s): void
     assertType('array{}|array{string}', $matches);
 }
 
-function equalMatch(string $s): void
-{
-    if (Preg::match('/Price: /i', $s, $matches) == 1) {
-        assertType('array{string}', $matches);
-    } else {
-        assertType('array{}', $matches);
-    }
-    assertType('array{}|array{string}', $matches);
-}
+// disabled until https://github.com/phpstan/phpstan-src/pull/3185 can be resolved
+//function equalMatch(string $s): void
+//{
+//    if (Preg::match('/Price: /i', $s, $matches) == 1) {
+//        assertType('array{string}', $matches);
+//    } else {
+//        assertType('array{}', $matches);
+//    }
+//    assertType('array{}|array{string}', $matches);
+//}
