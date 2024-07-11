@@ -20,7 +20,7 @@
         "php": "^7.2 || ^8.0"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^7",
+        "phpunit/phpunit": "^8 || ^9",
         "phpstan/phpstan": "^1.11.6",
         "phpstan/phpstan-strict-rules": "^1.1"
     },
@@ -43,7 +43,7 @@
         }
     },
     "scripts": {
-        "test": "SYMFONY_PHPUNIT_REMOVE_RETURN_TYPEHINT=1 vendor/bin/simple-phpunit",
+        "test": "vendor/bin/phpunit",
         "phpstan": "phpstan analyse"
     }
 }
