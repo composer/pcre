@@ -78,15 +78,11 @@ final class PregMatchTypeSpecifyingExtension implements StaticMethodTypeSpecifyi
             && count($matchedType->getConstantArrays()) === 1
         ) {
             $matchedType = $matchedType->getConstantArrays()[0];
-            $matchedType = new ConstantArrayType(
-                $matchedType->getKeyTypes(),
-                array_map(static function (Type $valueType): Type {
-                    return TypeCombinator::removeNull($valueType);
-                }, $matchedType->getValueTypes()),
-                $matchedType->getNextAutoIndexes(),
-                [],
-                $matchedType->isList()
-            );
+            foreach ($matchedType as $type) {
+                if ($type->containsNull()) {
+                    // TODO trigger an error here that $methodReflection->getName() should not be used, or the pattern needs to make sure that $type->?? get key name is not nullable
+                }
+            }
         }
 
         $overwrite = false;
