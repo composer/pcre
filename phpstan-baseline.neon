@@ -24,8 +24,3 @@ parameters:
 			message: "#^Parameter &\\$matches @param\\-out type of method Composer\\\\Pcre\\\\Preg\\:\\:matchWithOffsets\\(\\) expects array\\<int\\|string, array\\{string\\|null, int\\<\\-1, max\\>\\}\\>, array\\<int\\|string, string\\|null\\> given\\.$#"
 			count: 1
 			path: src/Preg.php
-
-		-
-			message: "#^Parameter &\\$matches @param\\-out type of method Composer\\\\Pcre\\\\Preg\\:\\:pregMatch\\(\\) expects array\\<int\\|string, array\\{string\\|null, int\\<\\-1, max\\>\\}\\|string\\|null\\>, array given\\.$#"
-			count: 1
-			path: src/Preg.php

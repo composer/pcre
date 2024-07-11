@@ -445,7 +445,12 @@ class Preg
         if ($result === 0) {
             $matches = [];
         } else {
-            $matches = array_map(function ($m) { return reset($m); }, $matchesInternal);
+            /** @var array<int|string, array<array{string|null, int<-1, max>}>>|array<int|string, array<string|null>> $matchesInternal */
+            $matches = array_map(function (array $m) {
+                $first = reset($m);
+                assert($first !== false);
+                return $first;
+            }, $matchesInternal);
             $result = min($result, 1);
         }
 
