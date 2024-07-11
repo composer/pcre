@@ -11,8 +11,11 @@ use PHPStan\Analyser\TypeSpecifierAwareExtension;
 use PHPStan\Analyser\TypeSpecifierContext;
 use PHPStan\Reflection\MethodReflection;
 use PHPStan\TrinaryLogic;
+use PHPStan\Type\Constant\ConstantArrayType;
 use PHPStan\Type\Php\RegexArrayShapeMatcher;
 use PHPStan\Type\StaticMethodTypeSpecifyingExtension;
+use PHPStan\Type\TypeCombinator;
+use PHPStan\Type\Type;
 
 final class PregMatchTypeSpecifyingExtension implements StaticMethodTypeSpecifyingExtension, TypeSpecifierAwareExtension
 {
@@ -43,7 +46,7 @@ final class PregMatchTypeSpecifyingExtension implements StaticMethodTypeSpecifyi
 
     public function isStaticMethodSupported(MethodReflection $methodReflection, StaticCall $node, TypeSpecifierContext $context): bool
     {
-        return in_array($methodReflection->getName(), ['match', 'isMatch'], true) && !$context->null();
+        return in_array($methodReflection->getName(), ['match', 'isMatch', 'matchStrictGroups', 'isMatchStrictGroups'], true) && !$context->null();
     }
 
     public function specifyTypes(MethodReflection $methodReflection, StaticCall $node, Scope $scope, TypeSpecifierContext $context): SpecifiedTypes
@@ -68,6 +71,22 @@ final class PregMatchTypeSpecifyingExtension implements StaticMethodTypeSpecifyi
         $matchedType = $this->regexShapeMatcher->matchType($patternType, $flagsType, TrinaryLogic::createFromBoolean($context->true()));
         if ($matchedType === null) {
             return new SpecifiedTypes();
+        }
+
+        if (
+            in_array($methodReflection->getName(), ['matchStrictGroups', 'isMatchStrictGroups'], true)
+            && count($matchedType->getConstantArrays()) > 0
+        ) {
+            $matchedType = $matchedType->getConstantArrays()[0];
+            $matchedType = new ConstantArrayType(
+                $matchedType->getKeyTypes(),
+                array_map(static function (Type $valueType): Type {
+                    return TypeCombinator::removeNull($valueType);
+                }, $matchedType->getValueTypes()),
+                [0],
+                [],
+                $matchedType->isList()
+            );
         }
 
         $overwrite = false;
