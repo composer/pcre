@@ -75,7 +75,7 @@ final class PregMatchTypeSpecifyingExtension implements StaticMethodTypeSpecifyi
 
         if (
             in_array($methodReflection->getName(), ['matchStrictGroups', 'isMatchStrictGroups'], true)
-            && count($matchedType->getConstantArrays()) > 0
+            && count($matchedType->getConstantArrays()) === 1
         ) {
             $matchedType = $matchedType->getConstantArrays()[0];
             $matchedType = new ConstantArrayType(
@@ -83,7 +83,7 @@ final class PregMatchTypeSpecifyingExtension implements StaticMethodTypeSpecifyi
                 array_map(static function (Type $valueType): Type {
                     return TypeCombinator::removeNull($valueType);
                 }, $matchedType->getValueTypes()),
-                [0],
+                $matchedType->getNextAutoIndexes(),
                 [],
                 $matchedType->isList()
             );
