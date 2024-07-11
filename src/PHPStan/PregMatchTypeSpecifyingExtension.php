@@ -43,7 +43,7 @@ final class PregMatchTypeSpecifyingExtension implements StaticMethodTypeSpecifyi
 
     public function isStaticMethodSupported(MethodReflection $methodReflection, StaticCall $node, TypeSpecifierContext $context): bool
     {
-        return $methodReflection->getName() === 'match' && !$context->null();
+        return in_array($methodReflection->getName(), ['match', 'isMatch'], true) && !$context->null();
     }
 
     public function specifyTypes(MethodReflection $methodReflection, StaticCall $node, Scope $scope, TypeSpecifierContext $context): SpecifiedTypes
