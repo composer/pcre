@@ -8,8 +8,7 @@
     >
     <testsuites>
         <testsuite name="PCRE Test Suite">
-            <directory>tests/PregTests</directory>
-            <directory>tests/RegexTests</directory>
+            <directory>tests/PHPStanTests</directory>
         </testsuite>
     </testsuites>
 
