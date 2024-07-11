@@ -52,12 +52,12 @@ function doMatchStrictGroups(string $s): void
     }
     assertType('array{}|array{string, string}', $matches);
 
-    if (Preg::isMatchStrictGroups('/Price: (£|€)?\d+/', $s, $matches)) {
-        assertType('array{string, string}', $matches);
+    if (Preg::isMatchStrictGroups('/Price: (?<test>£|€)\d+/', $s, $matches)) {
+        assertType('array{0: string, test: string, 1: string}', $matches);
     } else {
         assertType('array{}', $matches);
     }
-    assertType('array{}|array{string, string}', $matches);
+    assertType('array{}|array{0: string, test: string, 1: string}', $matches);
 }
 
 // disabled until https://github.com/phpstan/phpstan-src/pull/3185 can be resolved
