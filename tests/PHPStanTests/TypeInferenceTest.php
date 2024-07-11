@@ -13,6 +13,13 @@ namespace Composer\Pcre\PHPStanTests;
 
 use PHPStan\Testing\TypeInferenceTestCase;
 
+/**
+ * Run with "vendor/bin/phpunit --group phpstan"
+ *
+ * This is excluded by default to avoid side effects with the library tests
+ *
+ * @group phpstan
+ */
 class TypeInferenceTest extends TypeInferenceTestCase
 {
     /**

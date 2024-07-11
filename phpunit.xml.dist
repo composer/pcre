@@ -12,6 +12,12 @@
         </testsuite>
     </testsuites>
 
+    <groups>
+        <exclude>
+            <group>phpstan</group>
+        </exclude>
+    </groups>
+
     <filter>
         <whitelist>
             <directory>src</directory>

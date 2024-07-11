@@ -51,4 +51,6 @@ jobs:
           composer update ${{ env.COMPOSER_FLAGS }}
 
       - name: "Run tests"
-        run: "vendor/bin/phpunit"
+        run: |
+          vendor/bin/phpunit
+          vendor/bin/phpunit --group phpstan
