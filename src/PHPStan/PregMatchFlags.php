@@ -29,7 +29,7 @@ final class PregMatchFlags
                 return null;
             }
 
-            $internalFlagsTypes[] = $constantScalarValue | PREG_UNMATCHED_AS_NULL;
+            $internalFlagsTypes[] = new ConstantIntegerType($constantScalarValue | PREG_UNMATCHED_AS_NULL);
         }
         return TypeCombinator::union(...$internalFlagsTypes);
     }

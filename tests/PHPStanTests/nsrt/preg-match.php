@@ -29,17 +29,18 @@ function doMatch(string $s): void
     assertType('array{}|array{0: string, 1?: string|null}', $matches);
 }
 
-function identicalMatch(string $s): void
-{
-    if (Preg::match('/Price: /i', $s, $matches) === 1) {
-        assertType('array{string}', $matches);
-    } else {
-        assertType('array{}', $matches);
-    }
-    assertType('array{}|array{string}', $matches);
-}
-
 // disabled until https://github.com/phpstan/phpstan-src/pull/3185 can be resolved
+//
+//function identicalMatch(string $s): void
+//{
+//    if (Preg::match('/Price: /i', $s, $matches) === 1) {
+//        assertType('array{string}', $matches);
+//    } else {
+//        assertType('array{}', $matches);
+//    }
+//    assertType('array{}|array{string}', $matches);
+//}
+//
 //function equalMatch(string $s): void
 //{
 //    if (Preg::match('/Price: /i', $s, $matches) == 1) {
