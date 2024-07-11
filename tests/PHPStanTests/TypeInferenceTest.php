@@ -16,7 +16,7 @@ use PHPStan\Testing\TypeInferenceTestCase;
 class TypeInferenceTest extends TypeInferenceTestCase
 {
     /**
-     * @return mixed
+     * @return iterable<mixed>
      */
     public function dataFileAsserts(): iterable
     {
