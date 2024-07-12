@@ -3,6 +3,7 @@
 namespace PregMatchShapes;
 
 use Composer\Pcre\Preg;
+use Composer\Pcre\Regex;
 use function PHPStan\Testing\assertType;
 
 function doMatch(string $s): void
@@ -75,8 +76,15 @@ function doMatchStrictGroupsUnsafe(string $s): void
         assertType('array{string, string}', $matches);
     }
 
-    if (Preg::isMatchStrictGroups('{Configure Command(?: *</td><td class="v">| *=> *)(.*)?(?:</td>|$)}m', $s, $matches)) {
-        // should error as it is unsafe due to the optional group
+    // should error as it is unsafe due to the optional group 1
+    Regex::matchStrictGroups('{Configure Command(?: *</td><td class="v">| *=> *)(.*)?(?:</td>|$)}m', $s);
+
+    if (Preg::matchAllStrictGroups('{((?<foo>.)?z)}m', $s, $matches)) {
+        // should error as it is unsafe due to the optional group foo/2
+    }
+
+    if (Preg::isMatchStrictGroups('{'.$s.'}', $s, $matches)) {
+        // should error as it is unsafe due not being introspectable with the dynamic string
     }
 }
 

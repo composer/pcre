@@ -44,7 +44,7 @@ class MatchAllTest extends BaseTestCase
 
     public function testSuccessStrictGroups(): void
     {
-        $count = Preg::matchAllStrictGroups('{(?P<m>\d)(?<matched>a)?}', '3a', $matches);
+        $count = Preg::matchAllStrictGroups('{(?<m>\d)(?<matched>a)}', '3a', $matches);
         self::assertSame(1, $count);
         self::assertSame(array(0 => ['3a'], 'm' => ['3'], 1 => ['3'], 'matched' => ['a'], 2 => ['a']), $matches);
     }
@@ -52,8 +52,9 @@ class MatchAllTest extends BaseTestCase
     public function testFailStrictGroups(): void
     {
         self::expectException(UnexpectedNullMatchException::class);
-        self::expectExceptionMessage('Pattern "{(?P<m>\d)(?<unmatched>b)?}" had an unexpected unmatched group "unmatched", make sure the pattern always matches or use matchAll() instead.');
-        Preg::matchAllStrictGroups('{(?P<m>\d)(?<unmatched>b)?}', '123', $matches);
+        self::expectExceptionMessage('Pattern "{(?<m>\d)(?<unmatched>b)?}" had an unexpected unmatched group "unmatched", make sure the pattern always matches or use matchAll() instead.');
+        // @phpstan-ignore composerPcre.unsafeStrictGroups
+        Preg::matchAllStrictGroups('{(?<m>\d)(?<unmatched>b)?}', '123', $matches);
     }
 
     public function testBadPatternThrowsIfWarningsAreNotThrowing(): void

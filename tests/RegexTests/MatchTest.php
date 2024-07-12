@@ -40,15 +40,16 @@ class MatchTest extends BaseTestCase
 
     public function testSuccessStrictGroups(): void
     {
-        $result = Regex::matchStrictGroups('{(?P<m>\d)(?<matched>a)?}', '3a');
+        $result = Regex::matchStrictGroups('{(?<m>\d)(?<matched>a)}', '3a');
         self::assertSame(array(0 => '3a', 'm' => '3', 1 => '3', 'matched' => 'a', 2 => 'a'), $result->matches);
     }
 
     public function testFailStrictGroups(): void
     {
         self::expectException(UnexpectedNullMatchException::class);
-        self::expectExceptionMessage('Pattern "{(?P<m>\d)(?<unmatched>b)?}" had an unexpected unmatched group "unmatched", make sure the pattern always matches or use match() instead.');
-        Regex::matchStrictGroups('{(?P<m>\d)(?<unmatched>b)?}', '123');
+        self::expectExceptionMessage('Pattern "{(?<m>\d)(?<unmatched>b)?}" had an unexpected unmatched group "unmatched", make sure the pattern always matches or use match() instead.');
+        // @phpstan-ignore composerPcre.unsafeStrictGroups
+        Regex::matchStrictGroups('{(?<m>\d)(?<unmatched>b)?}', '123');
     }
 
     public function testBadPatternThrowsIfWarningsAreNotThrowing(): void
