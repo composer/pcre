@@ -8,9 +8,14 @@ conditionalTags:
         phpstan.staticMethodParameterOutTypeExtension: %featureToggles.narrowPregMatches%
     Composer\Pcre\PHPStan\PregMatchTypeSpecifyingExtension:
         phpstan.typeSpecifier.staticMethodTypeSpecifyingExtension: %featureToggles.narrowPregMatches%
+    Composer\Pcre\PHPStan\UnsafeStrictGroupsCallRule:
+        phpstan.rules.rule: %featureToggles.narrowPregMatches%
 
 services:
     -
         class: Composer\Pcre\PHPStan\PregMatchParameterOutTypeExtension
     -
         class: Composer\Pcre\PHPStan\PregMatchTypeSpecifyingExtension
+
+rules:
+    - Composer\Pcre\PHPStan\UnsafeStrictGroupsCallRule

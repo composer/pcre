@@ -7,13 +7,14 @@ use PHPStan\Type\Constant\ConstantIntegerType;
 use PHPStan\Type\TypeCombinator;
 use PHPStan\Type\Type;
 use PhpParser\Node\Arg;
+use PHPStan\Type\Php\RegexArrayShapeMatcher;
 
 final class PregMatchFlags
 {
     static public function getType(?Arg $flagsArg, Scope $scope): ?Type
     {
         if ($flagsArg === null) {
-            return new ConstantIntegerType(PREG_UNMATCHED_AS_NULL);
+            return new ConstantIntegerType(PREG_UNMATCHED_AS_NULL | RegexArrayShapeMatcher::PREG_UNMATCHED_AS_NULL_ON_72_73);
         }
 
         $flagsType = $scope->getType($flagsArg->value);
@@ -29,7 +30,7 @@ final class PregMatchFlags
                 return null;
             }
 
-            $internalFlagsTypes[] = new ConstantIntegerType($constantScalarValue | PREG_UNMATCHED_AS_NULL);
+            $internalFlagsTypes[] = new ConstantIntegerType($constantScalarValue | PREG_UNMATCHED_AS_NULL | RegexArrayShapeMatcher::PREG_UNMATCHED_AS_NULL_ON_72_73);
         }
         return TypeCombinator::union(...$internalFlagsTypes);
     }
