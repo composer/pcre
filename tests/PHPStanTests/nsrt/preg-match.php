@@ -16,33 +16,33 @@ function doMatch(string $s): void
     assertType('array{}|array{string}', $matches);
 
     if (Preg::match('/Price: (£|€)\d+/', $s, $matches)) {
-        assertType('array{string, string}', $matches);
+        assertType('array{string, non-empty-string}', $matches);
     } else {
         assertType('array{}', $matches);
     }
-    assertType('array{}|array{string, string}', $matches);
+    assertType('array{}|array{string, non-empty-string}', $matches);
 
     if (Preg::match('/Price: (£|€)?\d+/', $s, $matches)) {
-        assertType('array{string, string|null}', $matches);
+        assertType('array{string, non-empty-string|null}', $matches);
     } else {
         assertType('array{}', $matches);
     }
-    assertType('array{}|array{string, string|null}', $matches);
+    assertType('array{}|array{string, non-empty-string|null}', $matches);
 
     // passing the PREG_UNMATCHED_AS_NULL should change nothing compared to above as it is always set
     if (Preg::match('/Price: (£|€)?\d+/', $s, $matches, PREG_UNMATCHED_AS_NULL)) {
-        assertType('array{string, string|null}', $matches);
+        assertType('array{string, non-empty-string|null}', $matches);
     } else {
         assertType('array{}', $matches);
     }
-    assertType('array{}|array{string, string|null}', $matches);
+    assertType('array{}|array{string, non-empty-string|null}', $matches);
 
     if (Preg::isMatch('/Price: (?<currency>£|€)\d+/', $s, $matches)) {
-        assertType('array{0: string, currency: string, 1: string}', $matches);
+        assertType('array{0: string, currency: non-empty-string, 1: non-empty-string}', $matches);
     } else {
         assertType('array{}', $matches);
     }
-    assertType('array{}|array{0: string, currency: string, 1: string}', $matches);
+    assertType('array{}|array{0: string, currency: non-empty-string, 1: non-empty-string}', $matches);
 }
 
 function doMatchStrictGroups(string $s): void
@@ -55,18 +55,18 @@ function doMatchStrictGroups(string $s): void
     assertType('array{}|array{string}', $matches);
 
     if (Preg::matchStrictGroups('/Price: (£|€)\d+/', $s, $matches)) {
-        assertType('array{string, string}', $matches);
+        assertType('array{string, non-empty-string}', $matches);
     } else {
         assertType('array{}', $matches);
     }
-    assertType('array{}|array{string, string}', $matches);
+    assertType('array{}|array{string, non-empty-string}', $matches);
 
     if (Preg::isMatchStrictGroups('/Price: (?<test>£|€)\d+/', $s, $matches)) {
-        assertType('array{0: string, test: string, 1: string}', $matches);
+        assertType('array{0: string, test: non-empty-string, 1: non-empty-string}', $matches);
     } else {
         assertType('array{}', $matches);
     }
-    assertType('array{}|array{0: string, test: string, 1: string}', $matches);
+    assertType('array{}|array{0: string, test: non-empty-string, 1: non-empty-string}', $matches);
 }
 
 function doMatchStrictGroupsUnsafe(string $s): void
