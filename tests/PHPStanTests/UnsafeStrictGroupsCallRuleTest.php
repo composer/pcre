@@ -22,7 +22,7 @@ use PHPStan\Type\Php\RegexArrayShapeMatcher;
  *
  * @extends RuleTestCase<UnsafeStrictGroupsCallRule>
  */
-class UnsafeStrictGruopsCallRuleTest extends RuleTestCase
+class UnsafeStrictGroupsCallRuleTest extends RuleTestCase
 {
     protected function getRule(): \PHPStan\Rules\Rule
     {

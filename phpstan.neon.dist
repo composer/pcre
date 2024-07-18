@@ -12,6 +12,7 @@ parameters:
 
     excludePaths:
         - tests/PHPStanTests/nsrt/*
+        - tests/PHPStanTests/fixtures/*
 
 includes:
     - extension.neon

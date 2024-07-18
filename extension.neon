@@ -19,3 +19,4 @@ services:
 
 rules:
     - Composer\Pcre\PHPStan\UnsafeStrictGroupsCallRule
+    - Composer\Pcre\PHPStan\InvalidRegexPatternRule
