@@ -77,7 +77,7 @@ final class UnsafeStrictGroupsCallRule implements Rule
         }
         $patternType = $scope->getType($patternArg->value);
 
-        $matchedType = $this->regexShapeMatcher->matchType($patternType, $flagsType, TrinaryLogic::createYes());
+        $matchedType = $this->regexShapeMatcher->matchExpr($patternType, $flagsType, TrinaryLogic::createYes());
         if ($matchedType === null) {
             return [
                 RuleErrorBuilder::message(sprintf('The %s call is potentially unsafe as $matches\' type could not be inferred.', $node->name->name))

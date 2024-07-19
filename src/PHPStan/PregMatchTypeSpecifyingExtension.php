@@ -68,7 +68,7 @@ final class PregMatchTypeSpecifyingExtension implements StaticMethodTypeSpecifyi
         }
         $patternType = $scope->getType($patternArg->value);
 
-        $matchedType = $this->regexShapeMatcher->matchType($patternType, $flagsType, TrinaryLogic::createFromBoolean($context->true()));
+        $matchedType = $this->regexShapeMatcher->matchExpr($patternType, $flagsType, TrinaryLogic::createFromBoolean($context->true()));
         if ($matchedType === null) {
             return new SpecifiedTypes();
         }
