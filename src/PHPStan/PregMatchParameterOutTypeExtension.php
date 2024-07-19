@@ -51,9 +51,8 @@ final class PregMatchParameterOutTypeExtension implements StaticMethodParameterO
         if ($flagsType === null) {
             return null;
         }
-        $patternType = $scope->getType($patternArg->value);
 
-        return $this->regexShapeMatcher->matchExpr($patternType, $flagsType, TrinaryLogic::createMaybe());
+        return $this->regexShapeMatcher->matchExpr($patternArg->value, $flagsType, TrinaryLogic::createMaybe(), $scope);
     }
 
 }
