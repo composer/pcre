@@ -51,16 +51,12 @@ class BaseTestCase extends TestCase
             // Only use a message if the error can be reliably determined
             if (PHP_VERSION_ID >= 80000) {
                 $error = 'Internal error';
-            } elseif (PHP_VERSION_ID >= 70201) {
+            } else {
                 $error = 'PREG_INTERNAL_ERROR';
             }
         }
 
-        if (null !== $error) {
-            $message = sprintf('%s: failed executing "%s": %s', $this->pregFunction, $pattern, $error);
-        } else {
-            $message = null;
-        }
+        $message = sprintf('%s: failed executing "%s": %s', $this->pregFunction, $pattern, $error);
 
         $this->doExpectException('Composer\Pcre\PcreException', $message);
     }
