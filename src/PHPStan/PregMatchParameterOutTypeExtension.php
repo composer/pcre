@@ -30,7 +30,10 @@ final class PregMatchParameterOutTypeExtension implements StaticMethodParameterO
     {
         return
             $methodReflection->getDeclaringClass()->getName() === Preg::class
-            && in_array($methodReflection->getName(), ['match', 'isMatch', 'matchStrictGroups', 'isMatchStrictGroups'], true)
+            && in_array($methodReflection->getName(), [
+                'match', 'isMatch', 'matchStrictGroups', 'isMatchStrictGroups',
+                'matchAll', 'isMatchAll', 'matchAllStrictGroups', 'isMatchAllStrictGroups'
+            ], true)
             && $parameter->getName() === 'matches';
     }
 
@@ -50,6 +53,10 @@ final class PregMatchParameterOutTypeExtension implements StaticMethodParameterO
         $flagsType = PregMatchFlags::getType($flagsArg, $scope);
         if ($flagsType === null) {
             return null;
+        }
+
+        if (stripos($methodReflection->getName(), 'matchAll') !== false) {
+            return $this->regexShapeMatcher->matchAllExpr($patternArg->value, $flagsType, TrinaryLogic::createMaybe(), $scope);
         }
 
         return $this->regexShapeMatcher->matchExpr($patternArg->value, $flagsType, TrinaryLogic::createMaybe(), $scope);
