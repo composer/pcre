@@ -56,7 +56,7 @@ parameters:
 			path: tests/PregTests/ReplaceCallbackArrayTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$string of function strtoupper expects string, string\\|null given\\.$#"
+			message: "#^Parameter \\#1 \\$str(ing)? of function strtoupper expects string, string\\|null given\\.$#"
 			count: 2
 			path: tests/PregTests/ReplaceCallbackTest.php
 
