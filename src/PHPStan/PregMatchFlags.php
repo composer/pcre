@@ -14,7 +14,7 @@ final class PregMatchFlags
     static public function getType(?Arg $flagsArg, Scope $scope): ?Type
     {
         if ($flagsArg === null) {
-            return new ConstantIntegerType(PREG_UNMATCHED_AS_NULL | RegexArrayShapeMatcher::PREG_UNMATCHED_AS_NULL_ON_72_73);
+            return new ConstantIntegerType(PREG_UNMATCHED_AS_NULL);
         }
 
         $flagsType = $scope->getType($flagsArg->value);
@@ -30,7 +30,7 @@ final class PregMatchFlags
                 return null;
             }
 
-            $internalFlagsTypes[] = new ConstantIntegerType($constantScalarValue | PREG_UNMATCHED_AS_NULL | RegexArrayShapeMatcher::PREG_UNMATCHED_AS_NULL_ON_72_73);
+            $internalFlagsTypes[] = new ConstantIntegerType($constantScalarValue | PREG_UNMATCHED_AS_NULL);
         }
         return TypeCombinator::union(...$internalFlagsTypes);
     }

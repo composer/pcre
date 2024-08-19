@@ -1,6 +1,11 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Creating new PHPStan\\\\Reflection\\\\Native\\\\NativeParameterReflection is not covered by backward compatibility promise\\. The class might change in a minor PHPStan version\\.$#"
+			count: 1
+			path: src/PHPStan/PregReplaceCallbackClosureTypeExtension.php
+
+		-
 			message: "#^Parameter \\#2 \\$callback of function preg_replace_callback expects callable\\(array\\<int\\|string, string\\>\\)\\: string, \\(callable\\(array\\<int\\|string, array\\{string\\|null, int\\<\\-1, max\\>\\}\\>\\)\\: string\\)\\|\\(callable\\(array\\<int\\|string, string\\|null\\>\\)\\: string\\) given\\.$#"
 			count: 1
 			path: src/Preg.php
@@ -49,6 +54,11 @@ parameters:
 			message: "#^Regex pattern is invalid\\: No ending matching delimiter '\\}' found$#"
 			count: 2
 			path: tests/PregTests/ReplaceCallbackArrayTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$string of function strtoupper expects string, string\\|null given\\.$#"
+			count: 2
+			path: tests/PregTests/ReplaceCallbackTest.php
 
 		-
 			message: "#^Regex pattern is invalid\\: No ending matching delimiter '\\}' found$#"
