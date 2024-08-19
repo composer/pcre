@@ -25,7 +25,7 @@
         "phpstan/phpstan-strict-rules": "^1.1"
     },
     "conflict": {
-        "phpstan/phpstan": "<1.11.8"
+        "phpstan/phpstan": "<1.11.9"
     },
     "autoload": {
         "psr-4": {
