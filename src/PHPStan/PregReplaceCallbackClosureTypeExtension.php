@@ -61,6 +61,18 @@ final class PregReplaceCallbackClosureTypeExtension implements StaticMethodParam
             $matchesType = new ConstantArrayType(
                 $matchesType->getKeyTypes(),
                 array_map(static function (Type $valueType): Type {
+                    if (count($valueType->getConstantArrays()) === 1) {
+                        $valueTypeArray = $valueType->getConstantArrays()[0];
+                        return new ConstantArrayType(
+                            $valueTypeArray->getKeyTypes(),
+                            array_map(static function (Type $valueType): Type {
+                                return TypeCombinator::removeNull($valueType);
+                            }, $valueTypeArray->getValueTypes()),
+                            $valueTypeArray->getNextAutoIndexes(),
+                            [],
+                            $valueTypeArray->isList()
+                        );
+                    }
                     return TypeCombinator::removeNull($valueType);
                 }, $matchesType->getValueTypes()),
                 $matchesType->getNextAutoIndexes(),
