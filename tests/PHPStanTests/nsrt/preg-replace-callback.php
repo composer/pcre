@@ -96,8 +96,7 @@ function (string $s): void {
     Preg::replaceCallbackStrictGroups(
         '/(foo)?(bar)?(baz)?/',
         function ($matches) {
-            // should be array{array{string, int<-1, max>}, array{'foo', int<-1, max>}, array{'bar', int<-1, max>}, array{'baz', int<-1, max>}}
-            assertType("array{array{string|null, int<-1, max>}, array{'foo'|null, int<-1, max>}, array{'bar'|null, int<-1, max>}, array{'baz'|null, int<-1, max>}}", $matches);
+            assertType("array{array{string, int<-1, max>}, array{'foo', int<-1, max>}, array{'bar', int<-1, max>}, array{'baz', int<-1, max>}}", $matches);
             return '';
         },
         $s,
