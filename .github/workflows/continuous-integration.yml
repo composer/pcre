@@ -30,6 +30,7 @@ jobs:
         include:
           - php-version: "8.3"
             os: windows-latest
+            experimental: false
 
     steps:
       - uses: actions/checkout@v4
