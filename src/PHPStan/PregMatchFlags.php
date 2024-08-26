@@ -60,7 +60,7 @@ final class PregMatchFlags
             }
 
             if ($type instanceof ArrayType) {
-                return new ArrayType($type->getKeyType(), TypeCombinator::removeNull($type->getItemType()));
+                return new ArrayType($type->getKeyType(), $traverse($type->getItemType()));
             }
 
             return TypeCombinator::removeNull($type);
