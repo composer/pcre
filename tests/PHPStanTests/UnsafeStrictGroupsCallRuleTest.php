@@ -44,6 +44,10 @@ class UnsafeStrictGroupsCallRuleTest extends RuleTestCase
                 'The isMatchStrictGroups call is potentially unsafe as $matches\' type could not be inferred.',
                 86,
             ],
+            [
+                'The isMatchAllStrictGroups call is unsafe as match groups "test", "1" are optional and may be null.',
+                114
+            ]
         ]);
     }
 
