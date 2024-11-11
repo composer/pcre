@@ -31,7 +31,7 @@ class InvalidRegexPatternRuleTest extends RuleTestCase
 
     public function testRule(): void
     {
-        $missing = PHP_VERSION_ID < 70300 ? ')' : 'closing parenthesis';
+        $missing = 'closing parenthesis';
 
         $this->analyse([__DIR__ . '/fixtures/invalid-patterns.php'], [
             [
