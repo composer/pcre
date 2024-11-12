@@ -97,7 +97,7 @@ final class PregMatchTypeSpecifyingExtension implements StaticMethodTypeSpecifyi
             $matchesArg->value,
             $matchedType,
             $context,
-            $scope,
+            $scope
         )->setRootExpr($node);
 
         return $overwrite ? $typeSpecifier->setAlwaysOverwriteTypes() : $typeSpecifier;
