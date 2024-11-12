@@ -39,7 +39,6 @@ class PcreException extends \RuntimeException
             return preg_last_error_msg();
         }
 
-        /** @var array<string, array<string, int>> $constants */
         $constants = get_defined_constants(true);
         if (!isset($constants['pcre']) || !is_array($constants['pcre'])) {
             return 'UNDEFINED_ERROR';
