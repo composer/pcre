@@ -31,31 +31,29 @@ class InvalidRegexPatternRuleTest extends RuleTestCase
 
     public function testRule(): void
     {
-        $missing = PHP_VERSION_ID < 70300 ? ')' : 'closing parenthesis';
-
         $this->analyse([__DIR__ . '/fixtures/invalid-patterns.php'], [
             [
-                'Regex pattern is invalid: Compilation failed: missing '.$missing.' at offset 1',
+                'Regex pattern is invalid: Compilation failed: missing closing parenthesis at offset 1',
                 11,
             ],
             [
-                'Regex pattern is invalid: Compilation failed: missing '.$missing.' at offset 1',
+                'Regex pattern is invalid: Compilation failed: missing closing parenthesis at offset 1',
                 13,
             ],
             [
-                'Regex pattern is invalid: Compilation failed: missing '.$missing.' at offset 1',
+                'Regex pattern is invalid: Compilation failed: missing closing parenthesis at offset 1',
                 15,
             ],
             [
-                'Regex pattern is invalid: Compilation failed: missing '.$missing.' at offset 1',
+                'Regex pattern is invalid: Compilation failed: missing closing parenthesis at offset 1',
                 17,
             ],
             [
-                'Regex pattern is invalid: Compilation failed: missing '.$missing.' at offset 1',
+                'Regex pattern is invalid: Compilation failed: missing closing parenthesis at offset 1',
                 19,
             ],
             [
-                'Regex pattern is invalid: Compilation failed: missing '.$missing.' at offset 1',
+                'Regex pattern is invalid: Compilation failed: missing closing parenthesis at offset 1',
                 21,
             ],
         ]);

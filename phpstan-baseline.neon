@@ -1,106 +1,127 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Creating new PHPStan\\\\Reflection\\\\Native\\\\NativeParameterReflection is not covered by backward compatibility promise\\. The class might change in a minor PHPStan version\\.$#"
+			message: '#^Creating new PHPStan\\Reflection\\Native\\NativeParameterReflection is not covered by backward compatibility promise\. The class might change in a minor PHPStan version\.$#'
+			identifier: phpstanApi.constructor
 			count: 1
 			path: src/PHPStan/PregReplaceCallbackClosureTypeExtension.php
 
 		-
-			message: "#^Parameter \\#2 \\$callback of function preg_replace_callback expects callable\\(array\\<int\\|string, string\\>\\)\\: string, \\(callable\\(array\\<int\\|string, array\\{string\\|null, int\\<\\-1, max\\>\\}\\>\\)\\: string\\)\\|\\(callable\\(array\\<int\\|string, string\\|null\\>\\)\\: string\\) given\\.$#"
+			message: '#^Parameter \#2 \$callback of function preg_replace_callback expects callable\(array\<string\>\)\: string, \(callable\(array\<int\|string, array\{string\|null, int\<\-1, max\>\}\>\)\: string\)\|\(callable\(array\<int\|string, string\|null\>\)\: string\) given\.$#'
+			identifier: argument.type
 			count: 1
 			path: src/Preg.php
 
 		-
-			message: "#^Parameter &\\$matches @param\\-out type of method Composer\\\\Pcre\\\\Preg\\:\\:matchAllWithOffsets\\(\\) expects array\\<int\\|string, list\\<array\\{string\\|null, int\\<\\-1, max\\>\\}\\>\\>, array given\\.$#"
+			message: '#^Parameter &\$matches @param\-out type of method Composer\\Pcre\\Preg\:\:matchAllWithOffsets\(\) expects array\<int\|string, list\<array\{string\|null, int\<\-1, max\>\}\>\>, array\<mixed\> given\.$#'
+			identifier: paramOut.type
 			count: 1
 			path: src/Preg.php
 
 		-
-			message: "#^Regex pattern is invalid\\: No ending matching delimiter '\\}' found$#"
+			message: '#^Regex pattern is invalid\: No ending matching delimiter ''\}'' found$#'
+			identifier: regexp.pattern
 			count: 2
 			path: tests/PregTests/GrepTest.php
 
 		-
-			message: "#^Regex pattern is invalid\\: No ending matching delimiter '\\}' found$#"
+			message: '#^Regex pattern is invalid\: No ending matching delimiter ''\}'' found$#'
+			identifier: regexp.pattern
 			count: 2
 			path: tests/PregTests/IsMatchAllTest.php
 
 		-
-			message: "#^Regex pattern is invalid\\: No ending matching delimiter '\\}' found$#"
+			message: '#^Regex pattern is invalid\: No ending matching delimiter ''\}'' found$#'
+			identifier: regexp.pattern
 			count: 2
 			path: tests/PregTests/IsMatchAllWithOffsetsTest.php
 
 		-
-			message: "#^Regex pattern is invalid\\: No ending matching delimiter '\\}' found$#"
+			message: '#^Regex pattern is invalid\: No ending matching delimiter ''\}'' found$#'
+			identifier: regexp.pattern
 			count: 2
 			path: tests/PregTests/IsMatchTest.php
 
 		-
-			message: "#^Regex pattern is invalid\\: No ending matching delimiter '\\}' found$#"
+			message: '#^Regex pattern is invalid\: No ending matching delimiter ''\}'' found$#'
+			identifier: regexp.pattern
 			count: 2
 			path: tests/PregTests/IsMatchWithOffsetsTest.php
 
 		-
-			message: "#^Regex pattern is invalid\\: No ending matching delimiter '\\}' found$#"
+			message: '#^Regex pattern is invalid\: No ending matching delimiter ''\}'' found$#'
+			identifier: regexp.pattern
 			count: 2
 			path: tests/PregTests/MatchAllTest.php
 
 		-
-			message: "#^Regex pattern is invalid\\: No ending matching delimiter '\\}' found$#"
+			message: '#^Regex pattern is invalid\: No ending matching delimiter ''\}'' found$#'
+			identifier: regexp.pattern
 			count: 2
 			path: tests/PregTests/MatchTest.php
 
 		-
-			message: "#^Regex pattern is invalid\\: No ending matching delimiter '\\}' found$#"
+			message: '#^Regex pattern is invalid\: No ending matching delimiter ''\}'' found$#'
+			identifier: regexp.pattern
 			count: 2
 			path: tests/PregTests/ReplaceCallbackArrayTest.php
 
 		-
-			message: "#^Regex pattern is invalid\\: No ending matching delimiter '\\}' found$#"
+			message: '#^Regex pattern is invalid\: No ending matching delimiter ''\}'' found$#'
+			identifier: regexp.pattern
 			count: 2
 			path: tests/PregTests/ReplaceCallbackTest.php
 
 		-
-			message: "#^Regex pattern is invalid\\: No ending matching delimiter '\\}' found$#"
+			message: '#^Regex pattern is invalid\: No ending matching delimiter ''\}'' found$#'
+			identifier: regexp.pattern
 			count: 2
 			path: tests/PregTests/ReplaceTest.php
 
 		-
-			message: "#^Regex pattern is invalid\\: No ending matching delimiter '\\}' found$#"
+			message: '#^Regex pattern is invalid\: No ending matching delimiter ''\}'' found$#'
+			identifier: regexp.pattern
 			count: 2
 			path: tests/PregTests/SplitTest.php
 
 		-
-			message: "#^Regex pattern is invalid\\: No ending matching delimiter '\\}' found$#"
+			message: '#^Regex pattern is invalid\: No ending matching delimiter ''\}'' found$#'
+			identifier: regexp.pattern
 			count: 2
 			path: tests/PregTests/SplitWithOffsetsTest.php
 
 		-
-			message: "#^Regex pattern is invalid\\: No ending matching delimiter '\\}' found$#"
+			message: '#^Regex pattern is invalid\: No ending matching delimiter ''\}'' found$#'
+			identifier: regexp.pattern
 			count: 2
 			path: tests/RegexTests/IsMatchTest.php
 
 		-
-			message: "#^Regex pattern is invalid\\: No ending matching delimiter '\\}' found$#"
+			message: '#^Regex pattern is invalid\: No ending matching delimiter ''\}'' found$#'
+			identifier: regexp.pattern
 			count: 2
 			path: tests/RegexTests/MatchAllTest.php
 
 		-
-			message: "#^Regex pattern is invalid\\: No ending matching delimiter '\\}' found$#"
+			message: '#^Regex pattern is invalid\: No ending matching delimiter ''\}'' found$#'
+			identifier: regexp.pattern
 			count: 2
 			path: tests/RegexTests/MatchTest.php
 
 		-
-			message: "#^Regex pattern is invalid\\: No ending matching delimiter '\\}' found$#"
+			message: '#^Regex pattern is invalid\: No ending matching delimiter ''\}'' found$#'
+			identifier: regexp.pattern
 			count: 2
 			path: tests/RegexTests/ReplaceCallbackArrayTest.php
 
 		-
-			message: "#^Regex pattern is invalid\\: No ending matching delimiter '\\}' found$#"
+			message: '#^Regex pattern is invalid\: No ending matching delimiter ''\}'' found$#'
+			identifier: regexp.pattern
 			count: 2
 			path: tests/RegexTests/ReplaceCallbackTest.php
 
 		-
-			message: "#^Regex pattern is invalid\\: No ending matching delimiter '\\}' found$#"
+			message: '#^Regex pattern is invalid\: No ending matching delimiter ''\}'' found$#'
+			identifier: regexp.pattern
 			count: 2
 			path: tests/RegexTests/ReplaceTest.php
