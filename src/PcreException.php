@@ -45,7 +45,7 @@ class PcreException extends \RuntimeException
         }
 
         $constants = get_defined_constants(true);
-        if (!isset($constants['pcre'])) {
+        if (!isset($constants['pcre']) || !is_array($constants['pcre'])) {
             return 'UNDEFINED_ERROR';
         }
 
