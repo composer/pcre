@@ -31,8 +31,8 @@ class BaseTestCase extends TestCase
 
     protected function doExpectWarning(string $message): void
     {
-        $this->expectWarning();
-        $this->expectWarningMessage($message);
+        $this->expectWarning(); // @phpstan-ignore method.deprecated
+        $this->expectWarningMessage($message); // @phpstan-ignore method.deprecated
     }
 
     protected function expectPcreEngineException(string $pattern): void
