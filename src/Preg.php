@@ -11,6 +11,10 @@
 
 namespace Composer\Pcre;
 
+use InvalidArgumentException;
+use TypeError;
+use Stringable;
+
 class Preg
 {
     /** @internal */
@@ -151,10 +155,10 @@ class Preg
     {
         if (!is_scalar($subject)) {
             if (is_array($subject)) {
-                throw new \InvalidArgumentException(static::ARRAY_MSG);
+                throw new InvalidArgumentException(static::ARRAY_MSG);
             }
 
-            throw new \TypeError(sprintf(static::INVALID_TYPE_MSG, gettype($subject)));
+            throw new TypeError(sprintf(static::INVALID_TYPE_MSG, gettype($subject)));
         }
 
         $result = preg_replace($pattern, $replacement, $subject, $limit, $count);
@@ -178,10 +182,10 @@ class Preg
     {
         if (!is_scalar($subject)) {
             if (is_array($subject)) {
-                throw new \InvalidArgumentException(static::ARRAY_MSG);
+                throw new InvalidArgumentException(static::ARRAY_MSG);
             }
 
-            throw new \TypeError(sprintf(static::INVALID_TYPE_MSG, gettype($subject)));
+            throw new TypeError(sprintf(static::INVALID_TYPE_MSG, gettype($subject)));
         }
 
         $result = preg_replace_callback($pattern, $replacement, $subject, $limit, $count, $flags | PREG_UNMATCHED_AS_NULL);
@@ -222,10 +226,10 @@ class Preg
     {
         if (!is_scalar($subject)) {
             if (is_array($subject)) {
-                throw new \InvalidArgumentException(static::ARRAY_MSG);
+                throw new InvalidArgumentException(static::ARRAY_MSG);
             }
 
-            throw new \TypeError(sprintf(static::INVALID_TYPE_MSG, gettype($subject)));
+            throw new TypeError(sprintf(static::INVALID_TYPE_MSG, gettype($subject)));
         }
 
         $result = preg_replace_callback_array($pattern, $subject, $limit, $count, $flags | PREG_UNMATCHED_AS_NULL);
@@ -244,7 +248,7 @@ class Preg
     public static function split(string $pattern, string $subject, int $limit = -1, int $flags = 0): array
     {
         if (($flags & PREG_SPLIT_OFFSET_CAPTURE) !== 0) {
-            throw new \InvalidArgumentException('PREG_SPLIT_OFFSET_CAPTURE is not supported as it changes the type of $matches, use splitWithOffsets() instead');
+            throw new InvalidArgumentException('PREG_SPLIT_OFFSET_CAPTURE is not supported as it changes the type of $matches, use splitWithOffsets() instead');
         }
 
         $result = preg_split($pattern, $subject, $limit, $flags);
@@ -271,7 +275,7 @@ class Preg
     }
 
     /**
-     * @template T of string|\Stringable
+     * @template T of string|Stringable
      * @param string   $pattern
      * @param array<T> $array
      * @param int-mask<PREG_GREP_INVERT> $flags PREG_GREP_INVERT
@@ -379,14 +383,14 @@ class Preg
     private static function checkOffsetCapture(int $flags, string $useFunctionName): void
     {
         if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
-            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the type of $matches, use ' . $useFunctionName . '() instead');
+            throw new InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the type of $matches, use ' . $useFunctionName . '() instead');
         }
     }
 
     private static function checkSetOrder(int $flags): void
     {
         if (($flags & PREG_SET_ORDER) !== 0) {
-            throw new \InvalidArgumentException('PREG_SET_ORDER is not supported as it changes the type of $matches');
+            throw new InvalidArgumentException('PREG_SET_ORDER is not supported as it changes the type of $matches');
         }
     }
 
@@ -395,7 +399,7 @@ class Preg
      * @return array<int|string, string>
      * @throws UnexpectedNullMatchException
      */
-    private static function enforceNonNullMatches(string $pattern, array $matches, string $variantMethod)
+    private static function enforceNonNullMatches(string $pattern, array $matches, string $variantMethod): array
     {
         foreach ($matches as $group => $match) {
             if (is_string($match) || (is_array($match) && is_string($match[0]))) {
@@ -414,7 +418,7 @@ class Preg
      * @return array<int|string, list<string>>
      * @throws UnexpectedNullMatchException
      */
-    private static function enforceNonNullMatchAll(string $pattern, array $matches, string $variantMethod)
+    private static function enforceNonNullMatchAll(string $pattern, array $matches, string $variantMethod): array
     {
         foreach ($matches as $group => $groupMatches) {
             foreach ($groupMatches as $match) {
