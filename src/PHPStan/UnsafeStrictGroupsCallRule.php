@@ -2,6 +2,7 @@
 
 namespace Composer\Pcre\PHPStan;
 
+use PhpParser\Node\Identifier;
 use Composer\Pcre\Preg;
 use Composer\Pcre\Regex;
 use PhpParser\Node;
@@ -48,7 +49,7 @@ final class UnsafeStrictGroupsCallRule implements Rule
         if (!$isRegex && !$isPreg) {
             return [];
         }
-        if (!$node->name instanceof Node\Identifier || !in_array($node->name->name, ['matchStrictGroups', 'isMatchStrictGroups', 'matchAllStrictGroups', 'isMatchAllStrictGroups'], true)) {
+        if (!$node->name instanceof Identifier || !in_array($node->name->name, ['matchStrictGroups', 'isMatchStrictGroups', 'matchAllStrictGroups', 'isMatchAllStrictGroups'], true)) {
             return [];
         }
 

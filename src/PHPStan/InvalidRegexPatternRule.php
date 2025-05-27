@@ -2,6 +2,7 @@
 
 namespace Composer\Pcre\PHPStan;
 
+use PhpParser\Node\Identifier;
 use Composer\Pcre\Preg;
 use Composer\Pcre\Regex;
 use Composer\Pcre\PcreException;
@@ -58,7 +59,7 @@ class InvalidRegexPatternRule implements Rule
         if (!$isRegex && !$isPreg) {
             return [];
         }
-        if (!$node->name instanceof Node\Identifier || !Preg::isMatch('{^(match|isMatch|grep|replace|split)}', $node->name->name)) {
+        if (!$node->name instanceof Identifier || !Preg::isMatch('{^(match|isMatch|grep|replace|split)}', $node->name->name)) {
             return [];
         }
 

@@ -11,10 +11,12 @@
 
 namespace Composer\Pcre;
 
+use LogicException;
+
 class UnexpectedNullMatchException extends PcreException
 {
     public static function fromFunction($function, $pattern)
     {
-        throw new \LogicException('fromFunction should not be called on '.self::class.', use '.PcreException::class);
+        throw new LogicException('fromFunction should not be called on '.self::class.', use '.PcreException::class);
     }
 }

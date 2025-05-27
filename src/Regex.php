@@ -11,6 +11,8 @@
 
 namespace Composer\Pcre;
 
+use InvalidArgumentException;
+
 class Regex
 {
     /**
@@ -163,14 +165,14 @@ class Regex
     private static function checkOffsetCapture(int $flags, string $useFunctionName): void
     {
         if (($flags & PREG_OFFSET_CAPTURE) !== 0) {
-            throw new \InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the return type, use '.$useFunctionName.'() instead');
+            throw new InvalidArgumentException('PREG_OFFSET_CAPTURE is not supported as it changes the return type, use '.$useFunctionName.'() instead');
         }
     }
 
     private static function checkSetOrder(int $flags): void
     {
         if (($flags & PREG_SET_ORDER) !== 0) {
-            throw new \InvalidArgumentException('PREG_SET_ORDER is not supported as it changes the return type');
+            throw new InvalidArgumentException('PREG_SET_ORDER is not supported as it changes the return type');
         }
     }
 }
