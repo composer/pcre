@@ -11,6 +11,7 @@
 
 namespace Composer\Pcre;
 
+use Throwable;
 use PHPUnit\Framework\TestCase;
 
 class BaseTestCase extends TestCase
@@ -19,7 +20,7 @@ class BaseTestCase extends TestCase
     protected $pregFunction = null;
 
     /**
-     * @param  class-string<\Throwable> $class
+     * @param class-string<Throwable> $class
      */
     protected function doExpectException(string $class, ?string $message = null): void
     {

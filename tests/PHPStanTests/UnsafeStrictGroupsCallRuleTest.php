@@ -11,6 +11,7 @@
 
 namespace Composer\Pcre\PHPStanTests;
 
+use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use Composer\Pcre\PHPStan\UnsafeStrictGroupsCallRule;
 use PHPStan\Type\Php\RegexArrayShapeMatcher;
@@ -24,7 +25,7 @@ use PHPStan\Type\Php\RegexArrayShapeMatcher;
  */
 class UnsafeStrictGroupsCallRuleTest extends RuleTestCase
 {
-    protected function getRule(): \PHPStan\Rules\Rule
+    protected function getRule(): Rule
     {
         return new UnsafeStrictGroupsCallRule(self::getContainer()->getByType(RegexArrayShapeMatcher::class));
     }

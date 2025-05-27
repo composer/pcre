@@ -11,6 +11,7 @@
 
 namespace Composer\Pcre\PHPStanTests;
 
+use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use Composer\Pcre\PHPStan\InvalidRegexPatternRule;
 use PHPStan\Type\Php\RegexArrayShapeMatcher;
@@ -24,7 +25,7 @@ use PHPStan\Type\Php\RegexArrayShapeMatcher;
  */
 class InvalidRegexPatternRuleTest extends RuleTestCase
 {
-    protected function getRule(): \PHPStan\Rules\Rule
+    protected function getRule(): Rule
     {
         return new InvalidRegexPatternRule();
     }
