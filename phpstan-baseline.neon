@@ -7,6 +7,12 @@ parameters:
 			path: src/PHPStan/PregReplaceCallbackClosureTypeExtension.php
 
 		-
+			message: '#^Method Composer\\Pcre\\Preg\:\:split\(\) should return list\<string\> but returns list\<array\{string, int\<0, max\>\}\|string\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Preg.php
+
+		-
 			message: '#^Parameter \#2 \$callback of function preg_replace_callback expects callable\(array\<string\>\)\: string, \(callable\(array\<int\|string, array\{string\|null, int\<\-1, max\>\}\>\)\: string\)\|\(callable\(array\<int\|string, string\|null\>\)\: string\) given\.$#'
 			identifier: argument.type
 			count: 1
