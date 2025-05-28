@@ -27,7 +27,7 @@ class MatchTest extends BaseTestCase
         $result = Regex::match('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz');
         self::assertInstanceOf('Composer\Pcre\MatchResult', $result);
         self::assertTrue($result->matched);
-        self::assertSame(array(0 => 'i', 'm' => 'i', 1 => 'i'), $result->matches);
+        self::assertSame([0 => 'i', 'm' => 'i', 1 => 'i'], $result->matches);
     }
 
     public function testFailure(): void
@@ -35,13 +35,13 @@ class MatchTest extends BaseTestCase
         $result = Regex::match('{abc}', 'def');
         self::assertInstanceOf('Composer\Pcre\MatchResult', $result);
         self::assertFalse($result->matched);
-        self::assertSame(array(), $result->matches);
+        self::assertSame([], $result->matches);
     }
 
     public function testSuccessStrictGroups(): void
     {
         $result = Regex::matchStrictGroups('{(?<m>\d)(?<matched>a)}', '3a');
-        self::assertSame(array(0 => '3a', 'm' => '3', 1 => '3', 'matched' => 'a', 2 => 'a'), $result->matches);
+        self::assertSame([0 => '3a', 'm' => '3', 1 => '3', 'matched' => 'a', 2 => 'a'], $result->matches);
     }
 
     public function testFailStrictGroups(): void

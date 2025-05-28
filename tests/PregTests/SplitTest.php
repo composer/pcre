@@ -24,13 +24,13 @@ class SplitTest extends BaseTestCase
     public function testSuccess(): void
     {
         $result = Preg::split('{[\s,]+}', 'a, b, c');
-        self::assertSame(array('a', 'b', 'c'), $result);
+        self::assertSame(['a', 'b', 'c'], $result);
     }
 
     public function testFailure(): void
     {
         $result = Preg::split('{[\s,]+}', 'abc');
-        self::assertSame(array('abc'), $result);
+        self::assertSame(['abc'], $result);
     }
 
     public function testBadPatternThrowsIfWarningsAreNotThrowing(): void

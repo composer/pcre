@@ -56,6 +56,6 @@ class ReplaceTest extends BaseTestCase
     {
         $this->doExpectException('InvalidArgumentException', Preg::ARRAY_MSG);
         // @phpstan-ignore-next-line
-        Regex::replace('{(?P<m>d)}', 'e', array('abcd'));
+        Regex::replace('{(?P<m>d)}', 'e', ['abcd']);
     }
 }

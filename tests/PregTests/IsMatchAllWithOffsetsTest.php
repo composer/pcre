@@ -25,14 +25,14 @@ class IsMatchAllWithOffsetsTest extends BaseTestCase
     {
         $result = Preg::isMatchAllWithOffsets('{[aei]}', 'abcdefghijklmnopqrstuvwxyz', $matches);
         self::assertSame(true, $result);
-        self::assertSame(array(0 => array(array('a', 0), array('e', 4), array('i', 8))), $matches);
+        self::assertSame([0 => [['a', 0], ['e', 4], ['i', 8]]], $matches);
     }
 
     public function testFailure(): void
     {
         $result = Preg::isMatchAllWithOffsets('{abc}', 'def', $matches);
         self::assertSame(false, $result);
-        self::assertSame(array(array()), $matches);
+        self::assertSame([[]], $matches);
     }
 
     public function testBadPatternThrowsIfWarningsAreNotThrowing(): void

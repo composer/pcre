@@ -25,7 +25,7 @@ class IsMatchAllTest extends BaseTestCase
     {
         $result = Preg::isMatchAll('{[aei]}', 'abcdefghijklmnopqrstuvwxyz', $matches);
         self::assertSame(true, $result);
-        self::assertSame(array(0 => array('a', 'e', 'i')), $matches);
+        self::assertSame([0 => ['a', 'e', 'i']], $matches);
     }
 
     public function testSuccessNoRef(): void
@@ -38,7 +38,7 @@ class IsMatchAllTest extends BaseTestCase
     {
         $result = Preg::isMatchAll('{abc}', 'def', $matches);
         self::assertSame(false, $result);
-        self::assertSame(array(array()), $matches);
+        self::assertSame([[]], $matches);
     }
 
     public function testBadPatternThrowsIfWarningsAreNotThrowing(): void

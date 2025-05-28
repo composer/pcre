@@ -125,6 +125,6 @@ class ReplaceCallbackTest extends BaseTestCase
 
         Preg::replaceCallback('{(?P<m>d)}', function ($match) {
             return '('.$match[0].')';
-        }, array('abcd')); // @phpstan-ignore-line
+        }, ['abcd']); // @phpstan-ignore-line
     }
 }

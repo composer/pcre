@@ -27,7 +27,7 @@ class MatchAllTest extends BaseTestCase
         self::assertInstanceOf('Composer\Pcre\MatchAllResult', $result);
         self::assertTrue($result->matched);
         self::assertSame(3, $result->count);
-        self::assertSame(array(0 => array('a', 'e', 'i')), $result->matches);
+        self::assertSame([0 => ['a', 'e', 'i']], $result->matches);
     }
 
     public function testFailure(): void
@@ -35,7 +35,7 @@ class MatchAllTest extends BaseTestCase
         $result = Regex::matchAll('{abc}', 'def');
         self::assertInstanceOf('Composer\Pcre\MatchAllResult', $result);
         self::assertFalse($result->matched);
-        self::assertSame(array(array()), $result->matches);
+        self::assertSame([[]], $result->matches);
     }
 
     public function testBadPatternThrowsIfWarningsAreNotThrowing(): void

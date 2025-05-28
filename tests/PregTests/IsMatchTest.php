@@ -25,7 +25,7 @@ class IsMatchTest extends BaseTestCase
     {
         $result = Preg::isMatch('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz', $matches);
         self::assertSame(true, $result);
-        self::assertSame(array(0 => 'i', 'm' => 'i', 1 => 'i'), $matches);
+        self::assertSame([0 => 'i', 'm' => 'i', 1 => 'i'], $matches);
     }
 
     public function testSuccessNoRef(): void
@@ -38,7 +38,7 @@ class IsMatchTest extends BaseTestCase
     {
         $result = Preg::isMatch('{abc}', 'def', $matches);
         self::assertSame(false, $result);
-        self::assertSame(array(), $matches);
+        self::assertSame([], $matches);
     }
 
     public function testBadPatternThrowsIfWarningsAreNotThrowing(): void

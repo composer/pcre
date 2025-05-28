@@ -26,7 +26,7 @@ class MatchWithOffsetsTest extends BaseTestCase
         $result = Regex::matchWithOffsets('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz');
         self::assertInstanceOf('Composer\Pcre\MatchWithOffsetsResult', $result);
         self::assertTrue($result->matched);
-        self::assertSame(array(0 => array('i', 8), 'm' => array('i', 8), 1 => array('i', 8)), $result->matches);
+        self::assertSame([0 => ['i', 8], 'm' => ['i', 8], 1 => ['i', 8]], $result->matches);
     }
 
     public function testFailure(): void
@@ -34,6 +34,6 @@ class MatchWithOffsetsTest extends BaseTestCase
         $result = Regex::matchWithOffsets('{abc}', 'def');
         self::assertInstanceOf('Composer\Pcre\MatchWithOffsetsResult', $result);
         self::assertFalse($result->matched);
-        self::assertSame(array(), $result->matches);
+        self::assertSame([], $result->matches);
     }
 }

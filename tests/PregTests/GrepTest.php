@@ -23,25 +23,25 @@ class GrepTest extends BaseTestCase
 
     public function testSuccess(): void
     {
-        $result = Preg::grep('{[bc]}', array('a', 'b', 'c'));
-        self::assertSame(array(1 => 'b', 2 => 'c'), $result);
+        $result = Preg::grep('{[bc]}', ['a', 'b', 'c']);
+        self::assertSame([1 => 'b', 2 => 'c'], $result);
     }
 
     public function testFailure(): void
     {
-        $result = Preg::grep('{[de]}', array('a', 'b', 'c'));
-        self::assertSame(array(), $result);
+        $result = Preg::grep('{[de]}', ['a', 'b', 'c']);
+        self::assertSame([], $result);
     }
 
     public function testBadPatternThrowsIfWarningsAreNotThrowing(): void
     {
         $this->expectPcreException($pattern = '{[de]');
-        @Preg::grep($pattern, array('a', 'b', 'c'));
+        @Preg::grep($pattern, ['a', 'b', 'c']);
     }
 
     public function testBadPatternTriggersWarningByDefault(): void
     {
         $this->expectPcreWarning();
-        Preg::grep('{[de]', array('a', 'b', 'c'));
+        Preg::grep('{[de]', ['a', 'b', 'c']);
     }
 }

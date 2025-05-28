@@ -24,13 +24,13 @@ class SplitWithOffsetsTest extends BaseTestCase
     public function testSuccess(): void
     {
         $result = Preg::splitWithOffsets('{[\s,]+}', 'a, b, c');
-        self::assertSame(array(array('a', 0), array('b', 3), array('c', 6)), $result);
+        self::assertSame([['a', 0], ['b', 3], ['c', 6]], $result);
     }
 
     public function testFailure(): void
     {
         $result = Preg::splitWithOffsets('{[\s,]+}', 'abc');
-        self::assertSame(array(array('abc', 0)), $result);
+        self::assertSame([['abc', 0]], $result);
     }
 
     public function testBadPatternThrowsIfWarningsAreNotThrowing(): void

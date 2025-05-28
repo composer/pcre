@@ -26,9 +26,9 @@ class ReplaceCallbackArrayTest extends BaseTestCase
 
     public function testSuccess(): void
     {
-        $result = Preg::replaceCallbackArray(array('{(?P<m>d)}' => function ($match) {
+        $result = Preg::replaceCallbackArray(['{(?P<m>d)}' => function ($match) {
             return '('.$match[0].')';
-        }), 'abcd', -1, $count);
+        }], 'abcd', -1, $count);
 
         self::assertSame(1, $count);
         self::assertSame('abc(d)', $result);
@@ -36,18 +36,18 @@ class ReplaceCallbackArrayTest extends BaseTestCase
 
     public function testSuccessNoRef(): void
     {
-        $result = Preg::replaceCallbackArray(array('{(?P<m>d)}' => function ($match) {
+        $result = Preg::replaceCallbackArray(['{(?P<m>d)}' => function ($match) {
             return '('.$match[0].')';
-        }), 'abcd');
+        }], 'abcd');
 
         self::assertSame('abc(d)', $result);
     }
 
     public function testFailure(): void
     {
-        $result = Preg::replaceCallbackArray(array('{abc}' => function ($match) {
+        $result = Preg::replaceCallbackArray(['{abc}' => function ($match) {
             return '('.$match[0].')';
-        }), 'def', -1, $count);
+        }], 'def', -1, $count);
 
         self::assertSame(0, $count);
         self::assertSame('def', $result);
@@ -57,35 +57,35 @@ class ReplaceCallbackArrayTest extends BaseTestCase
     {
         $this->expectPcreException($pattern = '{(?P<m>d)');
 
-        @Preg::replaceCallbackArray(array($pattern => function ($match) {
+        @Preg::replaceCallbackArray([$pattern => function ($match) {
             return '('.$match[0].')';
-        }), 'abcd');
+        }], 'abcd');
     }
 
     public function testBadPatternTriggersWarningByDefault(): void
     {
         $this->expectPcreWarning();
 
-        Preg::replaceCallbackArray(array('{(?P<m>d)' => function ($match) {
+        Preg::replaceCallbackArray(['{(?P<m>d)' => function ($match) {
             return '('.$match[0].')';
-        }), 'abcd');
+        }], 'abcd');
     }
 
     public function testThrowsWithSubjectArray(): void
     {
         $this->doExpectException('InvalidArgumentException', Preg::ARRAY_MSG);
 
-        Preg::replaceCallbackArray(array('{(?P<m>d)}' => function ($match) {
+        Preg::replaceCallbackArray(['{(?P<m>d)}' => function ($match) {
             return '('.$match[0].')';
-        }), array('abcd')); // @phpstan-ignore-line
+        }], ['abcd']); // @phpstan-ignore-line
     }
 
     public function testThrowsWithSubjectSomethingElse(): void
     {
         $this->doExpectException('TypeError', sprintf(Preg::INVALID_TYPE_MSG, gettype(null)));
 
-        Preg::replaceCallbackArray(array('{(?P<m>d)}' => function ($match) {
+        Preg::replaceCallbackArray(['{(?P<m>d)}' => function ($match) {
             return '('.$match[0].')';
-        }), null); // @phpstan-ignore-line
+        }], null); // @phpstan-ignore-line
     }
 }

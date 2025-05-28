@@ -25,14 +25,14 @@ class IsMatchWithOffsetsTest extends BaseTestCase
     {
         $result = Preg::isMatchWithOffsets('{(?P<m>[io])}', 'abcdefghijklmnopqrstuvwxyz', $matches);
         self::assertSame(true, $result);
-        self::assertSame(array(0 => array('i', 8), 'm' => array('i', 8), 1 => array('i', 8)), $matches);
+        self::assertSame([0 => ['i', 8], 'm' => ['i', 8], 1 => ['i', 8]], $matches);
     }
 
     public function testFailure(): void
     {
         $result = Preg::isMatchWithOffsets('{abc}', 'def', $matches);
         self::assertSame(false, $result);
-        self::assertSame(array(), $matches);
+        self::assertSame([], $matches);
     }
 
     public function testBadPatternThrowsIfWarningsAreNotThrowing(): void

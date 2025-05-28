@@ -26,7 +26,7 @@ class MatchAllTest extends BaseTestCase
     {
         $count = Preg::matchAll('{[aei]}', 'abcdefghijklmnopqrstuvwxyz', $matches);
         self::assertSame(3, $count);
-        self::assertSame(array(0 => array('a', 'e', 'i')), $matches);
+        self::assertSame([0 => ['a', 'e', 'i']], $matches);
     }
 
     public function testSuccessNoRef(): void
@@ -39,14 +39,14 @@ class MatchAllTest extends BaseTestCase
     {
         $count = Preg::matchAll('{abc}', 'def', $matches);
         self::assertSame(0, $count);
-        self::assertSame(array(array()), $matches);
+        self::assertSame([[]], $matches);
     }
 
     public function testSuccessStrictGroups(): void
     {
         $count = Preg::matchAllStrictGroups('{(?<m>\d)(?<matched>a)}', '3a', $matches);
         self::assertSame(1, $count);
-        self::assertSame(array(0 => ['3a'], 'm' => ['3'], 1 => ['3'], 'matched' => ['a'], 2 => ['a']), $matches);
+        self::assertSame([0 => ['3a'], 'm' => ['3'], 1 => ['3'], 'matched' => ['a'], 2 => ['a']], $matches);
     }
 
     public function testFailStrictGroups(): void

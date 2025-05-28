@@ -27,9 +27,9 @@ class ReplaceCallbackArrayTest extends BaseTestCase
 
     public function testSuccess(): void
     {
-        $result = Regex::replaceCallbackArray(array('{(?P<m>d)}' => function ($match) {
+        $result = Regex::replaceCallbackArray(['{(?P<m>d)}' => function ($match) {
             return '('.$match[0].')';
-        }), 'abcd');
+        }], 'abcd');
 
         self::assertInstanceOf('Composer\Pcre\ReplaceResult', $result);
         self::assertTrue($result->matched);
@@ -39,9 +39,9 @@ class ReplaceCallbackArrayTest extends BaseTestCase
 
     public function testFailure(): void
     {
-        $result = Regex::replaceCallbackArray(array('{abc}' => function ($match) {
+        $result = Regex::replaceCallbackArray(['{abc}' => function ($match) {
             return '('.$match[0].')';
-        }), 'def');
+        }], 'def');
 
         self::assertInstanceOf('Composer\Pcre\ReplaceResult', $result);
         self::assertFalse($result->matched);
@@ -53,26 +53,26 @@ class ReplaceCallbackArrayTest extends BaseTestCase
     {
         $this->expectPcreException($pattern = '{(?P<m>d)');
 
-        @Regex::replaceCallbackArray(array($pattern => function ($match) {
+        @Regex::replaceCallbackArray([$pattern => function ($match) {
             return '('.$match[0].')';
-        }), 'abcd');
+        }], 'abcd');
     }
 
     public function testBadPatternTriggersWarningByDefault(): void
     {
         $this->expectPcreWarning();
 
-        Regex::replaceCallbackArray(array('{(?P<m>d)' => function ($match) {
+        Regex::replaceCallbackArray(['{(?P<m>d)' => function ($match) {
             return '('.$match[0].')';
-        }), 'abcd');
+        }], 'abcd');
     }
 
     public function testThrowsWithSubjectArray(): void
     {
         $this->doExpectException('InvalidArgumentException', Preg::ARRAY_MSG);
 
-        Regex::replaceCallbackArray(array('{(?P<m>d)}' => function ($match) {
+        Regex::replaceCallbackArray(['{(?P<m>d)}' => function ($match) {
             return '('.$match[0].')';
-        }), array('abcd')); // @phpstan-ignore-line
+        }], ['abcd']); // @phpstan-ignore-line
     }
 }
