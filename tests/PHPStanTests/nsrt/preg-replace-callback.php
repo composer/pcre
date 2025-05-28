@@ -30,7 +30,7 @@ function (string $s): void {
     Preg::replaceCallback(
         '|<p>(\s*)\w|',
         function ($matches) {
-            assertType('array{string, string}', $matches);
+            assertType('array{non-falsy-string, string}', $matches);
             return '';
         },
         $s
@@ -55,7 +55,7 @@ function (string $s): void {
     Preg::replaceCallback(
         '/(foo)?(bar)?(baz)?/',
         function ($matches) {
-            assertType("array{0: array{string, int<-1, max>}, 1?: array{''|'foo', int<-1, max>}, 2?: array{''|'bar', int<-1, max>}, 3?: array{'baz', int<-1, max>}}", $matches);
+            assertType("list{0: array{string, int<-1, max>}, 1?: array{''|'foo', int<-1, max>}, 2?: array{''|'bar', int<-1, max>}, 3?: array{'baz', int<-1, max>}}", $matches);
             return '';
         },
         $s,

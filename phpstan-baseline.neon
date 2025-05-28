@@ -11,6 +11,12 @@ parameters:
 			path: src/Preg.php
 
 		-
+			message: '#^Method Composer\\Pcre\\Preg\:\:split\(\) should return list\<string\> but returns list\<array\{string, int\<0, max\>\}\|string\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Preg.php
+
+		-
 			message: '#^Creating new PHPStan\\Reflection\\Native\\NativeParameterReflection is not covered by backward compatibility promise\. The class might change in a minor PHPStan version\.$#'
 			identifier: phpstanApi.constructor
 			count: 1
