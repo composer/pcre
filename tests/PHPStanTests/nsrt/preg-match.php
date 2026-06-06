@@ -116,6 +116,23 @@ function doMatchAllStrictGroups(string $s): void
     }
 }
 
+function narrowsSubject(string $s): void
+{
+    if (Preg::match('/Price: /i', $s)) {
+        assertType('non-falsy-string', $s);
+    } else {
+        assertType('string', $s);
+    }
+    assertType('string', $s);
+
+    if (Preg::isMatch('/Price: /i', $s)) {
+        assertType('non-falsy-string', $s);
+    } else {
+        assertType('string', $s);
+    }
+    assertType('string', $s);
+}
+
 // disabled until https://github.com/phpstan/phpstan-src/pull/3185 can be resolved
 //
 //function identicalMatch(string $s): void
