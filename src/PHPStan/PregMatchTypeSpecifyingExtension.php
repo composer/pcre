@@ -113,13 +113,13 @@ final class PregMatchTypeSpecifyingExtension implements StaticMethodTypeSpecifyi
             $context = $context->negate();
         }
 
-        $typeSpecifier = $this->typeSpecifier->create(
+        $specifiedTypes = $this->typeSpecifier->create(
             $matchesArg->value,
             $matchedType,
             $context,
             $scope
         )->setRootExpr($node);
 
-        return $subjectTypes->unionWith($overwrite ? $typeSpecifier->setAlwaysOverwriteTypes() : $typeSpecifier);
+        return $subjectTypes->unionWith($overwrite ? $specifiedTypes->setAlwaysOverwriteTypes() : $specifiedTypes);
     }
 }
