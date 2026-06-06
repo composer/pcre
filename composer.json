@@ -18,12 +18,15 @@
     ],
     "require": {
         "php": "^7.4 || ^8.0",
-        "phpstan/phpstan": "^2.2.2"
     },
     "require-dev": {
+        "phpstan/phpstan": "^2",
         "phpunit/phpunit": "^8 || ^9",
         "phpstan/phpstan-strict-rules": "^2",
         "phpstan/phpstan-deprecation-rules": "^2"
+    },
+    "conflict": {
+        "phpstan/phpstan": "<2.2.2"
     },
     "autoload": {
         "psr-4": {
