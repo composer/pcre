@@ -61,11 +61,11 @@ final class PregMatchTypeSpecifyingExtension implements StaticMethodTypeSpecifyi
         $matchesArg = $args[2] ?? null;
         $flagsArg = $args[3] ?? null;
 
+        $subjectTypes = new SpecifiedTypes();
         if ($patternArg === null) {
-            return new SpecifiedTypes();
+            return $subjectTypes;
         }
 
-        $subjectTypes = new SpecifiedTypes();
         if (
             $subjectArg !== null
             && $context->true()
