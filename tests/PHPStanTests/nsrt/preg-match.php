@@ -112,7 +112,7 @@ function doMatchAllStrictGroups(string $s): void
     assertType('array{}|array{0: list<string>, test: list<\'£\'|\'€\'>, 1: list<\'£\'|\'€\'>}', $matches);
 
     if (Preg::isMatchAllStrictGroups('/Price: (?<test>£|€)?\d+/', $s, $matches)) {
-        assertType('array{0: list<string>, test: list<\'£\'|\'€\'>, 1: list<\'£\'|\'€\'>}', $matches);
+        assertType('array{0: non-empty-list<string>, test: non-empty-list<\'£\'|\'€\'>, 1: non-empty-list<\'£\'|\'€\'>}', $matches);
     }
 }
 
