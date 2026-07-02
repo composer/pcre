@@ -91,25 +91,25 @@ function doMatchStrictGroupsUnsafe(string $s): void
 function doMatchAllStrictGroups(string $s): void
 {
     if (Preg::matchAllStrictGroups('/Price: /i', $s, $matches)) {
-        assertType('array{list<string>}', $matches);
+        assertType('array{non-empty-list<string>}', $matches);
     } else {
         assertType('array{}', $matches);
     }
-    assertType('array{}|array{list<string>}', $matches);
+    assertType('array{}|array{non-empty-list<string>}', $matches);
 
     if (Preg::matchAllStrictGroups('/Price: (£|€)\d+/', $s, $matches)) {
-        assertType('array{list<string>, list<\'£\'|\'€\'>}', $matches);
+        assertType('array{non-empty-list<string>, non-empty-list<\'£\'|\'€\'>}', $matches);
     } else {
         assertType('array{}', $matches);
     }
-    assertType('array{}|array{list<string>, list<\'£\'|\'€\'>}', $matches);
+    assertType('array{}|array{non-empty-list<string>, non-empty-list<\'£\'|\'€\'>}', $matches);
 
     if (Preg::isMatchAllStrictGroups('/Price: (?<test>£|€)\d+/', $s, $matches)) {
-        assertType('array{0: list<string>, test: list<\'£\'|\'€\'>, 1: list<\'£\'|\'€\'>}', $matches);
+        assertType('array{0: non-empty-list<string>, test: non-empty-list<\'£\'|\'€\'>, 1: non-empty-list<\'£\'|\'€\'>}', $matches);
     } else {
         assertType('array{}', $matches);
     }
-    assertType('array{}|array{0: list<string>, test: list<\'£\'|\'€\'>, 1: list<\'£\'|\'€\'>}', $matches);
+    assertType('array{}|array{0: non-empty-list<string>, test: non-empty-list<\'£\'|\'€\'>, 1: non-empty-list<\'£\'|\'€\'>}', $matches);
 
     if (Preg::isMatchAllStrictGroups('/Price: (?<test>£|€)?\d+/', $s, $matches)) {
         assertType('array{0: non-empty-list<string>, test: non-empty-list<\'£\'|\'€\'>, 1: non-empty-list<\'£\'|\'€\'>}', $matches);
