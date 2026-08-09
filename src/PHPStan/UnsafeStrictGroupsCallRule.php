@@ -57,7 +57,7 @@ final class UnsafeStrictGroupsCallRule implements Rule
             return [];
         }
 
-        $patternArg = $args[0] ?? null;
+        $patternArg = $args[0];
         if ($isPreg) {
             if (!isset($args[2])) { // no matches set, skip as the matches won't be used anyway
                 return [];
@@ -65,10 +65,6 @@ final class UnsafeStrictGroupsCallRule implements Rule
             $flagsArg = $args[3] ?? null;
         } else {
             $flagsArg = $args[2] ?? null;
-        }
-
-        if ($patternArg === null) {
-            return [];
         }
 
         $flagsType = PregMatchFlags::getType($flagsArg, $scope);
