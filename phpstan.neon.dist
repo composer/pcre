@@ -8,6 +8,7 @@ parameters:
 
     bootstrapFiles:
         - vendor/autoload.php
+        - tests/phpstan-bootstrap.php
 
     excludePaths:
         - tests/PHPStanTests/nsrt/*

@@ -23,8 +23,7 @@
         "phpunit/phpunit": "^9",
         "phpstan/phpstan": "^2",
         "phpstan/phpstan-strict-rules": "^2",
-        "phpstan/phpstan-deprecation-rules": "^2",
-        "symfony/polyfill-php80": "^1"
+        "phpstan/phpstan-deprecation-rules": "^2"
     },
     "conflict": {
         "phpstan/phpstan": "<2.2.2"
