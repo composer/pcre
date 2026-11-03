@@ -76,7 +76,7 @@ class ReplaceCallbackTest extends BaseTestCase
         self::expectException(UnexpectedNullMatchException::class);
         self::expectExceptionMessage('Pattern "{(?P<m>\d)(?<unmatched>a)?}" had an unexpected unmatched group "unmatched", make sure the pattern always matches or use replaceCallback() instead.');
 
-        $result = Preg::replaceCallbackStrictGroups('{(?P<m>\d)(?<unmatched>a)?}', function ($match) {
+        Preg::replaceCallbackStrictGroups('{(?P<m>\d)(?<unmatched>a)?}', function ($match) {
             return strtoupper($match['unmatched']);
         }, '123', -1, $count);
     }
@@ -96,7 +96,7 @@ class ReplaceCallbackTest extends BaseTestCase
         self::expectException(UnexpectedNullMatchException::class);
         self::expectExceptionMessage('Pattern "{(?P<m>\d)(?<unmatched>a)?}" had an unexpected unmatched group "unmatched", make sure the pattern always matches or use replaceCallback() instead.');
 
-        $result = Preg::replaceCallbackStrictGroups('{(?P<m>\d)(?<unmatched>a)?}', function ($match) {
+        Preg::replaceCallbackStrictGroups('{(?P<m>\d)(?<unmatched>a)?}', function ($match) {
             return strtoupper($match['unmatched'][0]);
         }, '3', -1, $count, PREG_OFFSET_CAPTURE);
     }

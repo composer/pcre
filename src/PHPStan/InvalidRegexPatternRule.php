@@ -112,7 +112,7 @@ class InvalidRegexPatternRule implements Rule
     {
         try {
             $msg = null;
-            $prev = set_error_handler(function (int $severity, string $message, string $file) use (&$msg): bool {
+            set_error_handler(function (int $severity, string $message, string $file) use (&$msg): bool {
                 $msg = preg_replace("#^preg_match(_all)?\\(.*?\\): #", '', $message);
 
                 return true;
